@@ -1,0 +1,29 @@
+@require ../theme.ts as theme;
+@require ../spec.ts as spec;
+
+.scrollable::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  theme.colour("body");
+  border-radius: ":spec.borders.body.radius";
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  theme.colour("primary", 0.9);
+  border-radius: ":spec.borders.body.radius";
+  border: 3px solid transparent;
+  background-clip: content-box;
+  theme.transition("fast", "background-color");
+  cursor: pointer;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  theme.colour("primary");
+  border-radius: ":spec.borders.body.radius";
+  border: 3px solid transparent;
+  background-clip: content-box;
+}

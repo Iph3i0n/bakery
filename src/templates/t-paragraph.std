@@ -1,0 +1,19 @@
+<script>
+  import * as theme from "../theme.ts";
+
+  export const name = "t-paragraph";
+  export const aria = { Role: "paragraph" };
+</script>
+
+<style>
+  :host {
+    display: block;
+    theme.text("body");
+  }
+
+  :host(:last-child) {
+    margin-bottom: 0;
+  }
+</style>
+
+<slot></slot>

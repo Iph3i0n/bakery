@@ -1,0 +1,70 @@
+<script>
+  import * as theme from "../theme.ts";
+  import * as spec from "../spec.ts";
+  export const name = "t-icon";
+  export const props = ["name", "fill", "size", "colour", "text", "spin"];
+
+  function make_sheet() {
+    const ele = document.createElement("link");
+    ele.href =
+      "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css";
+    ele.rel = "stylesheet";
+    return ele;
+  }
+
+  self.addEventListener("rerendered", () => {
+    if (!self.querySelector("link")) self.root.append(make_sheet());
+  });
+
+  self.addEventListener("loaded", () => {
+    document.head.append(make_sheet());
+  });
+</script>
+
+<style>
+  :host {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  span {
+    font-size: ":spec.text_styles[self.props.size ?? 'body'].font_size";
+    background-color: transparent !important;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  @if ":self.props.spin" {
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    span::before {
+      display: inline-block;
+      theme.animation("spin", "slow", "infinite");
+    }
+  }
+
+  @if ":self.props.text" {
+    span {
+      theme.colour(self.props.colour ?? "surface");
+    }
+  }
+
+  @if ":!self.props.text" {
+    span {
+      theme.textcolour(self.props.colour ?? "surface");
+    }
+  }
+</style>
+
+<span
+  class=":`ri-${self.props.name}-${self.props.fill ? 'fill' : 'line'}`"
+></span>

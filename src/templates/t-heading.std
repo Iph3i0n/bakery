@@ -1,0 +1,31 @@
+<script>
+  import * as theme from "../theme.ts";
+  import { LoadedEvent, PropsEvent } from "../deps.ts";
+
+  export const name = "t-heading";
+  export const props = ["level", "display"];
+  export const aria = { Role: "heading" };
+
+  self.addEventListener(LoadedEvent.Key, () => {
+    self.internals.ariaLevel = self.props.level;
+  });
+
+  self.addEventListener(PropsEvent.Key, () => {
+    self.internals.ariaLevel = self.props.level;
+  });
+
+  const type = () => self.props.level + (self.props.display ? "_display" : "");
+</script>
+
+<style>
+  :host {
+    display: block;
+    theme.text(type());
+  }
+
+  :host(:last-child) {
+    margin-bottom: 0;
+  }
+</style>
+
+<slot></slot>

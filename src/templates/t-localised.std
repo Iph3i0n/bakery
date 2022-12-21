@@ -1,0 +1,32 @@
+<script>
+  export const name = "t-localised";
+  export const props = ["default"];
+
+  function Languages() {
+    if (navigator.languages != undefined) return navigator.languages;
+    return [navigator.language];
+  }
+
+  let possible = [];
+  function HasData(lang) {
+    return (e) => {
+      possible = possible.filter((p) => p !== lang);
+      if (e.currentTarget.assignedNodes().length > 0)
+        possible = [...possible, lang];
+    };
+  }
+</script>
+
+<s:use get=":Languages()" as="languages">
+  <s:for subject=":languages" key="lang">
+    <slot
+      name=":lang"
+      on:slotchange="HasData(lang)"
+      style=":!possible.includes(lang)?'display: none': undefined"
+    ></slot>
+  </s:for>
+
+  <s:if check=":!possible.length">
+    <slot></slot>
+  </s:if>
+</s:use>

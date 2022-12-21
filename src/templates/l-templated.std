@@ -1,0 +1,25 @@
+<script>
+  import { RenderEvent } from "../deps.ts";
+  export const name = "l-templated";
+  export const props = ["use", "remote"];
+
+  async function get_data() {
+    if (!self.props.remote) {
+      return document.getElementById(self.props.use);
+    }
+
+    const response = await fetch(self.props.use);
+    if (!response.ok) throw response;
+    const content = await response.text();
+    const template = document.createElement("template");
+    template.innerHTML = content;
+    return template;
+  }
+
+  self.addEventListener(RenderEvent.Key, async () => {
+    const data = await get_data();
+    self.root.replaceChildren(data.content.cloneNode(true));
+  });
+</script>
+
+<d-loading open="true"></d-loading>

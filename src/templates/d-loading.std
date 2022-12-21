@@ -1,0 +1,31 @@
+<script>
+  import * as theme from "../theme.ts";
+
+  export const name = "d-loading";
+  export const props = ["open"];
+</script>
+<style>
+  :host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    theme.transition("slow", "opacity");
+    theme.colour("body");
+  }
+
+  @if ":self.props.open" {
+    :host {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+</style>
+<t-icon name="loader-4" colour="body" size="h1_display" text spin></t-icon>
+<slot></slot>

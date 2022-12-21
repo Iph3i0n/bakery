@@ -1,0 +1,201 @@
+<script>
+  export const name = "l-header";
+  export const props = ["logo", "logo-alt", "bg"];
+  export const aria = { Role: "banner" };
+
+  let has_right = false;
+  function on_right(e) {
+    has_right = e.currentTarget.assignedNodes().length > 0;
+  }
+
+  let open = false;
+  function on_toggle() {
+    open = !open;
+  }
+</script>
+
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+
+  @insert ../styles/custom-scrollbar.pss;
+
+  @use ":bg = self.props.bg ?? 'primary'" {
+    :host {
+      container-type: inline-size;
+      display: block;
+      theme.border("body", undefined, "bottom");
+      theme.margin("block", "bottom");
+    }
+
+    .logo-col {
+      theme.colour(bg);
+      theme.padding("block");
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-col a {
+      display: block;
+      max-height: 3rem;
+      theme.border("small");
+      theme.shadow("small");
+      overflow: hidden;
+    }
+
+    .logo-col img {
+      display: block;
+      max-height: 3rem;
+    }
+
+    .logo-col .expand-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transform: scale(1);
+      theme.padding("badge");
+      theme.colour(bg);
+      theme.transition("fast", "background-color", "transform");
+    }
+
+    .logo-col .expand-button:hover,
+    .logo-col .expand-button:focus {
+      outline: none;
+      transform: scale(1.1);
+      theme.colour(bg, 0.9);
+    }
+
+    .main-links {
+      max-height: 0;
+      overflow: hidden;
+      theme.transition("slow", "max-height");
+    }
+
+    @if ":open" {
+      .main-links {
+        max-height: 12rem;
+      }
+    }
+
+    .main-content {
+      box-sizing: border-box;
+      max-height: 12rem;
+      overflow-y: auto;
+    }
+
+    .main-content ::slotted(a),
+    .main-content ::slotted(span) {
+      display: block;
+      theme.colour("surface");
+      theme.text("body", "no-margin");
+      theme.padding("small_block");
+      theme.border("body", "contrast", "bottom");
+      text-decoration: none;
+    }
+
+    .main-content ::slotted(a:last-child),
+    .main-content ::slotted(span:last-child) {
+      border-bottom: none;
+    }
+
+    .main-content ::slotted(a) {
+      cursor: pointer;
+    }
+
+    .main-content ::slotted(a:hover),
+    .main-content ::slotted(a:focus) {
+      outline: none;
+      theme.colour("surface", 0.9);
+    }
+
+    .right-actions {
+      display: block;
+      theme.padding("small_block");
+      theme.colour("body");
+      theme.border("body", undefined, "top");
+    }
+
+    .right-actions ::slotted(form) {
+      display: grid;
+      grid-template-columns: auto fit-content(8ch);
+      gap: ":spec.spacings.small_block[1]";
+    }
+
+    @if ":!has_right" {
+      .right-actions {
+        display: none;
+      }
+    }
+
+    @media ":spec.screen_sizes.lg.query" {
+      :host {
+        display: flex;
+        align-items: center;
+        theme.colour(bg);
+      }
+
+      .logo-col .expand-button {
+        display: none;
+      }
+
+      .main-links {
+        flex: 1;
+        max-height: 100%;
+      }
+
+      .main-content {
+        display: flex;
+        theme.padding("small_block");
+      }
+
+      .main-content ::slotted(a),
+      .main-content ::slotted(span) {
+        border: none;
+        color: inherit;
+        background-color: transparent;
+        transform: scale(1);
+        theme.transition("fast", "transform");
+      }
+
+      .right-actions {
+        color: inherit;
+        border-top: none;
+        background-color: transparent;
+      }
+
+      .main-content ::slotted(a:hover),
+      .main-content ::slotted(a:focus) {
+        background-color: transparent;
+        color: inherit;
+        transform: scale(1.2);
+      }
+    }
+  }
+</style>
+
+<div class="logo-col">
+  <a href="/">
+    <img src=":self.props.logo" alt=":self.props['logo-alt']" />
+  </a>
+
+  <div class="expand-button" on:click="on_toggle" tabindex="0">
+    <t-icon
+      name="menu-3"
+      size="body_large"
+      colour=":self.props.bg ?? 'primary'"
+      text
+    ></t-icon>
+  </div>
+</div>
+
+<div class="main-links">
+  <div class="main-content scrollable">
+    <slot></slot>
+  </div>
+</div>
+
+<div class="right-actions">
+  <slot name="right" on:slotchange="on_right"></slot>
+</div>

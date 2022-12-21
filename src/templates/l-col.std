@@ -1,0 +1,30 @@
+<script>
+  import * as theme from "../theme.ts";
+  import * as spec from "../spec.ts";
+
+  export const name = "l-col";
+  export const props = [...Object.keys(screen), "flush"];
+</script>
+<style>
+  :host {
+    display: block;
+  }
+
+  @if ":!self.props.flush" {
+    :host {
+      theme.padding("block");
+    }
+  }
+
+  @for ":size in spec.screen_sizes" {
+    @if ":size in self.props" {
+      @media ":spec.screen_sizes[size].query" {
+        :host {
+          grid-column: ":`auto / span ${self.props[size]}`";
+        }
+      }
+    }
+  }
+</style>
+
+<slot></slot>

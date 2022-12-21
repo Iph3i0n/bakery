@@ -1,0 +1,11 @@
+<script>
+  import { Receiver } from "../data.ts";
+
+  export const name = "u-if";
+  export const props = ["check"];
+
+  const receiver = new Receiver(self, self.props.check);
+</script>
+<s:if check=":receiver.data">
+  <slot></slot>
+</s:if>

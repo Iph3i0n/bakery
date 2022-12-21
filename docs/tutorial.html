@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script>
+      window.CODE_EXAMPLES = {
+        cdn_install: `&lt;script src="https://cdn.jsdelivr.net/npm/@paulpopat/bakery@0.0.1">&lt;/script>`,
+        text: {
+          basic: `<f-input name="test">Hello world</f-input>`,
+        },
+        select: {
+          basic: `
+            <f-select name="test-select">
+              <option value="value-1">First Value</option>
+              <option value="value-2">Second Value</option>
+              <option value="value-3">Third Value</option>
+              <option value="value-4">Fourth Value</option>
+              <option value="value-5">Fifth Value</option>
+              <span slot="label">Hello world</span>
+            </f-select>
+          `,
+        },
+        textarea: {
+          basic: `<f-textarea name="test-textarea">Hello world</f-textarea>`,
+        },
+        date: {
+          basic: `<f-date name="test-date">Hello world</f-date>`,
+        },
+      };
+    </script>
+    <script src="./dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <template id="example-block">
+      <d-panel colour="surface" bordered>
+        <l-row>
+          <l-col xs="12">
+            <slot></slot>
+          </l-col>
+        </l-row>
+        <slot name="code"></slot>
+      </d-panel>
+    </template>
+    <l-templated use="/layout.template.html" remote>
+      <u-global var="CODE_EXAMPLES" key="ex">
+        <form onsubmit="event.preventDefault()">
+          <l-container>
+            <l-row>
+              <l-col xs="12">
+                <t-heading id="install" level="h2">
+                  <t-localised>Installation</t-localised>
+                </t-heading>
+                <t-paragraph>
+                  <t-localised>
+                    This project can be loaded in a couple of ways
+                  </t-localised>
+                </t-paragraph>
+                <t-heading level="h3">
+                  <t-localised>CDN (Recommended)</t-localised>
+                </t-heading>
+                <t-code
+                  language="html"
+                  file="*.html"
+                  accessor="ex.cdn_install"
+                ></t-code>
+                <t-paragraph>
+                  <t-localised>
+                    This will allow you to use all components with ease in any
+                    project if you include this in the head of the HTML. It can
+                    be included after the body but this can result in flashes on
+                    load, as unknown components will be rendered as if they were
+                  </t-localised>
+                </t-paragraph>
+              </l-col>
+              <l-col xs="12">
+                <t-heading id="forms" level="h2">
+                  <t-localised>Forms</t-localised>
+                </t-heading>
+                <t-paragraph>
+                  <t-localised>
+                    All forms are compatible with the standard HTML form
+                    element. The provide added functionality around validation
+                    and styling.
+                  </t-localised>
+                </t-paragraph>
+                <t-paragraph>
+                  <t-localised>
+                    They are included in the f- namespace and must be withing a
+                    form element to function.
+                  </t-localised>
+                </t-paragraph>
+              </l-col>
+              <l-col xs="12">
+                <l-templated use="example-block">
+                  <f-select name="test-select">
+                    <option value="value-1">First Value</option>
+                    <option value="value-2">Second Value</option>
+                    <option value="value-3">Third Value</option>
+                    <option value="value-4">Fourth Value</option>
+                    <option value="value-5">Fifth Value</option>
+                    <span slot="label">Hello world</span>
+                  </f-select>
+                  <t-code
+                    slot="code"
+                    language="html"
+                    file="*.html"
+                    accessor="ex.select.basic"
+                    flush
+                  ></t-code>
+                </l-templated>
+              </l-col>
+              <l-col xs="12">
+                <l-templated use="example-block">
+                  <f-date name="test-date">Hello world</f-date>
+                  <t-code
+                    slot="code"
+                    language="html"
+                    file="*.html"
+                    accessor="ex.date.basic"
+                    flush
+                  ></t-code>
+                </l-templated>
+              </l-col>
+              <l-col xs="12">
+                <l-templated use="example-block">
+                  <f-textarea name="test-textarea">Hello world</f-textarea>
+                  <t-code
+                    slot="code"
+                    language="html"
+                    file="*.html"
+                    accessor="ex.textarea.basic"
+                    flush
+                  ></t-code>
+                </l-templated>
+              </l-col>
+              <l-col xs="12">
+                <l-templated use="example-block">
+                  <f-input name="test">Hello world</f-input>
+                  <t-code
+                    slot="code"
+                    language="html"
+                    file="*.html"
+                    accessor="ex.text.basic"
+                    flush
+                  ></t-code>
+                </l-templated>
+              </l-col>
+            </l-row>
+          </l-container>
+        </form>
+      </u-global>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; right: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+    <o-offcanvas trigger="#toc" size="small">
+      <span slot="title">
+        <t-localised default="en-GB">
+          <span slot="en-GB">Contents</span>
+        </t-localised>
+      </span>
+      <t-link href="#install" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">Installation</span>
+        </t-localised>
+      </t-link>
+      <t-link href="#data" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">Fetching Data</span>
+        </t-localised>
+      </t-link>
+      <t-link href="#grid" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">The Grid</span>
+        </t-localised>
+      </t-link>
+      <t-link href="#forms" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">Forms</span>
+        </t-localised>
+      </t-link>
+    </o-offcanvas>
+  </body>
+</html>

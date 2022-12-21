@@ -1,0 +1,25 @@
+<script>
+  import * as theme from "../theme.ts";
+
+  export const name = "d-panel";
+  export const props = ["colour", "bordered"];
+
+  function get_colour() {
+    return self.props.colour ?? "body";
+  }
+</script>
+
+<style>
+  :host {
+    display: block;
+    theme.colour(get_colour());
+  }
+
+  @if ":self.props.bordered" {
+    :host {
+      theme.border("body");
+    }
+  }
+</style>
+
+<slot></slot>

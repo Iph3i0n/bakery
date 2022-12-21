@@ -1,0 +1,111 @@
+<script>
+  import { On } from "../events.ts";
+  import * as theme from "../theme.ts";
+  import * as spec from "../spec.ts";
+  import { ShouldRender, LoadedEvent } from "../deps.ts";
+
+  export const name = "o-modal";
+  export const props = ["trigger", "size"];
+  export const aria = { Role: "dialog" };
+
+  let open = false;
+  let width = "0";
+  let height = "0";
+  let has_footer = false;
+
+  switch (self.props.size) {
+    case "small":
+      height = "12rem";
+      width = "15rem";
+      break;
+    case "medium":
+      height = "25rem";
+      width = "30rem";
+      break;
+    case "large":
+      height = "40rem";
+      width = "50rem";
+      break;
+  }
+
+  function close() {
+    open = false;
+  }
+
+  function on_footer(e) {
+    has_footer = e.currentTarget.assignedNodes().length > 0;
+  }
+
+  self.addEventListener(LoadedEvent.Key, () => {
+    const off_click = On("click", self.props.trigger, () => {
+      if (typeof self === "undefined") {
+        off_click();
+        return;
+      }
+
+      open = true;
+      self.dispatchEvent(new ShouldRender());
+    });
+
+    const slot = self.root.querySelector("slot[name=footer]");
+    slot.addEventListener("slotchange", on_footer);
+  });
+</script>
+<style>
+  @insert ../styles/overlay.pss;
+
+  @if ":open" {
+    @insert ../styles/overlay-open.pss;
+  }
+
+  .container {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    max-width: ":width";
+    max-height: ":height";
+  }
+
+  @insert ../styles/custom-scrollbar.pss;
+
+  .modal {
+    transform: translateY(0);
+    theme.transition("slow", "transform");
+    theme.border("body");
+    theme.margin("small_block");
+  }
+
+  @if ":!open" {
+    .modal {
+      transform: translateY(-10px);
+    }
+  }
+
+  @if ":!has_footer" {
+    .footer {
+      display: none;
+    }
+  }
+</style>
+
+<div class="overlay" on:click="close"></div>
+<div class="container">
+  <div class="modal">
+    <div class="title">
+      <slot name="title"></slot>
+      <div class="close-button" on:click="close">
+        <t-icon name="close" colour="body" size="body_large" text></t-icon>
+      </div>
+    </div>
+    <div class="body scrollable">
+      <slot></slot>
+    </div>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</div>

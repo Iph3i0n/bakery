@@ -1,0 +1,65 @@
+@require ../theme.ts as theme;
+@require ../spec.ts as spec;
+
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: ":spec.z_indexes.overlay";
+  opacity: 0;
+  theme.transition("slow", "opacity");
+  pointer-events: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  theme.colour("primary");
+  opacity: 0.4;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  theme.shadow("body");
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  theme.colour("body");
+  theme.text("h4", "no-margin");
+  theme.padding("block");
+  theme.border("body", "contrast", "bottom");
+  background-clip: border-box;
+}
+
+.body {
+  theme.colour("surface");
+  theme.padding("block");
+  flex: 1;
+  overflow-y: auto;
+  background-clip: border-box;
+}
+
+.footer {
+  theme.colour("body");
+  theme.text("body", "no-margin");
+  theme.padding("block");
+  theme.border("body", "contrast", "top");
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-clip: border-box;
+}

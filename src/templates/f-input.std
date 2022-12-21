@@ -1,0 +1,77 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import {
+    ShouldRender,
+    RenderEvent,
+    LoadedEvent,
+    CreateRef,
+  } from "../deps.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+
+  export const name = "f-input";
+  export const props = [
+    "default",
+    "disabled",
+    "name",
+    "type",
+    "required",
+    "validate",
+  ];
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "input" };
+
+  const slot = slotted();
+  const textarea = CreateRef();
+
+  self.addEventListener("focus", () => {
+    textarea.current.focus();
+  });
+
+  self.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    self.submit();
+  });
+
+  function update_value() {
+    self.value = textarea.current.innerText.replace(/\n/gm, "");
+  }
+</script>
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+  @insert ../styles/single-line-input.pss;
+</style>
+
+<div class=":self.label_class">
+  <span class=":c('label-text', ['populated', self.focused || self.value])">
+    <slot></slot>
+  </span>
+  <div
+    class="content"
+    contenteditable="true"
+    s:ref="textarea"
+    on:blur="update_value"
+  >
+    <s:text use=":self.value ?? ''"></s:text>
+  </div>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

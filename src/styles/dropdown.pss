@@ -1,0 +1,26 @@
+@require ../spec.ts as spec;
+@require ../theme.ts as theme;
+
+.dropdown-container {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: ":`-${spec.borders.body.width}`";
+  max-height: 0;
+  overflow: hidden;
+  theme.transition("fast", "max-height");
+  z-index: ":spec.z_indexes.popup";
+}
+
+.dropdown-container.open {
+  theme.shadow("small");
+  border-radius: ":spec.borders.body.radius";
+}
+
+.dropdown-body {
+  theme.text("body", "no-margin");
+  theme.colour("surface");
+  box-sizing: border-box;
+  theme.border("body", "contrast");
+}
+
+@insert ./custom-scrollbar.pss;

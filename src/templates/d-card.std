@@ -1,0 +1,23 @@
+<script>
+  import * as theme from "../theme.ts";
+
+  export const name = "d-card";
+  export const props = ["colour"];
+  export const aria = { Role: "section" };
+
+  function get_colour() {
+    return self.props.colour ?? "surface";
+  }
+</script>
+
+<style>
+  :host {
+    display: block;
+    theme.colour(get_colour());
+    theme.shadow("body");
+    theme.padding("block");
+    theme.border("body");
+  }
+</style>
+
+<slot></slot>

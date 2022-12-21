@@ -1,0 +1,24 @@
+<script>
+  import * as spec from "../spec.ts";
+  export const name = "l-container";
+  export const props = ["flush"];
+</script>
+<style>
+  :host {
+    display: block;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+
+  @if ":!self.props.flush" {
+    @for ":size in spec.screen_sizes" {
+      @media ":spec.screen_sizes[size].query" {
+        :host {
+          max-width: ":spec.screen_sizes[size].width";
+        }
+      }
+    }
+  }
+</style>
+
+<slot></slot>

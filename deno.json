@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "deno.ns", "deno.unstable"]
+  },
+  "tasks": {
+    "test": "deno test --allow-all",
+    "build": "wholemeal --out=./docs/dist",
+    "dev": "wholemeal --dev=true --out=./docs/dist",
+    "dev-dev": "wholemeal-dev --dev=true --out=./docs/dist"
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["no-case-declarations"]
+    }
+  }
+}

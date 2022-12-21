@@ -1,0 +1,58 @@
+<script>
+  import { FindForm } from "../form-element.ts";
+  import * as theme from "../theme.ts";
+
+  export const name = "f-button";
+  export const props = ["colour", "type", "href", "target", "private"];
+  export const aria = { Role: "button" };
+
+  self.tabIndex = 0;
+
+  let initialised = false;
+
+  self.addEventListener("loaded", () => {
+    if (initialised) return;
+    initialised = true;
+
+    self.addEventListener("click", () => {
+      if (self.props.type === "button") return;
+      else if (self.props.type === "submit") {
+        const form = FindForm(self);
+        if (!form) throw new Error("Cannot use a submit outside of a form");
+        form.requestSubmit();
+      } else if (self.props.href)
+        if (self.props.target)
+          window.open(
+            self.props.href,
+            self.props.target,
+            self.props.private ? "noreferrer" : undefined
+          );
+        else window.location.href = self.props.href;
+    });
+  });
+</script>
+
+<style>
+  @use ":c = self.props.colour ?? 'primary'" {
+    :host {
+      display: inline-block;
+      theme.colour(c);
+      theme.padding("block");
+      theme.border("body");
+      theme.text("body", "no-margin");
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      text-align: center;
+      theme.transition("fast", "background-color");
+    }
+
+    :host(:hover),
+    :host(:focus) {
+      outline: none;
+      theme.colour(c, 1.1);
+    }
+  }
+</style>
+
+<slot></slot>

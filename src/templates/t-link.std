@@ -1,0 +1,43 @@
+<script>
+  import * as theme from "../theme.ts";
+
+  export const name = "t-link";
+  export const props = ["href", "target", "private", "block"];
+  export const aria = { Role: "button" };
+
+  self.tabIndex = 0;
+
+  self.addEventListener("loaded", () => {
+    self.addEventListener("click", () => {
+      if (self.props.target)
+        window.open(
+          self.props.href,
+          self.props.target,
+          self.props.private ? "noreferrer" : undefined
+        );
+      else window.location.href = self.props.href;
+    });
+  });
+</script>
+
+<style>
+  :host {
+    display: ":self.props.block ? 'block' : 'inline-block'";
+    theme.text("body", self.props.block ? undefined : "no-margin");
+    cursor: pointer;
+    theme.border("body", "contrast", "bottom");
+    theme.transition("fast", "color", "background-color");
+  }
+
+  @if ":self.props.block" {
+    :host {
+      theme.padding("small_block");
+    }
+  }
+
+  :host(:hover) {
+    theme.colour("primary", 1, 0.5);
+  }
+</style>
+
+<slot></slot>

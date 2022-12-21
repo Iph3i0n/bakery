@@ -1,0 +1,17 @@
+<script>
+  import { Provider } from "../data.ts";
+  import { PropsEvent } from "../deps.ts";
+
+  export const name = "u-global";
+  export const props = ["var", "key"];
+
+  const provider = new Provider(self, self.props.key);
+  provider.data = window[self.props.var];
+
+  self.addEventListener(PropsEvent.Key, (e) => {
+    if (e.Key === "key")
+      console.warn("Changing keys for providers is current not supported.");
+    provider.data = window[self.props.var];
+  });
+</script>
+<slot></slot>

@@ -1,0 +1,38 @@
+{
+  "templates": [
+    "./src/templates/d-card.std",
+    "./src/templates/d-panel.std",
+    "./src/templates/d-loading.std",
+    "./src/templates/d-listgroup.std",
+
+    "./src/templates/f-button.std",
+    "./src/templates/f-input.std",
+    "./src/templates/f-select.std",
+    "./src/templates/f-date.std",
+    "./src/templates/f-textarea.std",
+
+    "./src/templates/l-container.std",
+    "./src/templates/l-row.std",
+    "./src/templates/l-col.std",
+    "./src/templates/l-templated.std",
+    "./src/templates/l-header.std",
+
+    "./src/templates/o-modal.std",
+    "./src/templates/o-offcanvas.std",
+
+    "./src/templates/t-paragraph.std",
+    "./src/templates/t-icon.std",
+    "./src/templates/t-heading.std",
+    "./src/templates/t-link.std",
+    "./src/templates/t-code.std",
+    "./src/templates/t-localised.std",
+
+    "./src/templates/u-fetch.std",
+    "./src/templates/u-text.std",
+    "./src/templates/u-global.std",
+    "./src/templates/u-if.std",
+    "./src/templates/u-each.std",
+    "./src/templates/u-relay.std"
+  ],
+  "global_css": "./global.pss"
+}

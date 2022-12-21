@@ -1,0 +1,134 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+
+  export const name = "f-select";
+  export const props = ["name", "required", "disabled"];
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "select" };
+
+  let options = [];
+
+  const on_change = (e) => {
+    const target = e.currentTarget;
+    const nodes = target.assignedElements();
+    const result = [];
+    for (const node of nodes)
+      result.push({
+        text: node.textContent,
+        value: node.getAttribute("value"),
+        disabled: node.getAttribute("disabled") !== null,
+        default: node.getAttribute("default") !== null,
+      });
+
+    options = result;
+  };
+
+  function current() {
+    return options.find((o) => o.value === self.value)?.text ?? "\xa0";
+  }
+
+  function select(name) {
+    return () => {
+      self.value = name;
+      self.blur();
+    };
+  }
+
+  const slot = slotted();
+</script>
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+  @insert ../styles/single-line-input.pss;
+  @insert ../styles/dropdown.pss;
+
+  :host {
+    cursor: pointer;
+  }
+
+  .label {
+    cursor: pointer;
+  }
+
+  .item {
+    position: relative;
+    theme.colour("surface");
+    theme.padding("small_block");
+    theme.transition("fast", "background-color");
+  }
+
+  .item:hover {
+    theme.colour("surface", 0.95);
+  }
+
+  t-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    theme.padding("input", "left", "right");
+  }
+
+  .dropdown-container {
+    width: ":`calc(100% + (${spec.borders.body.width} * 2))`";
+  }
+
+  .dropdown-container.open {
+    max-height: 12rem;
+  }
+
+  .dropdown-body {
+    max-height: 12rem;
+    overflow-y: scroll;
+  }
+</style>
+
+<div style="display: none">
+  <slot on:slotchange="on_change"></slot>
+</div>
+
+<div class=":self.label_class">
+  <div class=":c('label-text', ['populated', self.focused || self.value])">
+    <slot name="label"></slot>
+  </div>
+
+  <div class="content">
+    <s:text use=":current()"></s:text>
+  </div>
+
+  <t-icon name="arrow-down-s" size="body_large" text></t-icon>
+
+  <div class=":c('dropdown-container', ['open', self.focused])">
+    <div class="dropdown-body scrollable">
+      <s:for key="item" subject=":options">
+        <div class="item" on:click="select(item.value)">
+          <s:text use=":item.text"></s:text>
+          <s:if check=":item.value === self.value">
+            <t-icon name="check" text></t-icon>
+          </s:if>
+        </div>
+      </s:for>
+    </div>
+  </div>
+</div>
+
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

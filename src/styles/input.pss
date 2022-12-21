@@ -1,0 +1,48 @@
+@require ../theme.ts as theme;
+
+:host {
+  display: block;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host(:focus) .label {
+  theme.border("body", "contrast");
+}
+
+.label {
+  position: relative;
+  display: block;
+  theme.colour("surface");
+  theme.transition("fast", "border-color");
+  cursor: text;
+  theme.border("body");
+}
+
+.label.disabled {
+  theme.colour("surface", 0.9);
+  cursor: unset;
+}
+
+.label.error {
+  theme.border("body", "warning");
+}
+
+.help-text.empty {
+  display: none;
+}
+
+.help-text {
+  theme.text("small", "no-margin");
+  theme.padding("small_block", "top", "bottom");
+  theme.margin("input", "left", "right");
+}
+
+.error-text {
+  theme.text("small", "no-margin");
+  theme.padding("small_block", "top", "bottom");
+  theme.margin("input", "left", "right");
+  theme.textcolour("warning");
+}

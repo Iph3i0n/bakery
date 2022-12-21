@@ -1,0 +1,12 @@
+<script>
+  export const name = "l-row";
+  export const props = ["cols"];
+</script>
+<style>
+  :host {
+    display: grid;
+    grid-template-columns: ":`repeat(${self.props.cols ?? '12'}, minmax(0, 1fr))`";
+  }
+</style>
+
+<slot></slot>

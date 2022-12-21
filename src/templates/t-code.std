@@ -1,0 +1,159 @@
+<script>
+  import { RenderEvent } from "../deps.ts";
+  import { Receiver } from "../data.ts";
+  export const name = "t-code";
+  export const props = ["language", "file", "accessor", "flush"];
+
+  const preceding_whitespace = (l) => {
+    const tester = l.split(" ");
+    for (let i = 0; i < tester.length; i++) if (tester[i].trim()) return i;
+    return l.length;
+  };
+
+  const raw_code = self.props.accessor
+    ? new Receiver(self, self.props.accessor)
+    : {
+        get value() {
+          return self.innerHTML;
+        },
+      };
+
+  const code = () => {
+    const code =
+      raw_code.data
+        ?.replace(/&gt;/gm, ">")
+        .replace(/&lt;/gm, "<")
+        .replace(/&quot;/gm, '"') ?? "";
+    let level = -1;
+    return code
+      .replace("<!-- prettier-ignore -->", "")
+      .split("\n")
+      .map((l) => {
+        if (level === -1 && l.trim()) level = preceding_whitespace(l);
+        if (level === -1) return l;
+
+        return l.replace(
+          Array.apply(null, Array(level))
+            .map(() => " ")
+            .join(""),
+          ""
+        );
+      })
+      .join("\n")
+      .trim();
+  };
+
+  const container = () => self.root.querySelector("#container");
+
+  function build_code() {
+    if (!window.hljs) return;
+    const result = window.hljs.highlight(code(), {
+      language: self.props.language,
+    }).value;
+
+    const cont = container();
+    cont.innerHTML = result;
+  }
+
+  const unsafe_import = (path) =>
+    fetch(path, { cache: "force-cache" })
+      .then((response) => response.text())
+      .then(eval);
+
+  if (!window.hljs)
+    unsafe_import(
+      `https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js`
+    ).then(build_code);
+  else build_code();
+
+  self.addEventListener(RenderEvent.Key, build_code);
+</script>
+
+<style>
+  @require ../theme.ts as theme;
+
+  :host {
+    display: block;
+    theme.colour("surface");
+    theme.text("code");
+    overflow: hidden;
+  }
+
+  @if ":self.props.flush" {
+    :host {
+      background-color: transparent !important;
+    }
+  }
+
+  .hljs-keyword {
+    theme.textcolour("rainbow_0");
+  }
+
+  .hljs-subst {
+    theme.textcolour("rainbow_1");
+  }
+
+  .hljs-params {
+    theme.textcolour("rainbow_2");
+  }
+
+  .hljs-property {
+    theme.textcolour("rainbow_3");
+  }
+
+  .hljs-name {
+    theme.textcolour("rainbow_4");
+  }
+
+  .hljs-attr {
+    theme.textcolour("rainbow_5");
+  }
+
+  .hljs-string,
+  .hljs-section,
+  .hljs-selector-class,
+  .hljs-template-variable,
+  .hljs-deletion {
+    theme.textcolour("rainbow_6");
+  }
+
+  .hljs-variable {
+    theme.textcolour("rainbow_7");
+  }
+
+  .hljs-title {
+    theme.textcolour("rainbow_9");
+  }
+
+  .file-name {
+    theme.colour("body");
+    theme.padding("block");
+    theme.border("body", "contrast", "bottom");
+  }
+
+  @if ":!self.props.file" {
+    .file-name {
+      display: none;
+    }
+  }
+
+  @insert ../styles/custom-scrollbar.pss;
+
+  #container {
+    theme.padding("block");
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  @if ":!self.props.flush" {
+    :host {
+      theme.border("body");
+      theme.shadow("body");
+    }
+  }
+</style>
+
+<div class="file-name">
+  <s:text use=":self.props.file"></s:text>
+</div>
+<div id="container" class="scrollable"></div>

@@ -1,0 +1,109 @@
+<script>
+  import { On } from "../events.ts";
+  import * as theme from "../theme.ts";
+  import * as spec from "../spec.ts";
+  import { ShouldRender, LoadedEvent } from "../deps.ts";
+
+  export const name = "o-offcanvas";
+  export const props = ["trigger", "size"];
+  export const aria = { Role: "dialog" };
+
+  let open = false;
+  let width = "0";
+  let has_footer = false;
+
+  switch (self.props.size) {
+    case "small":
+      width = "15em";
+      break;
+    case "medium":
+      width = "30rem";
+      break;
+    case "large":
+      width = "50rem";
+      break;
+  }
+
+  function on_footer(e) {
+    has_footer = e.currentTarget.assignedNodes().length > 0;
+  }
+
+  self.addEventListener(LoadedEvent.Key, () => {
+    const off_click = On("click", self.props.trigger, () => {
+      if (typeof self === "undefined") {
+        off_click();
+        return;
+      }
+
+      open = true;
+      self.dispatchEvent(new ShouldRender());
+    });
+  });
+
+  function close() {
+    open = false;
+  }
+</script>
+<style>
+  @insert ../styles/overlay.pss;
+
+  @if ":open" {
+    @insert ../styles/overlay-open.pss;
+  }
+
+  .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    max-width: 100%;
+    theme.transition("slow", "max-width");
+  }
+
+  @if ":!open" {
+    .container {
+      max-width: 0 !important;
+      border: none !important;
+    }
+  }
+
+  .modal {
+    width: ":width";
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  @media ":spec.screen_sizes.md.query" {
+    .container {
+      theme.border("body", undefined, "right");
+      max-width: ":width";
+    }
+  }
+
+  @if ":!has_footer" {
+    .footer {
+      display: none;
+    }
+  }
+
+  @insert ../styles/custom-scrollbar.pss;
+</style>
+
+<div class="overlay" on:click="close"></div>
+<div class="container">
+  <div class="modal">
+    <div class="title">
+      <slot name="title"></slot>
+      <div class="close-button" on:click="close">
+        <t-icon name="close" colour="body" size="body_large" text></t-icon>
+      </div>
+    </div>
+    <div class="body scrollable">
+      <slot></slot>
+    </div>
+    <div class="footer">
+      <slot name="footer" on:slotchange="on_footer"></slot>
+    </div>
+  </div>
+</div>
