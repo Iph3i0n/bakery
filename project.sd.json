@@ -10,6 +10,7 @@
     "./src/templates/f-select.std",
     "./src/templates/f-date.std",
     "./src/templates/f-textarea.std",
+    "./src/templates/f-multiselect.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",

@@ -1,0 +1,194 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import options from "../options.ts";
+
+  export const name = "f-multiselect";
+  export const props = ["default", "disabled", "name", "required"];
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "select" };
+
+  const items = options();
+
+  const slot = slotted();
+
+  function toggle(value) {
+    return () => {
+      if (self.value?.includes(value))
+        self.value = (self.value?.split(",") ?? [])
+          .filter((v) => v !== value)
+          .join(",");
+      else self.value = [...(self.value?.split(",") ?? []), value].join(",");
+    };
+  }
+</script>
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+  @insert ../styles/input.pss;
+  @insert ../styles/custom-scrollbar.pss;
+
+  @keyframes scale-motion {
+    0% {
+      transform: scale(0.9);
+    }
+
+    50% {
+      transform: scale(1.5);
+    }
+
+    100% {
+      transform: scale(0.9);
+    }
+  }
+
+  @keyframes scale-in {
+    0% {
+      transform: scale(0.4) rotate(0deg);
+    }
+
+    100% {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+
+  @keyframes scale-out {
+    0% {
+      transform: scale(0.4) rotate(0deg);
+    }
+
+    100% {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+
+  .label {
+    overflow: hidden;
+  }
+
+  .label-text {
+    display: block;
+    theme.padding("small_block");
+    theme.colour("body");
+    theme.text("body", "no-margin");
+    theme.border("body", "contrast", "bottom");
+    border-top-left-radius: ":spec.borders.body.radius";
+    border-top-right-radius: ":spec.borders.body.radius";
+  }
+
+  .content {
+    max-height: 12rem;
+    theme.text("body", "no-margin");
+    overflow-y: auto;
+    cursor: pointer;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    theme.padding("small_block");
+    theme.colour("surface");
+    theme.transition("fast", "color", "background-color");
+    user-select: none;
+  }
+
+  .toggle t-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    theme.transition("fast", "opacity");
+    theme.animation("scale-out", "fast");
+  }
+
+  .option .toggle {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    theme.border("body");
+    margin-right: 1rem;
+    theme.colour("surface");
+    transform: scale(1);
+    theme.transition("fast", "border-color", "transform");
+  }
+
+  .option:hover {
+    theme.colour("surface", 0.9);
+  }
+
+  .option:active {
+    theme.colour("surface", 0.7);
+  }
+
+  .option:hover .toggle {
+    theme.border("body", "contrast");
+  }
+
+  .option:active .toggle {
+    transform: scale(0.9);
+    theme.animation("scale-motion", "fast");
+  }
+
+  .option.selected {
+    theme.colour("primary");
+  }
+
+  .option.selected t-icon {
+    opacity: 1;
+    theme.animation("scale-in", "fast");
+  }
+
+  .option.selected:hover {
+    theme.colour("primary", 0.9);
+  }
+
+  .option.selected:active {
+    theme.colour("primary", 0.7);
+  }
+</style>
+
+<div style="display: none">
+  <slot on:slotchange="items.on_change"></slot>
+</div>
+
+<div class=":self.label_class">
+  <div class="label-text">
+    <slot name="label"></slot>
+  </div>
+
+  <div class="content scrollable">
+    <s:for subject=":items.data" key="option">
+      <div
+        class=":c('option', ['selected', self.value?.includes(option.value)])"
+        on:click="toggle(option.value)"
+      >
+        <span class="toggle">
+          <t-icon name="check" colour="surface" text></t-icon>
+        </span>
+        <s:text use=":option.text"></s:text>
+      </div>
+    </s:for>
+  </div>
+</div>
+
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

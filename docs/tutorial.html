@@ -3,29 +3,44 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
     <script>
       window.CODE_EXAMPLES = {
-        cdn_install: `&lt;script src="https://cdn.jsdelivr.net/npm/@paulpopat/bakery@0.0.1">&lt;/script>`,
+        cdn_install: e("script", {
+          src: "https://cdn.jsdelivr.net/npm/@paulpopat/bakery@0.0.1",
+        }),
         text: {
-          basic: `<f-input name="test">Hello world</f-input>`,
+          basic: e("f-input", { name: "test" }, "Hello World"),
         },
         select: {
-          basic: `
-            <f-select name="test-select">
-              <option value="value-1">First Value</option>
-              <option value="value-2">Second Value</option>
-              <option value="value-3">Third Value</option>
-              <option value="value-4">Fourth Value</option>
-              <option value="value-5">Fifth Value</option>
-              <span slot="label">Hello world</span>
-            </f-select>
-          `,
+          basic: e(
+            "f-select",
+            { name: "test-select" },
+            e("option", { value: "value-1" }, "First Value"),
+            e("option", { value: "value-2" }, "Second Value"),
+            e("option", { value: "value-3" }, "Third Value"),
+            e("option", { value: "value-4" }, "Fourth Value"),
+            e("option", { value: "value-5" }, "Fifth Value"),
+            e("span", { slot: "label" }, "Hello world")
+          ),
+        },
+        multiselect: {
+          basic: e(
+            "f-multiselect",
+            { name: "test-multiselect" },
+            e("option", { value: "value-1" }, "First Value"),
+            e("option", { value: "value-2" }, "Second Value"),
+            e("option", { value: "value-3" }, "Third Value"),
+            e("option", { value: "value-4" }, "Fourth Value"),
+            e("option", { value: "value-5" }, "Fifth Value"),
+            e("span", { slot: "label" }, "Hello world")
+          ),
         },
         textarea: {
-          basic: `<f-textarea name="test-textarea">Hello world</f-textarea>`,
+          basic: e("f-textarea", { name: "test-textarea" }, "Hello World"),
         },
         date: {
-          basic: `<f-date name="test-date">Hello world</f-date>`,
+          basic: e("f-date", { name: "test-date" }, "Hello World"),
         },
       };
     </script>
@@ -62,7 +77,7 @@
                 <t-code
                   language="html"
                   file="*.html"
-                  accessor="ex.cdn_install"
+                  accessor="ex.cdn_install.toString()"
                 ></t-code>
                 <t-paragraph>
                   <t-localised>
@@ -92,59 +107,19 @@
                 </t-paragraph>
               </l-col>
               <l-col xs="12">
-                <l-templated use="example-block">
-                  <f-select name="test-select">
-                    <option value="value-1">First Value</option>
-                    <option value="value-2">Second Value</option>
-                    <option value="value-3">Third Value</option>
-                    <option value="value-4">Fourth Value</option>
-                    <option value="value-5">Fifth Value</option>
-                    <span slot="label">Hello world</span>
-                  </f-select>
-                  <t-code
-                    slot="code"
-                    language="html"
-                    file="*.html"
-                    accessor="ex.select.basic"
-                    flush
-                  ></t-code>
-                </l-templated>
+                <div data-example="select.basic"></div>
               </l-col>
               <l-col xs="12">
-                <l-templated use="example-block">
-                  <f-date name="test-date">Hello world</f-date>
-                  <t-code
-                    slot="code"
-                    language="html"
-                    file="*.html"
-                    accessor="ex.date.basic"
-                    flush
-                  ></t-code>
-                </l-templated>
+                <div data-example="date.basic"></div>
               </l-col>
               <l-col xs="12">
-                <l-templated use="example-block">
-                  <f-textarea name="test-textarea">Hello world</f-textarea>
-                  <t-code
-                    slot="code"
-                    language="html"
-                    file="*.html"
-                    accessor="ex.textarea.basic"
-                    flush
-                  ></t-code>
-                </l-templated>
+                <div data-example="textarea.basic"></div>
               </l-col>
               <l-col xs="12">
-                <l-templated use="example-block">
-                  <f-input name="test">Hello world</f-input>
-                  <t-code
-                    slot="code"
-                    language="html"
-                    file="*.html"
-                    accessor="ex.text.basic"
-                    flush
-                  ></t-code>
-                </l-templated>
+                <div data-example="text.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="multiselect.basic"></div>
               </l-col>
             </l-row>
           </l-container>
@@ -183,5 +158,26 @@
         </t-localised>
       </t-link>
     </o-offcanvas>
+    <script>
+      document.querySelectorAll("div[data-example]").forEach((t) => {
+        const accessor_statement = t.getAttribute("data-example");
+        const accessor = new Function(
+          "data",
+          "return data." + accessor_statement
+        );
+        const data = accessor(window.CODE_EXAMPLES);
+        t.innerHTML = `
+          <l-templated use="example-block">
+            ${data.toString()}
+            <t-code
+              slot="code"
+              language="html"
+              file="*.html"
+              accessor="ex.${accessor_statement}.toString()"
+              flush
+            ></t-code>
+          </l-templated>`;
+      });
+    </script>
   </body>
 </html>
