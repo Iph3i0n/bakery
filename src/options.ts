@@ -3,7 +3,6 @@ export default function options() {
     text: string;
     value: string;
     disabled: boolean;
-    default: boolean;
   }> = [];
 
   const on_change = (e: Event) => {
@@ -17,7 +16,6 @@ export default function options() {
         text: node.textContent ?? "",
         value: node.getAttribute("value") ?? "",
         disabled: node.getAttribute("disabled") !== null,
-        default: node.getAttribute("default") !== null,
       });
 
     options = result;

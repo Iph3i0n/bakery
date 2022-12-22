@@ -3,7 +3,14 @@ window.e = function (tag, attr, ...children) {
     toString(level = 0) {
       const prefix = Array.apply(null, Array(level * 2)).join(" ");
       let attr_string = Object.keys(attr)
-        .map((a) => a + '="' + attr[a] + '"')
+        .map((a) =>
+          typeof attr[a] === "string"
+            ? a + '="' + attr[a] + '"'
+            : attr[a]
+            ? a
+            : ""
+        )
+        .filter((r) => r)
         .join(" ");
       if (attr_string) attr_string = " " + attr_string;
       const start = `<${tag}${attr_string}>`;

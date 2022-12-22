@@ -85,7 +85,7 @@
     cursor: pointer;
   }
 
-  .option {
+  .item {
     display: flex;
     align-items: center;
     theme.padding("small_block");
@@ -94,7 +94,18 @@
     user-select: none;
   }
 
-  .toggle t-icon {
+  .item .toggle {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    theme.border("body");
+    margin-right: 1rem;
+    theme.colour("surface");
+    transform: scale(1);
+    theme.transition("fast", "border-color", "transform");
+  }
+
+  .item .toggle t-icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -105,15 +116,18 @@
     theme.animation("scale-out", "fast");
   }
 
-  .option .toggle {
-    position: relative;
-    width: 1rem;
-    height: 1rem;
-    theme.border("body");
-    margin-right: 1rem;
-    theme.colour("surface");
-    transform: scale(1);
-    theme.transition("fast", "border-color", "transform");
+  .item.selected {
+    theme.colour("primary");
+  }
+
+  .item.selected .toggle t-icon {
+    opacity: 1;
+    theme.animation("scale-in", "fast");
+  }
+
+  .item.disabled {
+    opacity: 0.5;
+    cursor: default;
   }
 
   .option:hover {
@@ -131,15 +145,6 @@
   .option:active .toggle {
     transform: scale(0.9);
     theme.animation("scale-motion", "fast");
-  }
-
-  .option.selected {
-    theme.colour("primary");
-  }
-
-  .option.selected t-icon {
-    opacity: 1;
-    theme.animation("scale-in", "fast");
   }
 
   .option.selected:hover {
@@ -162,15 +167,27 @@
 
   <div class="content scrollable">
     <s:for subject=":items.data" key="option">
-      <div
-        class=":c('option', ['selected', self.value?.includes(option.value)])"
-        on:click="toggle(option.value)"
-      >
-        <span class="toggle">
-          <t-icon name="check" colour="surface" text></t-icon>
-        </span>
-        <s:text use=":option.text"></s:text>
-      </div>
+      <s:if check=":!option.disabled">
+        <div
+          class=":c('item', 'option', ['selected', self.value?.includes(option.value)])"
+          on:click="toggle(option.value)"
+        >
+          <span class="toggle">
+            <t-icon name="check" colour="surface" text></t-icon>
+          </span>
+          <s:text use=":option.text"></s:text>
+        </div>
+      </s:if>
+      <s:if check=":option.disabled">
+        <div
+          class=":c('item', 'disabled', ['selected', self.value?.includes(option.value)])"
+        >
+          <span class="toggle">
+            <t-icon name="check" colour="surface" text></t-icon>
+          </span>
+          <s:text use=":option.text"></s:text>
+        </div>
+      </s:if>
     </s:for>
   </div>
 </div>
