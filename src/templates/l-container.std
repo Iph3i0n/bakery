@@ -7,7 +7,6 @@
   :host {
     display: block;
     margin: 0 auto;
-    container-type: inline-size;
   }
 
   @if ":!self.props.flush" {

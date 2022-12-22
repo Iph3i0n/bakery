@@ -1,6 +1,4 @@
 <script>
-  import * as theme from "../theme.ts";
-
   export const name = "d-card";
   export const props = ["colour"];
   export const aria = { Role: "section" };
@@ -11,13 +9,34 @@
 </script>
 
 <style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+
   :host {
     display: block;
     theme.colour(get_colour());
     theme.shadow("body");
-    theme.padding("block");
     theme.border("body");
+  }
+
+  .title {
+    border-top-left-radius: ":spec.borders.body.radius";
+    border-top-right-radius: ":spec.borders.body.radius";
+    theme.padding("block");
+    theme.colour("body");
+    theme.border("body", "contrast", "bottom");
+    theme.text("h6", "no-margin");
+  }
+
+  .body {
+    theme.padding("block");
   }
 </style>
 
-<slot></slot>
+<div class="title">
+  <slot name="title"></slot>
+</div>
+
+<div class="body">
+  <slot></slot>
+</div>

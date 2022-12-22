@@ -22,7 +22,6 @@
 
   @use ":bg = self.props.bg ?? 'primary'" {
     :host {
-      container-type: inline-size;
       display: block;
       theme.border("body", undefined, "bottom");
       theme.margin("block", "bottom");
@@ -163,6 +162,7 @@
         color: inherit;
         border-top: none;
         background-color: transparent;
+        flex: 1;
       }
 
       .main-content ::slotted(a:hover),

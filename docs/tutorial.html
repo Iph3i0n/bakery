@@ -114,6 +114,137 @@
             ),
           },
         },
+        display: {
+          card: {
+            basic: e(
+              "d-card",
+              {},
+              e("span", { slot: "title" }, "Card Title"),
+              e("t-paragraph", {}, "Card body")
+            ),
+          },
+          listgroup: {
+            basic: e(
+              "d-listgroup",
+              {},
+              e("span", {}, "Item One"),
+              e("a", { href: "https://www.google.com/" }, "Item Two"),
+              e("span", {}, "Item Three")
+            ),
+          },
+          panel: {
+            basic: e(
+              "d-panel",
+              { colour: "body" },
+              e("t-paragraph", {}, "Hello world")
+            ),
+          },
+        },
+        layout: {
+          grid: {
+            basic: e(
+              "l-container",
+              {},
+              e(
+                "l-row",
+                {},
+                e(
+                  "l-col",
+                  { xs: "12", md: "6" },
+                  e("t-paragraph", {}, "Hello world 1")
+                ),
+                e(
+                  "l-col",
+                  { xs: "12", md: "6" },
+                  e("t-paragraph", {}, "Hello world 2")
+                )
+              )
+            ),
+          },
+          header: {
+            basic: e(
+              "l-header",
+              { logo: "/img/company-logo.png", "logo-alt": "Bakery" },
+              e("a", { href: "https://www.google.com/" }, "To Google"),
+              e(
+                "form",
+                { slot: "right", onsubmit: "event.preventDefault()" },
+                e("f-input", { name: "search" }, "Search"),
+                e("f-button", { type: "submit" }, "Submit")
+              )
+            ),
+          },
+        },
+        overlay: {
+          modal: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "test-modal-trigger" },
+                "Open the modal"
+              ),
+              e(
+                "o-modal",
+                { trigger: "#test-modal-trigger", size: "medium" },
+                e("span", { slot: "title" }, "Modal Title"),
+                e("t-paragraph", {}, "Modal Content")
+              )
+            ),
+          },
+          offcanvas: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "test-offcanvas-trigger" },
+                "Open the offcanvas"
+              ),
+              e(
+                "o-offcanvas",
+                { trigger: "#test-offcanvas-trigger", size: "medium" },
+                e("span", { slot: "title" }, "Offcanvas Title"),
+                e("t-paragraph", {}, "Offcanvas Content")
+              )
+            ),
+          },
+        },
+        text: {
+          heading: {
+            basic: e("t-heading", { level: "h1" }, "Test Heading"),
+          },
+          icon: {
+            basic: e("t-icon", {
+              name: "calendar",
+              size: "body",
+              colour: "primary",
+            }),
+          },
+          link: {
+            basic: e(
+              "t-link",
+              { href: "https://www.google.com/", block: true },
+              "Test Link"
+            ),
+          },
+          localised: {
+            basic: e(
+              "t-paragraph",
+              {},
+              e(
+                "t-localised",
+                {},
+                "Default Text",
+                e("span", { slot: "en-GB" }, "British Text")
+              )
+            ),
+          },
+          paragraph: {
+            basic: e("t-paragraph", {}, "Hello World"),
+          },
+        },
       };
 
       window.TEST_TEXT = {
@@ -135,63 +266,90 @@
     </template>
     <l-templated use="/layout.template.html" remote>
       <u-global var="CODE_EXAMPLES" key="ex">
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="install" level="h2">
+                <t-localised>Installation</t-localised>
+              </t-heading>
+              <t-paragraph>
+                <t-localised>
+                  This project can be loaded in a couple of ways
+                </t-localised>
+              </t-paragraph>
+              <t-heading level="h3">
+                <t-localised>CDN (Recommended)</t-localised>
+              </t-heading>
+              <t-code
+                language="html"
+                file="*.html"
+                accessor="ex.cdn_install.toString()"
+              ></t-code>
+              <t-paragraph>
+                <t-localised>
+                  This will allow you to use all components with ease in any
+                  project if you include this in the head of the HTML. It can be
+                  included after the body but this can result in flashes on
+                  load, as unknown components will be rendered as if they were
+                </t-localised>
+              </t-paragraph>
+            </l-col>
+          </l-row>
+        </l-container>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="data" level="h2">
+                <t-localised>Data Fetching</t-localised>
+              </t-heading>
+              <t-paragraph>
+                Page data can be collected using a few elements in the u-
+                namespace. They are designed for fetching data such as UI text
+                and should not be thought of as a way to handle complex
+                application data. For this use case, consider a framework such
+                as React, VueJS, Angular, or many more. This library will work
+                with all of them.
+              </t-paragraph>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="fetch.external.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="fetch.external.locale"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="fetch.global.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="fetch.each.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="fetch.if.basic"></div>
+            </l-col>
+          </l-row>
+        </l-container>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="layout" level="h2">
+                <t-localised>Layout</t-localised>
+              </t-heading>
+              <t-paragraph>
+                There are a variety of layout components. They are under the l-
+                namespace.
+              </t-paragraph>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="layout.grid.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="layout.header.basic"></div>
+            </l-col>
+          </l-row>
+        </l-container>
         <form onsubmit="event.preventDefault()">
           <l-container>
             <l-row>
-              <l-col xs="12">
-                <t-heading id="install" level="h2">
-                  <t-localised>Installation</t-localised>
-                </t-heading>
-                <t-paragraph>
-                  <t-localised>
-                    This project can be loaded in a couple of ways
-                  </t-localised>
-                </t-paragraph>
-                <t-heading level="h3">
-                  <t-localised>CDN (Recommended)</t-localised>
-                </t-heading>
-                <t-code
-                  language="html"
-                  file="*.html"
-                  accessor="ex.cdn_install.toString()"
-                ></t-code>
-                <t-paragraph>
-                  <t-localised>
-                    This will allow you to use all components with ease in any
-                    project if you include this in the head of the HTML. It can
-                    be included after the body but this can result in flashes on
-                    load, as unknown components will be rendered as if they were
-                  </t-localised>
-                </t-paragraph>
-              </l-col>
-              <l-col xs="12">
-                <t-heading id="data" level="h2">
-                  <t-localised>Data Fetching</t-localised>
-                </t-heading>
-                <t-paragraph>
-                  Page data can be collected using a few elements in the u-
-                  namespace. They are designed for fetching data such as UI text
-                  and should not be thought of as a way to handle complex
-                  application data. For this use case, consider a framework such
-                  as React, VueJS, Angular, or many more. This library will work
-                  with all of them.
-                </t-paragraph>
-              </l-col>
-              <l-col xs="12">
-                <div data-example="fetch.external.basic"></div>
-              </l-col>
-              <l-col xs="12">
-                <div data-example="fetch.external.locale"></div>
-              </l-col>
-              <l-col xs="12">
-                <div data-example="fetch.global.basic"></div>
-              </l-col>
-              <l-col xs="12">
-                <div data-example="fetch.each.basic"></div>
-              </l-col>
-              <l-col xs="12">
-                <div data-example="fetch.if.basic"></div>
-              </l-col>
               <l-col xs="12">
                 <t-heading id="forms" level="h2">
                   <t-localised>Forms</t-localised>
@@ -234,6 +392,77 @@
             </l-row>
           </l-container>
         </form>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="display" level="h2">
+                <t-localised>Display</t-localised>
+              </t-heading>
+              <t-paragraph>
+                There are a variety of display components. These are designed to
+                impact the visual format of the page but not the layout. They
+                are under the d- namespace.
+              </t-paragraph>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="display.card.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="display.listgroup.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="display.panel.basic"></div>
+            </l-col>
+          </l-row>
+        </l-container>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="overlay" level="h2">
+                <t-localised>Overlay</t-localised>
+              </t-heading>
+              <t-paragraph>
+                Overlay components are designed to provide an experience for the
+                user to interact with information that is separate to the main
+                body of the page. They are found under the o- namespace.
+              </t-paragraph>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="overlay.modal.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="overlay.offcanvas.basic"></div>
+            </l-col>
+          </l-row>
+        </l-container>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading id="text" level="h2">
+                <t-localised>Text</t-localised>
+              </t-heading>
+              <t-paragraph>
+                Components to display text for the user to consume are under the
+                t- namespace.
+              </t-paragraph>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.heading.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.icon.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.link.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.localised.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.paragraph.basic"></div>
+            </l-col>
+          </l-row>
+        </l-container>
       </u-global>
     </l-templated>
     <div style="position: fixed; bottom: 1rem; right: 1rem">
@@ -257,14 +486,24 @@
           <span slot="en-GB">Fetching Data</span>
         </t-localised>
       </t-link>
-      <t-link href="#grid" block>
+      <t-link href="#layout" block>
         <t-localised default="en-GB">
-          <span slot="en-GB">The Grid</span>
+          <span slot="en-GB">Layout</span>
         </t-localised>
       </t-link>
       <t-link href="#forms" block>
         <t-localised default="en-GB">
           <span slot="en-GB">Forms</span>
+        </t-localised>
+      </t-link>
+      <t-link href="#display" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">Display</span>
+        </t-localised>
+      </t-link>
+      <t-link href="#text" block>
+        <t-localised default="en-GB">
+          <span slot="en-GB">Text</span>
         </t-localised>
       </t-link>
     </o-offcanvas>

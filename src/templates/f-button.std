@@ -35,9 +35,10 @@
 <style>
   @use ":c = self.props.colour ?? 'primary'" {
     :host {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       theme.colour(c);
-      theme.padding("block");
+      theme.padding("small_block");
       theme.border("body");
       theme.text("body", "no-margin");
       -webkit-user-select: none;
