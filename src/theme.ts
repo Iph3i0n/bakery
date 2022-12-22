@@ -45,6 +45,11 @@ export function textcolour(variant: string, shift = 1, alpha = 1) {
   return [...background.map((b) => ["color", ...b])];
 }
 
+export function backgroundcolour(variant: string, shift = 1, alpha = 1) {
+  const { foreground } = get_colour(variant, shift, alpha);
+  return [...foreground.map((b) => ["background-color", ...b])];
+}
+
 export function shadow(variant: string) {
   const target = spec.shadows[variant];
   return [

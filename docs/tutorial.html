@@ -54,6 +54,15 @@
         date: {
           basic: e("f-date", { name: "test-date" }, "Hello World"),
         },
+        toggle: {
+          basic: e(
+            "f-toggle",
+            { name: "test-toggle" },
+            "Which do you pick?",
+            e("span", { slot: "off" }, "Option One"),
+            e("span", { slot: "on" }, "Option Two")
+          ),
+        },
       };
     </script>
     <script src="./dist/bundle.min.js"></script>
@@ -129,6 +138,9 @@
               </l-col>
               <l-col xs="12">
                 <div data-example="text.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="toggle.basic"></div>
               </l-col>
               <l-col xs="12">
                 <div data-example="multiselect.basic"></div>

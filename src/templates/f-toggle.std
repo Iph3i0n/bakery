@@ -1,0 +1,118 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import options from "../options.ts";
+
+  export const name = "f-toggle";
+  export const props = ["default", "disabled", "name", "required"];
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "select" };
+
+  const items = options();
+
+  const slot = slotted();
+
+  self.addEventListener("click", () => {
+    self.value = self.value === "on" ? "" : "on";
+  });
+</script>
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+  @insert ../styles/input.pss;
+
+  .label {
+    display: flex;
+    theme.text("body");
+    cursor: default;
+    align-items: center;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  .question {
+    white-space: nowrap;
+    theme.padding("small_block");
+  }
+
+  .options {
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+  }
+
+  .option {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    theme.padding("small_block");
+    cursor: pointer;
+    theme.colour("body");
+    theme.transition("fast", "color", "background-color", "top");
+    theme.border("body", "contrast", "left");
+  }
+
+  .option:hover {
+    theme.colour("body", 0.9);
+  }
+
+  .option:active {
+    theme.colour("body", 0.7);
+  }
+
+  .option:last-child {
+    top: -100%;
+    theme.colour("primary");
+  }
+
+  .option:last-child:hover {
+    theme.colour("primary", 0.9);
+  }
+
+  .option:last-child:active {
+    theme.colour("primary", 0.7);
+  }
+
+  .option.active {
+    top: 0;
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class="question">
+    <slot></slot>
+  </div>
+
+  <div class="options">
+    <div class=":c('option', ['active', self.value !== 'on'])">
+      <slot name="off"></slot>
+    </div>
+    <div class=":c('option', ['active', self.value === 'on'])">
+      <slot name="on"></slot>
+    </div>
+  </div>
+</div>
+
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>
