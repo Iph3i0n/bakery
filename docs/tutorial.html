@@ -9,60 +9,115 @@
         cdn_install: e("script", {
           src: "https://cdn.jsdelivr.net/npm/@paulpopat/bakery",
         }),
-        text: {
-          basic: e("f-input", { name: "test" }, "Hello World"),
+        form: {
+          text: {
+            basic: e("f-input", { name: "test" }, "Hello World"),
+          },
+          select: {
+            basic: e(
+              "f-select",
+              { name: "test-select" },
+              e("option", { value: "value-1" }, "First Value"),
+              e("option", { value: "value-2" }, "Second Value"),
+              e("option", { value: "value-3" }, "Third Value"),
+              e("option", { value: "value-4" }, "Fourth Value"),
+              e("option", { value: "value-5" }, "Fifth Value"),
+              e("span", { slot: "label" }, "Hello world")
+            ),
+          },
+          multiselect: {
+            basic: e(
+              "f-multiselect",
+              { name: "test-multiselect" },
+              e("option", { value: "value-1" }, "First Value"),
+              e("option", { value: "value-2" }, "Second Value"),
+              e("option", { value: "value-3" }, "Third Value"),
+              e("option", { value: "value-4" }, "Fourth Value"),
+              e("option", { value: "value-5" }, "Fifth Value"),
+              e("span", { slot: "label" }, "Hello world")
+            ),
+          },
+          singleselect: {
+            basic: e(
+              "f-singleselect",
+              { name: "test-singleselect" },
+              e("option", { value: "value-1" }, "First Value"),
+              e("option", { value: "value-2" }, "Second Value"),
+              e("option", { value: "value-3" }, "Third Value"),
+              e("option", { value: "value-4" }, "Fourth Value"),
+              e("option", { value: "value-5" }, "Fifth Value"),
+              e("span", { slot: "label" }, "Hello world")
+            ),
+          },
+          textarea: {
+            basic: e("f-textarea", { name: "test-textarea" }, "Hello World"),
+          },
+          date: {
+            basic: e("f-date", { name: "test-date" }, "Hello World"),
+          },
+          toggle: {
+            basic: e(
+              "f-toggle",
+              { name: "test-toggle" },
+              "Which do you pick?",
+              e("span", { slot: "off" }, "Option One"),
+              e("span", { slot: "on" }, "Option Two")
+            ),
+          },
         },
-        select: {
-          basic: e(
-            "f-select",
-            { name: "test-select" },
-            e("option", { value: "value-1" }, "First Value"),
-            e("option", { value: "value-2" }, "Second Value"),
-            e("option", { value: "value-3" }, "Third Value"),
-            e("option", { value: "value-4" }, "Fourth Value"),
-            e("option", { value: "value-5" }, "Fifth Value"),
-            e("span", { slot: "label" }, "Hello world")
-          ),
+        fetch: {
+          external: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+            ),
+            locale: e(
+              "u-fetch",
+              {
+                url: "/examples/{locale}/locale-example.json",
+                key: "data",
+                fallback: "/examples/fetch-example.json",
+              },
+              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+            ),
+          },
+          global: {
+            basic: e(
+              "u-global",
+              { var: "TEST_TEXT", key: "text" },
+              e("t-paragraph", {}, e("u-text", { use: "text.title" }))
+            ),
+          },
+          each: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e("u-each", { subject: "data.repeated", key: "text" }),
+              e("t-paragraph", {}, e("u-text", { use: "text" }))
+            ),
+          },
+          if: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e(
+                "u-if",
+                { check: "data.should_show" },
+                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              ),
+              e(
+                "u-if",
+                { check: "data.should_show_false" },
+                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              )
+            ),
+          },
         },
-        multiselect: {
-          basic: e(
-            "f-multiselect",
-            { name: "test-multiselect" },
-            e("option", { value: "value-1" }, "First Value"),
-            e("option", { value: "value-2" }, "Second Value"),
-            e("option", { value: "value-3" }, "Third Value"),
-            e("option", { value: "value-4" }, "Fourth Value"),
-            e("option", { value: "value-5" }, "Fifth Value"),
-            e("span", { slot: "label" }, "Hello world")
-          ),
-        },
-        singleselect: {
-          basic: e(
-            "f-singleselect",
-            { name: "test-singleselect" },
-            e("option", { value: "value-1" }, "First Value"),
-            e("option", { value: "value-2" }, "Second Value"),
-            e("option", { value: "value-3" }, "Third Value"),
-            e("option", { value: "value-4" }, "Fourth Value"),
-            e("option", { value: "value-5" }, "Fifth Value"),
-            e("span", { slot: "label" }, "Hello world")
-          ),
-        },
-        textarea: {
-          basic: e("f-textarea", { name: "test-textarea" }, "Hello World"),
-        },
-        date: {
-          basic: e("f-date", { name: "test-date" }, "Hello World"),
-        },
-        toggle: {
-          basic: e(
-            "f-toggle",
-            { name: "test-toggle" },
-            "Which do you pick?",
-            e("span", { slot: "off" }, "Option One"),
-            e("span", { slot: "on" }, "Option Two")
-          ),
-        },
+      };
+
+      window.TEST_TEXT = {
+        title: "From Global",
       };
     </script>
     <script src="./dist/bundle.min.js"></script>
@@ -110,6 +165,34 @@
                 </t-paragraph>
               </l-col>
               <l-col xs="12">
+                <t-heading id="data" level="h2">
+                  <t-localised>Data Fetching</t-localised>
+                </t-heading>
+                <t-paragraph>
+                  Page data can be collected using a few elements in the u-
+                  namespace. They are designed for fetching data such as UI text
+                  and should not be thought of as a way to handle complex
+                  application data. For this use case, consider a framework such
+                  as React, VueJS, Angular, or many more. This library will work
+                  with all of them.
+                </t-paragraph>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="fetch.external.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="fetch.external.locale"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="fetch.global.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="fetch.each.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="fetch.if.basic"></div>
+              </l-col>
+              <l-col xs="12">
                 <t-heading id="forms" level="h2">
                   <t-localised>Forms</t-localised>
                 </t-heading>
@@ -128,25 +211,25 @@
                 </t-paragraph>
               </l-col>
               <l-col xs="12">
-                <div data-example="select.basic"></div>
+                <div data-example="form.select.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="date.basic"></div>
+                <div data-example="form.date.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="textarea.basic"></div>
+                <div data-example="form.textarea.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="text.basic"></div>
+                <div data-example="form.text.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="toggle.basic"></div>
+                <div data-example="form.toggle.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="multiselect.basic"></div>
+                <div data-example="form.multiselect.basic"></div>
               </l-col>
               <l-col xs="12">
-                <div data-example="singleselect.basic"></div>
+                <div data-example="form.singleselect.basic"></div>
               </l-col>
             </l-row>
           </l-container>

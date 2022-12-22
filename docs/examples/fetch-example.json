@@ -1,0 +1,6 @@
+{
+  "example_text": "Hello world",
+  "repeated": ["Simple", "Examples"],
+  "should_show": true,
+  "should_show_false": false
+}
