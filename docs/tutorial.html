@@ -36,6 +36,18 @@
             e("span", { slot: "label" }, "Hello world")
           ),
         },
+        singleselect: {
+          basic: e(
+            "f-singleselect",
+            { name: "test-singleselect" },
+            e("option", { value: "value-1" }, "First Value"),
+            e("option", { value: "value-2" }, "Second Value"),
+            e("option", { value: "value-3" }, "Third Value"),
+            e("option", { value: "value-4" }, "Fourth Value"),
+            e("option", { value: "value-5" }, "Fifth Value"),
+            e("span", { slot: "label" }, "Hello world")
+          ),
+        },
         textarea: {
           basic: e("f-textarea", { name: "test-textarea" }, "Hello World"),
         },
@@ -120,6 +132,9 @@
               </l-col>
               <l-col xs="12">
                 <div data-example="multiselect.basic"></div>
+              </l-col>
+              <l-col xs="12">
+                <div data-example="singleselect.basic"></div>
               </l-col>
             </l-row>
           </l-container>

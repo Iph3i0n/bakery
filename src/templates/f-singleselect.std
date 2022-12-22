@@ -4,7 +4,7 @@
   import slotted from "../toggleable-slot.ts";
   import options from "../options.ts";
 
-  export const name = "f-multiselect";
+  export const name = "f-singleselect";
   export const props = ["default", "disabled", "name", "required"];
   export const base = FormElement;
   export const form = true;
@@ -16,25 +16,22 @@
 
   function toggle(option) {
     return () => {
-      if (self.value?.includes(option.value))
-        self.value = (self.value?.split(",") ?? [])
-          .filter((v) => v !== option.value)
-          .join(",");
-      else
-        self.value = [...(self.value?.split(",") ?? []), option.value].join(
-          ","
-        );
+      self.value = option.value;
     };
   }
 
   function active(option) {
-    return self.value?.includes(option.value);
+    return self.value === option.value;
   }
 </script>
 <style>
   @require ../theme.ts as theme;
   @require ../spec.ts as spec;
   @insert ../styles/checklist-select.pss;
+
+  .item .toggle {
+    border-radius: 1em !important;
+  }
 </style>
 
 <div style="display: none">
@@ -54,7 +51,7 @@
           on:click="toggle(option)"
         >
           <span class="toggle">
-            <t-icon name="check" colour="surface" text></t-icon>
+            <t-icon name="radio-button" colour="primary" fill></t-icon>
           </span>
           <s:text use=":option.text"></s:text>
         </div>
@@ -62,7 +59,7 @@
       <s:if check=":option.disabled">
         <div class=":c('item', 'disabled', ['selected', active(option)])">
           <span class="toggle">
-            <t-icon name="check" colour="surface" text></t-icon>
+            <t-icon name="radio-button" colour="primary" fill></t-icon>
           </span>
           <s:text use=":option.text"></s:text>
         </div>

@@ -1,0 +1,130 @@
+
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+  @insert ./input.pss;
+  @insert ./custom-scrollbar.pss;
+
+.label {
+  overflow: hidden;
+}
+
+.label-text {
+  display: block;
+  theme.padding("small_block");
+  theme.colour("body");
+  theme.text("body", "no-margin");
+  theme.border("body", "contrast", "bottom");
+  border-top-left-radius: ":spec.borders.body.radius";
+  border-top-right-radius: ":spec.borders.body.radius";
+}
+
+.content {
+  max-height: 12rem;
+  theme.text("body", "no-margin");
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  theme.padding("small_block");
+  theme.colour("surface");
+  theme.transition("fast", "color", "background-color");
+  user-select: none;
+}
+
+.item.selected {
+  theme.colour("primary");
+}
+
+.item.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.option:hover {
+  theme.colour("surface", 0.9);
+}
+
+.option:active {
+  theme.colour("surface", 0.7);
+}
+
+.option:hover .toggle {
+  theme.border("body", "contrast");
+}
+
+.option:active .toggle {
+  transform: scale(0.9);
+  theme.animation("scale-motion", "fast");
+}
+
+.option.selected:hover {
+  theme.colour("primary", 0.9);
+}
+
+.option.selected:active {
+  theme.colour("primary", 0.7);
+}
+
+@keyframes scale-motion {
+  0% {
+    transform: scale(0.9);
+  }
+
+  50% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.4) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes scale-out {
+  0% {
+    transform: scale(0.4) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.item .toggle {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  theme.border("body");
+  margin-right: 1rem;
+  theme.colour("surface");
+  transform: scale(1);
+  theme.transition("fast", "border-color", "transform");
+}
+
+.item .toggle t-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  theme.transition("fast", "opacity");
+  theme.animation("scale-out", "fast");
+}
+
+.item.selected .toggle t-icon {
+  opacity: 1;
+  theme.animation("scale-in", "fast");
+}
