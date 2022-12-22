@@ -18,6 +18,7 @@
   @if ":self.props.bordered" {
     :host {
       theme.border("body");
+      theme.shadow("body");
     }
   }
 </style>
