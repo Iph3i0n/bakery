@@ -19,6 +19,7 @@
     "./src/templates/l-col.std",
     "./src/templates/l-templated.std",
     "./src/templates/l-header.std",
+    "./src/templates/l-accordion.std",
 
     "./src/templates/o-modal.std",
     "./src/templates/o-offcanvas.std",

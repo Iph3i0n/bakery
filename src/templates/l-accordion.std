@@ -1,0 +1,96 @@
+<script>
+  import { ShouldRender, LoadedEvent, CreateRef } from "../deps.ts";
+
+  export const name = "l-accordion";
+  export const props = ["open", "independent"];
+
+  class AccordionOpenEvent extends Event {
+    #id;
+
+    constructor(id) {
+      super("accordion-opened", { bubbles: true });
+      this.#id = id;
+    }
+
+    get Id() {
+      return this.#id;
+    }
+  }
+
+  const id = crypto.randomUUID();
+  const title = CreateRef();
+  const body = CreateRef();
+  let open = self.props.open ?? false;
+
+  if (open) self.dispatchEvent(new AccordionOpenEvent(id));
+
+  self.parentElement.addEventListener("accordion-opened", (e) => {
+    if (!self.props.independent && e.Id !== id) open = false;
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  function toggle() {
+    open = !open;
+    if (open) self.dispatchEvent(new AccordionOpenEvent(id));
+  }
+
+  const title_height = () => title.current?.clientHeight ?? 0;
+  const body_height = () => body.current?.clientHeight ?? 0;
+
+  const height = () => {
+    return open ? title_height() + body_height() : title_height();
+  };
+
+  self.addEventListener(LoadedEvent.Key, (e) => {
+    const ob = new ResizeObserver(() => self.dispatchEvent(new ShouldRender()));
+    ob.observe(title.current);
+    ob.observe(body.current);
+  });
+</script>
+<style>
+  @require ../theme.ts as theme;
+  :host {
+    display: block;
+    theme.border("body");
+    overflow: hidden;
+    theme.margin("block", "top", "bottom");
+    height: ":height() + 'px'";
+    theme.transition("fast", "height");
+  }
+
+  .title {
+    theme.padding("block");
+    theme.colour("body");
+    theme.border("body", "contrast", "bottom");
+    theme.text("h6", "no-margin");
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .title:hover {
+    theme.colour("body", 0.9);
+  }
+
+  .body {
+    theme.padding("block");
+    theme.colour("surface");
+  }
+
+  t-icon {
+    transform: ":open ? 'rotate(180deg)' : 'rotate(0deg)'";
+    theme.transition("fast", "transform");
+  }
+</style>
+
+<div class="title" s:ref="title" on:click="toggle">
+  <slot name="title"></slot>
+
+  <t-icon name="arrow-down-s" colour="body" size="h6" text></t-icon>
+</div>
+
+<div class="body" s:ref="body">
+  <slot></slot>
+</div>
