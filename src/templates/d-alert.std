@@ -1,0 +1,41 @@
+<script>
+  export const name = "d-alert";
+  export const props = ["colour", "closeable"];
+
+  function close() {
+    self.remove();
+  }
+</script>
+<style>
+  @require ../theme.ts as theme;
+  @require ../spec.ts as spec;
+
+  :host {
+    position: relative;
+    display: flex;
+    theme.colour(self.props.colour ?? "warning", 1.6);
+    theme.border("body", self.props.colour);
+    theme.padding("block");
+    theme.text("body_large");
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .close-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<slot></slot>
+<s:if check=":self.props.closeable">
+  <div class="close-button" on:click="close">
+    <t-icon
+      name="close"
+      colour=":self.props.colour ?? 'warning'"
+      size="body_large"
+      text
+    ></t-icon>
+  </div>
+</s:if>

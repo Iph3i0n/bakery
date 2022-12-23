@@ -4,6 +4,7 @@
     "./src/templates/d-panel.std",
     "./src/templates/d-loading.std",
     "./src/templates/d-listgroup.std",
+    "./src/templates/d-alert.std",
 
     "./src/templates/f-button.std",
     "./src/templates/f-input.std",

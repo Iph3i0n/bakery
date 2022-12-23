@@ -139,6 +139,9 @@
               e("t-paragraph", {}, "Hello world")
             ),
           },
+          alert: {
+            basic: e("d-alert", { colour: "warning" }, "Hello world"),
+          },
         },
         layout: {
           grid: {
@@ -439,6 +442,9 @@
             </l-col>
             <l-col xs="12">
               <div data-example="display.panel.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="display.alert.basic"></div>
             </l-col>
           </l-row>
         </l-container>
