@@ -10,18 +10,19 @@
     return l.length;
   };
 
-  const raw_code = self.props.accessor
-    ? new Receiver(self, self.props.accessor)
-    : {
-        get value() {
-          return self.innerHTML;
-        },
-      };
+  const raw_code = () =>
+    self.props.accessor
+      ? new Receiver(self, self.props.accessor)
+      : {
+          get data() {
+            return self.innerHTML;
+          },
+        };
 
   const code = () => {
     const code =
-      raw_code.data
-        ?.replace(/&gt;/gm, ">")
+      raw_code()
+        .data?.replace(/&gt;/gm, ">")
         .replace(/&lt;/gm, "<")
         .replace(/&quot;/gm, '"') ?? "";
     let level = -1;
@@ -154,7 +155,9 @@
   }
 </style>
 
-<div class="file-name">
-  <s:text use=":self.props.file"></s:text>
-</div>
+<s:if check=":self.props.file">
+  <div class="file-name">
+    <s:text use=":self.props.file"></s:text>
+  </div>
+</s:if>
 <div id="container" class="scrollable"></div>

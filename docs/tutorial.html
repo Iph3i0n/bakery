@@ -271,6 +271,13 @@
           paragraph: {
             basic: e("t-paragraph", {}, "Hello World"),
           },
+          code: {
+            basic: e(
+              "t-code",
+              { language: "javascript" },
+              "const test = () => 'hello world';"
+            ),
+          },
         },
       };
 
@@ -493,6 +500,9 @@
             </l-col>
             <l-col xs="12">
               <div data-example="text.paragraph.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.code.basic"></div>
             </l-col>
           </l-row>
         </l-container>
