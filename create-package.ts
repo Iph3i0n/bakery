@@ -1,4 +1,4 @@
-const tag = Deno.env.get("TAG_NAME");
+const tag = Deno.env.get("GITHUB_REF");
 
 if (!tag?.match(/^[0-9]+\.[0-9]+\.[0-9]+$/gm))
   throw new Error("Version tags must match 0.0.0 but recieved " + tag);
@@ -7,7 +7,7 @@ await Deno.writeTextFile(
   "./dist/package.json",
   JSON.stringify({
     name: "@paulpopat/bakery",
-    version: "0.0.1",
+    version: tag,
     description: "Web components for a modern PWA",
     main: "bundle.min.js",
     scripts: {},
