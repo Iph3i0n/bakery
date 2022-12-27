@@ -160,7 +160,7 @@ window.CODE_EXAMPLES = {
     header: {
       basic: e(
         "l-header",
-        { logo: "/img/company-logo.png", "logo-alt": "Bakery" },
+        { logo: "/img/logo.png", "logo-alt": "Bakery" },
         e("a", { href: "https://www.google.com/" }, "To Google"),
         e(
           "form",
