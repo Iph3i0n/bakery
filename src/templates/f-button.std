@@ -35,6 +35,7 @@
 <style>
   @use ":c = self.props.colour ?? 'primary'" {
     :host {
+      position: relative;
       display: inline-flex;
       align-items: center;
       theme.colour(c);

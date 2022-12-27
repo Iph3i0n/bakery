@@ -278,6 +278,14 @@
               "const test = () => 'hello world';"
             ),
           },
+          badge: {
+            basic: e(
+              "f-button",
+              { type: "button" },
+              "Messages",
+              e("t-badge", {}, "99+")
+            ),
+          },
         },
       };
 
@@ -503,6 +511,9 @@
             </l-col>
             <l-col xs="12">
               <div data-example="text.code.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="text.badge.basic"></div>
             </l-col>
           </l-row>
         </l-container>

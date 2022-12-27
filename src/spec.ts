@@ -29,7 +29,7 @@ export const spacings: Spacings = {
   block: ["0.75rem", "1rem", "0.75rem", "1rem"],
   small_block: ["0.5rem", "0.75rem", "0.5rem", "0.75rem"],
   input: ["1rem", "0.75rem", "0.25rem", "0.75rem"],
-  badge: ["0.15rem", "0.15rem", "0.15rem", "0.15rem"],
+  badge: ["0.1rem", "0.25rem", "0rem", "0.25rem"],
   paragraph: ["0.5rem", "0", "0.5rem", "0"],
   heading: ["1rem", "0", "1rem", "0"],
   display_heading: ["2rem", "0", "2rem", "0"],

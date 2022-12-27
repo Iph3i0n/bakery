@@ -31,6 +31,7 @@
     "./src/templates/t-link.std",
     "./src/templates/t-code.std",
     "./src/templates/t-localised.std",
+    "./src/templates/t-badge.std",
 
     "./src/templates/u-fetch.std",
     "./src/templates/u-text.std",

@@ -10,9 +10,13 @@
     return l.length;
   };
 
+  let receiver;
   const raw_code = () =>
     self.props.accessor
-      ? new Receiver(self, self.props.accessor)
+      ? (() => {
+          if (!receiver) receiver = new Receiver(self, self.props.accessor);
+          return receiver;
+        })()
       : {
           get data() {
             return self.innerHTML;

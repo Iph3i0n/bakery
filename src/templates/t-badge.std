@@ -1,0 +1,20 @@
+<script>
+  export const name = "t-badge";
+  export const props = ["colour"];
+</script>
+<style>
+  @require ../theme.ts as theme;
+
+  :host {
+    display: block;
+    theme.colour(self.props.colour ?? "warning");
+    theme.border("body", "surface");
+    border-radius: 1em;
+    theme.padding("badge");
+    theme.text("small", "no-margin");
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+</style>
