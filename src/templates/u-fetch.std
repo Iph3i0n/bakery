@@ -3,7 +3,9 @@
   import { Provider } from "../data.ts";
 
   export const name = "u-fetch";
-  export const props = ["url", "key", "fallback", "overlay"];
+  export const props = ["url", "key", "fallback", "overlay", "no-cache"];
+
+  const DATA_KEY = () => "__BAKERY_DATA__" + self.props.url;
 
   function Language() {
     if (navigator.languages != undefined) return navigator.languages[0];
@@ -15,7 +17,12 @@
   let loading = true;
 
   async function get_data() {
-    loading = true;
+    if (!self.props["no-cache"]) {
+      const cached = window.localStorage.getItem(DATA_KEY());
+      if (cached) provider.data = JSON.parse(cached);
+    }
+
+    loading = !!provider.data;
     self.dispatchEvent(new ShouldRender());
     const r = await fetch(self.props.url.replace("{locale}", Language()));
     let final;
@@ -36,6 +43,8 @@
     loading = false;
     self.dispatchEvent(new ShouldRender());
     provider.data = final;
+    if (!self.props["no-cache"])
+      window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
   }
 
   get_data();
