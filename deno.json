@@ -8,7 +8,7 @@
     "build": "wholemeal",
     "dev": "wholemeal --dev=true",
     "dev-dev": "wholemeal-dev --dev=true",
-    "prepublish": "deno --allow-write --allow-env --allow-read ./create-package.ts"
+    "prepublish": "deno run --allow-write --allow-env --allow-read ./create-package.ts"
   },
   "lint": {
     "rules": {
