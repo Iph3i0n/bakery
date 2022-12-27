@@ -1,4 +1,4 @@
-const tag = Deno.env.get("GITHUB_REF");
+const [_1, _2, tag] = Deno.env.get("GITHUB_REF")?.split("/") ?? "";
 
 if (!tag?.match(/^[0-9]+\.[0-9]+\.[0-9]+$/gm))
   throw new Error("Version tags must match 0.0.0 but recieved " + tag);
