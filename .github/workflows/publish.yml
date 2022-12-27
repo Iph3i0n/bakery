@@ -19,7 +19,7 @@ jobs:
       - run: deno task build
       - run: deno task prepublish
         env:
-          TAG_NAME: ${{ $GITHUB_REF }}
+          TAG_NAME: ${{ env.GITHUB_REF }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
