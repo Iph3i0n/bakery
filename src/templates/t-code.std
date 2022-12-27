@@ -52,6 +52,7 @@
     }).value;
 
     const cont = container();
+    if (!cont) return;
     cont.innerHTML = result;
   }
 
