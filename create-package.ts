@@ -1,7 +1,7 @@
 const tag = Deno.env.get("TAG_NAME");
 
 if (!tag?.match(/^[0-9]+\.[0-9]+\.[0-9]+$/gm))
-  throw new Error("Version tags must match 0.0.0");
+  throw new Error("Version tags must match 0.0.0 but recieved " + tag);
 
 await Deno.writeTextFile(
   "./dist/package.json",
