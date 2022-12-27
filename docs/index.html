@@ -3,39 +3,20 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bakery Docs</title>
-    <script src="./dist/bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@paulpopat/bakery"></script>
   </head>
   <body>
     <l-templated use="./layout.template.html" remote>
-      <u-fetch
-        url="./uitext/{locale}/index.json"
-        fallback="./uitext/en-GB/index.json"
-        key="uitext"
-        overlay
-      >
-        <l-row>
-          <l-col xs="12">
-            <t-heading level="h1" display>
-              <u-text use="uitext.page_heading"></u-text>
-            </t-heading>
-            <t-heading level="h6">
-              <u-text use="uitext.page_subheading"></u-text>
-            </t-heading>
-          </l-col>
-          <u-each subject="uitext.summary_sections" key="section"></u-each>
-          <l-col xs="12" md="6" lg="4">
-            <d-card>
-              <t-heading level="h4">
-                <u-text use="section.title"></u-text>
-              </t-heading>
-              <u-each subject="section.paragraphs" key="paragraph"></u-each>
-              <t-paragraph>
-                <u-text use="paragraph"></u-text>
-              </t-paragraph>
-            </d-card>
-          </l-col>
-        </l-row>
-      </u-fetch>
+      <l-row>
+        <l-col xs="12">
+          <t-heading level="h1" display>
+            <t-localised>BakeryJS</t-localised>
+          </t-heading>
+          <t-heading level="h6">
+            <t-localised>Web Components for modern PWA</t-localised>
+          </t-heading>
+        </l-col>
+      </l-row>
     </l-templated>
   </body>
 </html>
