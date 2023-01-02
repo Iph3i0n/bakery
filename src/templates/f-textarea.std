@@ -71,6 +71,8 @@
     contenteditable="true"
     s:ref="textarea"
     on:blur="update_value"
+    s:vdom="ignore"
+    inputmode=":self.props.type ?? 'text'"
   >
     <s:text use=":self.value ?? ''"></s:text>
   </div>
