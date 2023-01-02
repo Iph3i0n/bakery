@@ -2,6 +2,7 @@
   import FormElement from "../form-element.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
+  import LinkFont from "../link-font.ts";
 
   export const name = "f-textarea";
   export const props = [
@@ -15,6 +16,12 @@
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "input" };
+
+  LinkFont(
+    "https://cdn.rawgit.com/noppa/text-security/master/dist/text-security.css",
+    "f-input",
+    self
+  );
 
   const slot = slotted();
   const textarea = CreateRef();
@@ -46,14 +53,19 @@
     border-top-right-radius: ":spec.borders.body.radius";
   }
 
-  .textarea-content {
+  .content {
     min-height: 6rem;
     theme.text("body", "no-margin");
     theme.padding("small_block");
     white-space: pre;
   }
 
-  .textarea-content:focus {
+  .content.sensitive {
+    font-family: "text-security-disc";
+    -webkit-text-security: disc;
+  }
+
+  .content:focus {
     outline: none;
   }
 
@@ -67,7 +79,7 @@
     <slot></slot>
   </div>
   <div
-    class="textarea-content"
+    class=":c('content', ['sensitive', self.props.sensitive])"
     contenteditable="true"
     s:ref="textarea"
     on:blur="update_value"

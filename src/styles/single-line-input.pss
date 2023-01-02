@@ -30,6 +30,11 @@
   margin: 0;
 }
 
+.content.sensitive {
+  font-family: "text-security-disc";
+  -webkit-text-security: disc;
+}
+
 .content br {
   display: none;
 }

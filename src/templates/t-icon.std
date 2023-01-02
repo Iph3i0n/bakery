@@ -1,24 +1,15 @@
 <script>
   import * as theme from "../theme.ts";
   import * as spec from "../spec.ts";
+  import LinkFont from "../link-font.ts";
   export const name = "t-icon";
   export const props = ["name", "fill", "size", "colour", "text", "spin"];
 
-  function make_sheet() {
-    const ele = document.createElement("link");
-    ele.href =
-      "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css";
-    ele.rel = "stylesheet";
-    return ele;
-  }
-
-  self.addEventListener("rerendered", () => {
-    if (!self.querySelector("link")) self.root.append(make_sheet());
-  });
-
-  self.addEventListener("loaded", () => {
-    document.head.append(make_sheet());
-  });
+  LinkFont(
+    "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css",
+    "t-icon",
+    self
+  );
 </script>
 
 <style>

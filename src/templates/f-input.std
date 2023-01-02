@@ -2,6 +2,7 @@
   import FormElement from "../form-element.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
+  import LinkFont from "../link-font.ts";
 
   export const name = "f-input";
   export const props = [
@@ -11,10 +12,17 @@
     "type",
     "required",
     "validate",
+    "sensitive",
   ];
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "input" };
+
+  LinkFont(
+    "https://cdn.rawgit.com/noppa/text-security/master/dist/text-security.css",
+    "f-input",
+    self
+  );
 
   const slot = slotted();
   const textarea = CreateRef();
@@ -46,7 +54,7 @@
     <slot></slot>
   </span>
   <div
-    class="content"
+    class=":c('content', ['sensitive', self.props.sensitive])"
     contenteditable="true"
     s:ref="textarea"
     on:blur="update_value"
