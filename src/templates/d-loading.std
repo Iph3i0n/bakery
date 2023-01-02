@@ -20,7 +20,7 @@
     theme.colour("body");
   }
 
-  @if ":self.props.open" {
+  @if self.props.open {
     :host {
       opacity: 1;
       pointer-events: all;

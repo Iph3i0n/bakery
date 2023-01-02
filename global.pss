@@ -1,4 +1,4 @@
-@require ./src/theme.ts as theme;
+@js const theme = require("./src/theme.ts");
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;500&family=Roboto+Mono&display=swap");
 

@@ -1,5 +1,4 @@
 <script>
-  import { RenderEvent } from "../deps.ts";
   export const name = "l-templated";
   export const props = ["use", "remote"];
 

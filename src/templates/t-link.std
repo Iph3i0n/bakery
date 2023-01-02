@@ -29,7 +29,7 @@
     theme.transition("fast", "color", "background-color");
   }
 
-  @if ":self.props.block" {
+  @if self.props.block {
     :host {
       theme.padding("small_block");
     }

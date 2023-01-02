@@ -13,7 +13,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-   // ".github": true,
+    ".github": true,
     ".vscode": true,
     "dist": true,
     "deno.lock": true

@@ -1,6 +1,4 @@
 <script>
-  import { ShouldRender, LoadedEvent, CreateRef } from "../deps.ts";
-
   export const name = "l-accordion";
   export const props = ["open", "independent"];
 
@@ -48,7 +46,7 @@
   });
 </script>
 <style>
-  @require ../theme.ts as theme;
+  @js const theme = require("../theme.ts");
   :host {
     display: block;
     theme.border("body");

@@ -1,11 +1,5 @@
 <script>
   import FormElement from "../form-element.ts";
-  import {
-    ShouldRender,
-    RenderEvent,
-    LoadedEvent,
-    CreateRef,
-  } from "../deps.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
 
@@ -29,13 +23,17 @@
     textarea.current.focus();
   });
 
+  self.addEventListener(RenderEvent.Key, () => {
+    textarea.current.innerHTML = self.value ?? "";
+  });
+
   function update_value() {
-    self.value = textarea.current.innerText.replace(/\n\n/gm, "\n");
+    self.value = textarea.current.innerText;
   }
 </script>
 <style>
-  @require ../theme.ts as theme;
-  @require ../spec.ts as spec;
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
   @insert ../styles/input.pss;
 
   .textarea-label {

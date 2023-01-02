@@ -1,6 +1,5 @@
 <script>
   import { Provider } from "../data.ts";
-  import { PropsEvent } from "../deps.ts";
 
   export const name = "u-global";
   export const props = ["var", "key"];

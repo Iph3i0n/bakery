@@ -1,11 +1,5 @@
 <script>
   import FormElement from "../form-element.ts";
-  import {
-    ShouldRender,
-    RenderEvent,
-    LoadedEvent,
-    CreateRef,
-  } from "../deps.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
 
@@ -29,6 +23,10 @@
     textarea.current.focus();
   });
 
+  self.addEventListener(RenderEvent.Key, () => {
+    textarea.current.innerHTML = self.value ?? "";
+  });
+
   self.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
     e.preventDefault();
@@ -40,8 +38,6 @@
   }
 </script>
 <style>
-  @require ../theme.ts as theme;
-  @require ../spec.ts as spec;
   @insert ../styles/single-line-input.pss;
 </style>
 
@@ -54,6 +50,7 @@
     contenteditable="true"
     s:ref="textarea"
     on:blur="update_value"
+    spellcheck="true"
   >
     <s:text use=":self.value ?? ''"></s:text>
   </div>

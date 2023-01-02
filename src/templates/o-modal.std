@@ -2,7 +2,6 @@
   import { On } from "../events.ts";
   import * as theme from "../theme.ts";
   import * as spec from "../spec.ts";
-  import { ShouldRender, LoadedEvent } from "../deps.ts";
 
   export const name = "o-modal";
   export const props = ["trigger", "size"];
@@ -54,7 +53,7 @@
 <style>
   @insert ../styles/overlay.pss;
 
-  @if ":open" {
+  @if open {
     @insert ../styles/overlay-open.pss;
   }
 
@@ -83,13 +82,13 @@
     height: 100%;
   }
 
-  @if ":!open" {
+  @if !open {
     .modal {
       transform: translateY(-10px);
     }
   }
 
-  @if ":!has_footer" {
+  @if !has_footer {
     .footer {
       display: none;
     }

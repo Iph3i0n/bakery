@@ -2,7 +2,6 @@
   import FormElement from "../form-element.ts";
   import c from "../classes.ts";
   import DateFunctions from "../date-functions.ts";
-  import { LoadedEvent, ShouldRender } from "../deps.ts";
   import slotted from "../toggleable-slot.ts";
 
   export const name = "f-date";
@@ -41,8 +40,8 @@
   const slot = slotted();
 </script>
 <style>
-  @require ../theme.ts as theme;
-  @require ../spec.ts as spec;
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
   @insert ../styles/single-line-input.pss;
   @insert ../styles/dropdown.pss;
 

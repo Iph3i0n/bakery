@@ -3,7 +3,7 @@
   export const props = ["colour"];
 </script>
 <style>
-  @require ../theme.ts as theme;
+  @js const theme = require("../theme.ts");
 
   :host {
     display: block;

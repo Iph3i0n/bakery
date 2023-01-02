@@ -2,7 +2,6 @@
   import { On } from "../events.ts";
   import * as theme from "../theme.ts";
   import * as spec from "../spec.ts";
-  import { ShouldRender, LoadedEvent } from "../deps.ts";
 
   export const name = "o-offcanvas";
   export const props = ["trigger", "size"];
@@ -47,7 +46,7 @@
 <style>
   @insert ../styles/overlay.pss;
 
-  @if ":open" {
+  @if open {
     @insert ../styles/overlay-open.pss;
   }
 
@@ -61,7 +60,7 @@
     theme.transition("slow", "max-width");
   }
 
-  @if ":!open" {
+  @if !open {
     .container {
       max-width: 0 !important;
       border: none !important;
@@ -81,7 +80,7 @@
     }
   }
 
-  @if ":!has_footer" {
+  @if !has_footer {
     .footer {
       display: none;
     }

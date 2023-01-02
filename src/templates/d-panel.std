@@ -15,7 +15,7 @@
     theme.colour(get_colour());
   }
 
-  @if ":self.props.bordered" {
+  @if self.props.bordered {
     :host {
       theme.border("body");
       theme.shadow("body");

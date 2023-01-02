@@ -1,4 +1,4 @@
-@require ../theme.ts as theme;
+@js const theme = require("../theme.ts");
 
 .help-text.empty {
   display: none;

@@ -1,5 +1,5 @@
-@require ../theme.ts as theme;
-@require ../spec.ts as spec;
+@js const theme = require("../theme.ts");
+@js const spec = require("../spec.ts");
 @insert ../styles/input.pss;
 
 .label {

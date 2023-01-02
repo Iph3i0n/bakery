@@ -1,6 +1,5 @@
 <script>
   import * as theme from "../theme.ts";
-  import { LoadedEvent, PropsEvent } from "../deps.ts";
 
   export const name = "t-heading";
   export const props = ["level", "display"];

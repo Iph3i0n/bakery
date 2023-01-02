@@ -1,11 +1,11 @@
 <script>
-  import { LoadedEvent, RenderEvent, ShouldRender } from "../deps.ts";
   import { Receiver, Provider } from "../data.ts";
 
   export const name = "u-each";
   export const props = ["subject", "key"];
 
-  self.style.display = "none";  const id = "c" + crypto.randomUUID();
+  self.style.display = "none";
+  const id = "c" + crypto.randomUUID();
 
   const receiver = new Receiver(self, self.props.subject);
   let subject;
@@ -23,7 +23,9 @@
 
   self.addEventListener(RenderEvent.Key, () => {
     if (!subject || !Array.isArray(receiver.data)) return;
-    for (const ele of self.parentElement.querySelectorAll(`[data-each-id="${id}"]`))
+    for (const ele of self.parentElement.querySelectorAll(
+      `[data-each-id="${id}"]`
+    ))
       ele.remove();
 
     let previous = self;

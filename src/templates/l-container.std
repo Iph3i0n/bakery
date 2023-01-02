@@ -9,8 +9,8 @@
     margin: 0 auto;
   }
 
-  @if ":!self.props.flush" {
-    @for ":size in spec.screen_sizes" {
+  @if !self.props.flush {
+    @for const size in spec.screen_sizes {
       @media ":spec.screen_sizes[size].query" {
         :host {
           max-width: ":spec.screen_sizes[size].width";

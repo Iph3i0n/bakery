@@ -1,8 +1,7 @@
-
-  @require ../theme.ts as theme;
-  @require ../spec.ts as spec;
-  @insert ./input.pss;
-  @insert ./custom-scrollbar.pss;
+@js const theme = require("../theme.ts");
+@js const spec = require("../spec.ts");
+@insert ./input.pss;
+@insert ./custom-scrollbar.pss;
 
 .label {
   overflow: hidden;

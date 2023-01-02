@@ -10,14 +10,14 @@
     display: block;
   }
 
-  @if ":!self.props.flush" {
+  @if !self.props.flush {
     :host {
       theme.padding("block");
     }
   }
 
-  @for ":size in spec.screen_sizes" {
-    @if ":size in self.props" {
+  @for const size in spec.screen_sizes {
+    @if size in self.props {
       @media ":spec.screen_sizes[size].query" {
         :host {
           grid-column: ":`auto / span ${self.props[size]}`";

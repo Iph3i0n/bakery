@@ -33,27 +33,26 @@
 </script>
 
 <style>
-  @use ":c = self.props.colour ?? 'primary'" {
-    :host {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      theme.colour(c);
-      theme.padding("small_block");
-      theme.border("body");
-      theme.text("body", "no-margin");
-      -webkit-user-select: none;
-      user-select: none;
-      cursor: pointer;
-      text-align: center;
-      theme.transition("fast", "background-color");
-    }
+  @js const c = self.props.colour ?? 'primary';
+  :host {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    theme.colour(c);
+    theme.padding("small_block");
+    theme.border("body");
+    theme.text("body", "no-margin");
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    theme.transition("fast", "background-color");
+  }
 
-    :host(:hover),
-    :host(:focus) {
-      outline: none;
-      theme.colour(c, 1.1);
-    }
+  :host(:hover),
+  :host(:focus) {
+    outline: none;
+    theme.colour(c, 1.1);
   }
 </style>
 

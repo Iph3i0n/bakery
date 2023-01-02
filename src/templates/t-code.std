@@ -1,5 +1,4 @@
 <script>
-  import { RenderEvent } from "../deps.ts";
   import { Receiver } from "../data.ts";
   export const name = "t-code";
   export const props = ["language", "file", "accessor", "flush"];
@@ -76,7 +75,7 @@
 </script>
 
 <style>
-  @require ../theme.ts as theme;
+  @js const theme = require("../theme.ts");
 
   :host {
     display: block;
@@ -85,7 +84,7 @@
     overflow: hidden;
   }
 
-  @if ":self.props.flush" {
+  @if self.props.flush {
     :host {
       background-color: transparent !important;
     }
@@ -137,7 +136,7 @@
     theme.border("body", "contrast", "bottom");
   }
 
-  @if ":!self.props.file" {
+  @if !self.props.file {
     .file-name {
       display: none;
     }
@@ -151,7 +150,7 @@
     overflow-x: auto;
   }
 
-  @if ":!self.props.flush" {
+  @if !self.props.flush {
     :host {
       theme.border("body");
       theme.shadow("body");

@@ -1,6 +1,5 @@
 <script>
   import { Receiver } from "../data.ts";
-  import { ShouldRender, PropsEvent } from "../deps.ts";
 
   export const name = "u-text";
   export const props = ["use"];
