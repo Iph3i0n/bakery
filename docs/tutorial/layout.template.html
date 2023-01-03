@@ -1,0 +1,31 @@
+<l-templated use="/layout.template.html" remote>
+  <u-global var="CODE_EXAMPLES" key="ex">
+    <slot></slot>
+  </u-global>
+</l-templated>
+<o-offcanvas trigger="#toc" size="small">
+  <span slot="title">
+    <t-localised>Contents</t-localised>
+  </span>
+  <t-link href="/tutorial" block>
+    <t-localised>Installation</t-localised>
+  </t-link>
+  <t-link href="/tutorial/fetching" block>
+    <t-localised>Fetching Data</t-localised>
+  </t-link>
+  <t-link href="/tutorial/layout" block>
+    <t-localised>Layout</t-localised>
+  </t-link>
+  <t-link href="/tutorial/forms" block>
+    <t-localised>Forms</t-localised>
+  </t-link>
+  <t-link href="/tutorial/display" block>
+    <t-localised>Display</t-localised>
+  </t-link>
+  <t-link href="/tutorial/text" block>
+    <t-localised>Text</t-localised>
+  </t-link>
+  <t-link href="/tutorial/overlay" block>
+    <t-localised>Overlay</t-localised>
+  </t-link>
+</o-offcanvas>

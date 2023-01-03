@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        fetch: {
+          external: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+            ),
+            locale: e(
+              "u-fetch",
+              {
+                url: "/examples/{locale}/locale-example.json",
+                key: "data",
+                fallback: "/examples/fetch-example.json",
+              },
+              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+            ),
+          },
+          global: {
+            basic: e(
+              "u-global",
+              { var: "TEST_TEXT", key: "text" },
+              e("t-paragraph", {}, e("u-text", { use: "text.title" }))
+            ),
+          },
+          each: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e("u-each", { subject: "data.repeated", key: "text" }),
+              e("t-paragraph", {}, e("u-text", { use: "text" }))
+            ),
+          },
+          if: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", key: "data" },
+              e(
+                "u-if",
+                { check: "data.should_show" },
+                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              ),
+              e(
+                "u-if",
+                { check: "data.should_show_false" },
+                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              )
+            ),
+          },
+        },
+      };
+
+      window.TEST_TEXT = {
+        title: "From Global",
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="data" level="h2">
+              <t-localised>Data Fetching</t-localised>
+            </t-heading>
+            <t-paragraph>
+              Page data can be collected using a few elements in the u-
+              namespace. They are designed for fetching data such as UI text and
+              should not be thought of as a way to handle complex application
+              data. For this use case, consider a framework such as React,
+              VueJS, Angular, or many more. This library will work with all of
+              them.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.external.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.external.locale"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.global.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.each.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.if.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

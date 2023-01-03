@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        cdn_install: e("script", {
+          src: "https://cdn.jsdelivr.net/npm/@paulpopat/bakery",
+        }),
+        layout: {
+          grid: {
+            basic: e(
+              "l-container",
+              {},
+              e(
+                "l-row",
+                {},
+                e(
+                  "l-col",
+                  { xs: "12", md: "6" },
+                  e("t-paragraph", {}, "Hello world 1")
+                ),
+                e(
+                  "l-col",
+                  { xs: "12", md: "6" },
+                  e("t-paragraph", {}, "Hello world 2")
+                )
+              )
+            ),
+          },
+          header: {
+            basic: e(
+              "l-header",
+              { logo: "/img/logo.png", "logo-alt": "Bakery" },
+              e("a", { href: "https://www.google.com/" }, "To Google"),
+              e(
+                "form",
+                { slot: "right", onsubmit: "event.preventDefault()" },
+                e("f-input", { name: "search" }, "Search"),
+                e("f-button", { type: "submit" }, "Submit")
+              )
+            ),
+          },
+          accordion: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "l-accordion",
+                {},
+                e("span", { slot: "title" }, "First Item"),
+                e("t-paragraph", {}, "First Item Content")
+              ),
+              e(
+                "l-accordion",
+                {},
+                e("span", { slot: "title" }, "Second Item"),
+                e("t-paragraph", {}, "Second Item Content")
+              ),
+              e(
+                "l-accordion",
+                {},
+                e("span", { slot: "title" }, "Third Item"),
+                e("t-paragraph", {}, "Third Item Content")
+              )
+            ),
+          },
+        },
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="layout" level="h2">
+              <t-localised>Layout</t-localised>
+            </t-heading>
+            <t-paragraph>
+              There are a variety of layout components. They are under the l-
+              namespace.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.grid.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.header.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.accordion.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

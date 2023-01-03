@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        display: {
+          card: {
+            basic: e(
+              "d-card",
+              {},
+              e("span", { slot: "title" }, "Card Title"),
+              e("t-paragraph", {}, "Card body")
+            ),
+          },
+          listgroup: {
+            basic: e(
+              "d-listgroup",
+              {},
+              e("span", {}, "Item One"),
+              e("a", { href: "https://www.google.com/" }, "Item Two"),
+              e("span", {}, "Item Three")
+            ),
+          },
+          panel: {
+            basic: e(
+              "d-panel",
+              { colour: "body" },
+              e("t-paragraph", {}, "Hello world")
+            ),
+          },
+          alert: {
+            basic: e("d-alert", { colour: "warning" }, "Hello world"),
+          },
+        },
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="display" level="h2">
+              <t-localised>Display</t-localised>
+            </t-heading>
+            <t-paragraph>
+              There are a variety of display components. These are designed to
+              impact the visual format of the page but not the layout. They are
+              under the d- namespace.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.card.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.listgroup.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.panel.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.alert.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

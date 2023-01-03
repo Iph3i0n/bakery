@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        text: {
+          heading: {
+            basic: e("t-heading", { level: "h1" }, "Test Heading"),
+          },
+          icon: {
+            basic: e("t-icon", {
+              name: "calendar",
+              size: "body",
+              colour: "primary",
+            }),
+          },
+          link: {
+            basic: e(
+              "t-link",
+              { href: "https://www.google.com/", block: true },
+              "Test Link"
+            ),
+          },
+          localised: {
+            basic: e(
+              "t-paragraph",
+              {},
+              e(
+                "t-localised",
+                {},
+                "Default Text",
+                e("span", { slot: "en-GB" }, "British Text")
+              )
+            ),
+          },
+          paragraph: {
+            basic: e("t-paragraph", {}, "Hello World"),
+          },
+          code: {
+            basic: e(
+              "t-code",
+              { language: "javascript" },
+              "const test = () => 'hello world';"
+            ),
+          },
+          badge: {
+            basic: e(
+              "f-button",
+              { type: "button" },
+              "Messages",
+              e("t-badge", {}, "99+")
+            ),
+          },
+        },
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="text" level="h2">
+              <t-localised>Text</t-localised>
+            </t-heading>
+            <t-paragraph>
+              Components to display text for the user to consume are under the
+              t- namespace.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.heading.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.icon.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.link.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.localised.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.paragraph.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.code.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.badge.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

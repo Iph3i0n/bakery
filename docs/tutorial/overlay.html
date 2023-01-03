@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        overlay: {
+          modal: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "test-modal-trigger" },
+                "Open the modal"
+              ),
+              e(
+                "o-modal",
+                { trigger: "#test-modal-trigger", size: "medium" },
+                e("span", { slot: "title" }, "Modal Title"),
+                e("t-paragraph", {}, "Modal Content")
+              )
+            ),
+          },
+          offcanvas: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "test-offcanvas-trigger" },
+                "Open the offcanvas"
+              ),
+              e(
+                "o-offcanvas",
+                { trigger: "#test-offcanvas-trigger", size: "medium" },
+                e("span", { slot: "title" }, "Offcanvas Title"),
+                e("t-paragraph", {}, "Offcanvas Content")
+              )
+            ),
+          },
+        },
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="overlay" level="h2">
+              <t-localised>Overlay</t-localised>
+            </t-heading>
+            <t-paragraph>
+              Overlay components are designed to provide an experience for the
+              user to interact with information that is separate to the main
+              body of the page. They are found under the o- namespace.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="overlay.modal.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="overlay.offcanvas.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

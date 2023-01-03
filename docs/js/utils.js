@@ -44,3 +44,32 @@ window.e = function (tag, attr, ...children) {
     },
   };
 };
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    document.querySelectorAll("div[data-example]").forEach((t) => {
+      const accessor_statement = t.getAttribute("data-example");
+      const accessor = new Function(
+        "data",
+        "return data." + accessor_statement
+      );
+      const data = accessor(window.CODE_EXAMPLES);
+      t.innerHTML = `
+        <d-panel colour="surface" bordered>
+          <l-row>
+            <l-col xs="12">
+              ${data.toString()}
+            </l-col>
+          </l-row>
+          <t-code
+            language="html"
+            file="*.html"
+            accessor="ex.${accessor_statement}.toString()"
+            flush
+          ></t-code>
+        </d-panel>`;
+    });
+  },
+  false
+);

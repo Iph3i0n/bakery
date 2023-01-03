@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        cdn_install: e("script", {
+          src: "https://cdn.jsdelivr.net/npm/@paulpopat/bakery",
+        }),
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="install" level="h2">
+              <t-localised>Installation</t-localised>
+            </t-heading>
+            <t-paragraph>
+              <t-localised>
+                This project can be loaded in a couple of ways
+              </t-localised>
+            </t-paragraph>
+            <t-heading level="h3">
+              <t-localised>CDN (Recommended)</t-localised>
+            </t-heading>
+            <t-code
+              language="html"
+              file="*.html"
+              accessor="ex.cdn_install.toString()"
+            ></t-code>
+            <t-paragraph>
+              <t-localised>
+                This will allow you to use all components with ease in any
+                project if you include this in the head of the HTML. It can be
+                included after the body but this can result in flashes on load,
+                as unknown components will be rendered as if they were
+              </t-localised>
+            </t-paragraph>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>
