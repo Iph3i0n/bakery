@@ -1,5 +1,7 @@
 <script>
   import { Receiver } from "../data.ts";
+  import { unsafe_import } from "../fetch-resouces.ts";
+
   export const name = "t-code";
   export const props = ["language", "file", "accessor", "flush"];
 
@@ -59,11 +61,6 @@
     if (!cont) return;
     cont.innerHTML = result;
   }
-
-  const unsafe_import = (path) =>
-    fetch(path, { cache: "force-cache" })
-      .then((response) => response.text())
-      .then(eval);
 
   if (!window.hljs)
     unsafe_import(
