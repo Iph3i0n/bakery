@@ -2,7 +2,7 @@
   import { Receiver } from "../data.ts";
 
   export const name = "u-text";
-  export const props = ["use"];
+  export const props = { use: undefined };
 
   const receiver = new Receiver(self, self.props.use);
 </script>

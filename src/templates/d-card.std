@@ -1,6 +1,8 @@
 <script>
   export const name = "d-card";
-  export const props = ["colour"];
+  export const props = {
+    colour: "surface",
+  };
   export const aria = { Role: "section" };
 
   function get_colour() {

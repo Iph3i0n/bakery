@@ -2,7 +2,7 @@
   import * as theme from "../theme.ts";
 
   export const name = "t-heading";
-  export const props = ["level", "display"];
+  export const props = { level: undefined, display: false };
   export const aria = { Role: "heading" };
 
   self.addEventListener(LoadedEvent.Key, () => {

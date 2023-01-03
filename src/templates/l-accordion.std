@@ -1,6 +1,9 @@
 <script>
   export const name = "l-accordion";
-  export const props = ["open", "independent"];
+  export const props = {
+    open: false,
+    independent: false,
+  };
 
   class AccordionOpenEvent extends Event {
     #id;

@@ -2,7 +2,7 @@
   import { Provider } from "../data.ts";
 
   export const name = "u-global";
-  export const props = ["var", "key"];
+  export const props = { var: undefined, key: undefined };
 
   const provider = new Provider(self, self.props.key);
   provider.data = window[self.props.var];

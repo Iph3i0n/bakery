@@ -1,7 +1,7 @@
 <script>
   import * as spec from "../spec.ts";
   export const name = "l-container";
-  export const props = ["flush"];
+  export const props = { flush: false };
 </script>
 <style>
   :host {

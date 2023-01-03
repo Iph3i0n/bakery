@@ -2,7 +2,7 @@
   import { Receiver } from "../data.ts";
 
   export const name = "u-if";
-  export const props = ["check"];
+  export const props = { check: undefined };
 
   const receiver = new Receiver(self, self.props.check);
 </script>

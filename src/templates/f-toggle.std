@@ -5,7 +5,13 @@
   import options from "../options.ts";
 
   export const name = "f-toggle";
-  export const props = ["default", "disabled", "name", "required"];
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    required: false,
+    validate: undefined,
+  };
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "select" };

@@ -3,7 +3,13 @@
   import * as theme from "../theme.ts";
 
   export const name = "f-button";
-  export const props = ["colour", "type", "href", "target", "private"];
+  export const props = {
+    colour: "primary",
+    type: undefined,
+    href: undefined,
+    target: undefined,
+    private: false,
+  };
   export const aria = { Role: "button" };
 
   self.tabIndex = 0;

@@ -2,9 +2,13 @@
   import * as theme from "../theme.ts";
 
   export const name = "d-loading";
-  export const props = ["open"];
+  export const props = {
+    open: false,
+  };
 </script>
 <style>
+  @js const spec = require("../spec.ts");
+
   :host {
     display: flex;
     align-items: center;
@@ -18,6 +22,7 @@
     pointer-events: none;
     theme.transition("slow", "opacity");
     theme.colour("body");
+    z-index: ":spec.z_indexes.overlay";
   }
 
   @if self.props.open {

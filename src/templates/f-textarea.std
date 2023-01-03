@@ -5,14 +5,14 @@
   import { link_font } from "../fetch-resources.ts";
 
   export const name = "f-textarea";
-  export const props = [
-    "default",
-    "disabled",
-    "name",
-    "type",
-    "required",
-    "validate",
-  ];
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    type: "text",
+    required: false,
+    validate: undefined,
+  };
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "input" };

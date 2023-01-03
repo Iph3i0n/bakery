@@ -5,15 +5,15 @@
   import { link_font } from "../fetch-resources.ts";
 
   export const name = "f-input";
-  export const props = [
-    "default",
-    "disabled",
-    "name",
-    "type",
-    "required",
-    "validate",
-    "sensitive",
-  ];
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    type: "text",
+    required: false,
+    validate: undefined,
+    sensitive: false,
+  };
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "input" };

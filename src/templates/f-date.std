@@ -5,14 +5,14 @@
   import slotted from "../toggleable-slot.ts";
 
   export const name = "f-date";
-  export const props = [
-    "default",
-    "disabled",
-    "name",
-    "required",
-    "min",
-    "max",
-  ];
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    required: false,
+    min: undefined,
+    max: undefined,
+  };
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "select" };

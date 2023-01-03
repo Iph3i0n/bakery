@@ -1,6 +1,6 @@
 <script>
   export const name = "t-badge";
-  export const props = ["colour"];
+  export const props = { colour: "warning" };
 </script>
 <style>
   @js const theme = require("../theme.ts");

@@ -2,7 +2,10 @@
   import { Receiver, Provider } from "../data.ts";
 
   export const name = "u-each";
-  export const props = ["subject", "key"];
+  export const props = {
+    subject: undefined,
+    key: undefined,
+  };
 
   self.style.display = "none";
   const id = "c" + crypto.randomUUID();

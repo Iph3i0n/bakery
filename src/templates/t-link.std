@@ -2,7 +2,12 @@
   import * as theme from "../theme.ts";
 
   export const name = "t-link";
-  export const props = ["href", "target", "private", "block"];
+  export const props = {
+    href: undefined,
+    target: undefined,
+    private: false,
+    block: false,
+  };
   export const aria = { Role: "button" };
 
   self.tabIndex = 0;

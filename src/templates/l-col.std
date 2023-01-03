@@ -3,7 +3,13 @@
   import * as spec from "../spec.ts";
 
   export const name = "l-col";
-  export const props = [...Object.keys(screen), "flush"];
+  export const props = {
+    flush: false,
+    ...Object.keys(spec.screen_sizes).reduce(
+      (c, n) => ({ ...c, [n]: undefined }),
+      {}
+    ),
+  };
 </script>
 <style>
   :host {
@@ -17,7 +23,7 @@
   }
 
   @for const size in spec.screen_sizes {
-    @if size in self.props {
+    @if self.props[size] {
       @media ":spec.screen_sizes[size].query" {
         :host {
           grid-column: ":`auto / span ${self.props[size]}`";

@@ -1,6 +1,10 @@
 <script>
   export const name = "l-header";
-  export const props = ["logo", "logo-alt", "bg"];
+  export const props = {
+    logo: undefined,
+    "logo-alt": undefined,
+    bg: "primary",
+  };
   export const aria = { Role: "banner" };
 
   let has_right = false;

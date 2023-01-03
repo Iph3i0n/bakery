@@ -4,7 +4,7 @@
   import * as spec from "../spec.ts";
 
   export const name = "o-offcanvas";
-  export const props = ["trigger", "size"];
+  export const props = { trigger: undefined, size: "medium" };
   export const aria = { Role: "dialog" };
 
   let open = false;

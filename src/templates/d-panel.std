@@ -2,7 +2,10 @@
   import * as theme from "../theme.ts";
 
   export const name = "d-panel";
-  export const props = ["colour", "bordered"];
+  export const props = {
+    colour: "body",
+    bordered: false,
+  };
 
   function get_colour() {
     return self.props.colour ?? "body";

@@ -5,7 +5,12 @@
   import options from "../options.ts";
 
   export const name = "f-select";
-  export const props = ["name", "required", "disabled"];
+  export const props = {
+    name: "",
+    required: false,
+    validate: undefined,
+    disabled: false,
+  };
   export const base = FormElement;
   export const form = true;
   export const aria = { Role: "select" };

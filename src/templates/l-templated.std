@@ -1,6 +1,6 @@
 <script>
   export const name = "l-templated";
-  export const props = ["use", "remote"];
+  export const props = { use: undefined, remote: false };
 
   async function get_data() {
     if (!self.props.remote) {

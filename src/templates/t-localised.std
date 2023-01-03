@@ -1,6 +1,6 @@
 <script>
   export const name = "t-localised";
-  export const props = [];
+  export const props = {};
 
   function Languages() {
     if (navigator.languages != undefined) return navigator.languages;

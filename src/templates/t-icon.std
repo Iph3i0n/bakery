@@ -3,7 +3,14 @@
   import * as spec from "../spec.ts";
   import { link_font } from "../fetch-resources.ts";
   export const name = "t-icon";
-  export const props = ["name", "fill", "size", "colour", "text", "spin"];
+  export const props = {
+    name: undefined,
+    fill: false,
+    size: "body",
+    colour: "body",
+    text: false,
+    spin: false,
+  };
 
   link_font(
     "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css",

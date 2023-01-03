@@ -1,6 +1,9 @@
 <script>
   export const name = "d-alert";
-  export const props = ["colour", "closeable"];
+  export const props = {
+    colour: "warning",
+    closeable: false,
+  };
 
   function close() {
     self.remove();

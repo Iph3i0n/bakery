@@ -1,6 +1,6 @@
 <script>
   export const name = "l-row";
-  export const props = ["cols"];
+  export const props = { cols: "12" };
 </script>
 <style>
   :host {
