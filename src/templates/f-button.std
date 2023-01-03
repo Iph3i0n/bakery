@@ -52,14 +52,19 @@
     user-select: none;
     cursor: pointer;
     text-align: center;
-    theme.transition("fast", "background-color");
+    box-shadow: none;
+    theme.transition("fast", "background-color", "border-color", "box-shadow");
   }
 
   :host(:hover),
   :host(:focus) {
     outline: none;
     theme.colour(c, 1.1);
+    theme.border("body", "contrast");
+    theme.shadow("small");
   }
 </style>
 
-<slot></slot>
+<span class="text">
+  <slot></slot>
+</span>

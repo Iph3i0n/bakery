@@ -244,7 +244,7 @@ export const shadows: Shadows = {
       y: "0px",
       radius: "14px",
       spread: "0px",
-      colour: "rgba(0,0,0,0.1)",
+      colour: "rgba(0,0,0,0.2)",
     },
     dark: {
       x: "0px",

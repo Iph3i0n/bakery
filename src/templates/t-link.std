@@ -40,7 +40,9 @@
     }
   }
 
-  :host(:hover) {
+  :host(:hover),
+  :host(:focus) {
+    outline: none;
     theme.colour("primary", 1, 0.5);
   }
 </style>

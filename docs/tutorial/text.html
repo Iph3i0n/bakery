@@ -54,6 +54,15 @@
               e("t-badge", {}, "99+")
             ),
           },
+          breadcrumbs: {
+            basic: e(
+              "t-breadcrumbs",
+              {},
+              e("a", { href: "/" }, "Home"),
+              e("a", { href: "/tutorial" }, "Tutorial"),
+              e("span", {}, "Text")
+            ),
+          },
         },
       };
     </script>
@@ -92,6 +101,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="text.badge.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.breadcrumbs.basic"></div>
           </l-col>
         </l-row>
       </l-container>
