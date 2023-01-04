@@ -29,6 +29,7 @@
     display: block;
     theme.border("body", undefined, "bottom");
     theme.margin("block", "bottom");
+    theme.padding("block", "left", "right");
   }
 
   .logo-col {
@@ -115,9 +116,14 @@
 
   .right-actions {
     display: block;
+    text-align: right;
     theme.padding("small_block");
     theme.colour("body");
     theme.border("body", undefined, "top");
+  }
+
+  .right-actions ::slotted(a) {
+    text-decoration: none;
   }
 
   .right-actions ::slotted(form) {
