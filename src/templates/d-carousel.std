@@ -1,0 +1,208 @@
+<script>
+  import c from "../classes.ts";
+
+  export const name = "d-carousel";
+  export const props = {
+    height: "30rem",
+    "no-tabs": false,
+  };
+
+  let slots = [];
+  let current = 0;
+  let context = "";
+
+  self.addEventListener(LoadedEvent.Key, () => {
+    slots = [...self.children]
+      .map((d) => ({
+        slot: d.getAttribute("slot"),
+        colour: d.getAttribute("colour") ?? "body",
+      }))
+      .filter((s) => s);
+    if (slots.length !== self.children.length)
+      console.warn(
+        "A child of the carousel is without slot. This element will not be visible"
+      );
+
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  function set_current(slide, ctx) {
+    return () => {
+      context = ctx;
+      current = slide % slots.length;
+      if (current < 0) current = slots.length + current;
+    };
+  }
+
+  const colour = () => slots[current]?.colour ?? "body";
+</script>
+<style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: ":self.props.height";
+    theme.border("body");
+    theme.shadow("body");
+    overflow: hidden;
+  }
+
+  @keyframes slide-in-left {
+    from {
+      left: -100%;
+    }
+
+    to {
+      left: 0;
+    }
+  }
+
+  @keyframes slide-out-left {
+    from {
+      left: 0;
+    }
+
+    to {
+      left: 100%;
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      left: 100%;
+    }
+
+    to {
+      left: 0;
+    }
+  }
+
+  @keyframes slide-out-right {
+    from {
+      left: 0;
+    }
+
+    to {
+      left: -100%;
+    }
+  }
+
+
+  .slide {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @for const colour in spec.colours {
+    ":`.slide.${colour}`" {
+      theme.colour(colour);
+    }
+  }
+
+  .slide.open {
+    left: 0;
+  }
+
+  .slide.closed {
+    left: -100%;
+  }
+
+  .slide.left.open {
+    theme.animation("slide-in-left", "slow");
+  }
+
+  .slide.left.closed {
+    theme.animation("slide-out-left", "slow");
+  }
+
+  .slide.right.open {
+    theme.animation("slide-in-right", "slow");
+  }
+
+  .slide.right.closed {
+    theme.animation("slide-out-right", "slow");
+  }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    theme.transition("fast", "opacity", "transform");
+  }
+
+  .arrow:hover,
+  .arrow:focus {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1.1);
+    outline: none;
+  }
+
+  .arrow.left {
+    left: 1rem;
+  }
+
+  .arrow.right {
+    right: 1rem;
+  }
+
+  .tabs {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 40%;
+    height: 0.5rem;
+    bottom: 2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: stretch;
+  }
+
+  .tab {
+    flex: 1;
+    height: 50%;
+    theme.backgroundcolour(colour());
+    theme.margin("small_block");
+    theme.transition("fast", "height");
+    cursor: pointer;
+  }
+
+  .tab:hover,
+  .tab:focus {
+    outline: none;
+    height: 100%;
+  }
+</style>
+
+<s:for subject=":slots.map((s, i) => [s, i])" key="[{ slot, colour }, index]">
+  <div
+    class=":c('slide', colour, context, ['open', current === index], ['closed', current !== index])"
+  >
+    <slot name=":slot"></slot>
+  </div>
+</s:for>
+
+<div class="arrow left" on:click="set_current(current - 1, 'right')">
+  <t-icon name="arrow-left-s" size="h1" colour=":colour()" text></t-icon>
+</div>
+<div class="arrow right" on:click="set_current(current + 1, 'left')">
+  <t-icon name="arrow-right-s" size="h1" colour=":colour()" text></t-icon>
+</div>
+
+<s:if check=":!self.props['no-tabs']">
+  <div class="tabs">
+    <s:for subject=":slots.map((s, i) => [s, i])" key="[_, index]">
+      <div class="tab" on:click="set_current(index, 'left')"></div>
+    </s:for>
+  </div>
+</s:if>

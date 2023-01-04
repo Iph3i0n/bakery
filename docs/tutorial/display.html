@@ -34,6 +34,14 @@
           alert: {
             basic: e("d-alert", { colour: "warning" }, "Hello world"),
           },
+          carousel: {
+            basic: e(
+              "d-carousel",
+              {},
+              e("t-paragraph", { slot: "slide-1" }, "Slide One"),
+              e("t-paragraph", { slot: "slide-2" }, "Slide Two")
+            ),
+          },
         },
       };
     </script>
@@ -64,6 +72,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="display.alert.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.carousel.basic"></div>
           </l-col>
         </l-row>
       </l-container>
