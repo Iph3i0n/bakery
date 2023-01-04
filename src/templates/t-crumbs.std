@@ -1,7 +1,8 @@
 <script>
-  export const name = "t-breadcrumbs";
+  export const name = "t-crumbs";
   export const props = {
     divider: "/",
+    colour: "primary",
   };
 
   let options = [];
@@ -33,7 +34,7 @@
   }
 
   a.option {
-    theme.textcolour("primary");
+    theme.textcolour(self.props.colour);
     text-decoration: none;
     transform: scale(1);
     theme.transition("fast", "transform");
