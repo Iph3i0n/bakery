@@ -25,6 +25,7 @@
 
     "./src/templates/o-modal.std",
     "./src/templates/o-offcanvas.std",
+    "./src/templates/o-toast.std",
 
     "./src/templates/t-paragraph.std",
     "./src/templates/t-icon.std",

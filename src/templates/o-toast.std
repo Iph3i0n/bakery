@@ -1,0 +1,100 @@
+<script>
+  export const name = "o-toast";
+  export const props = {
+    icon: undefined,
+    metric: undefined,
+    unit: "minute",
+    "unit-display": "short",
+  };
+
+  function close() {
+    self.remove();
+  }
+
+  const metric_text = () => {
+    const formatter = new Intl.NumberFormat(undefined, {
+      style: "unit",
+      unit: self.props.unit,
+      unitDisplay: self.props["unit-display"],
+    });
+    return formatter.format(self.props.metric);
+  };
+</script>
+<style>
+  @js const theme = require("../theme.ts");
+
+  :host {
+    display: block;
+    theme.border("body");
+    theme.shadow("body");
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20rem;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    theme.colour("body");
+    theme.padding("small_block");
+    theme.border("body", "contrast", "bottom");
+    theme.text("body", "no-margin");
+  }
+
+  .title .spacer {
+    flex: 1;
+  }
+
+  .title img {
+    theme.border("small");
+    theme.margin("small_block", "right");
+    max-height: 1em;
+  }
+
+  .close {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transform: scale(1);
+    theme.transition("fast", "transform");
+  }
+
+  .close:hover,
+  .close:focus {
+    outline: none;
+    transform: scale(1.2);
+  }
+
+  .body {
+    theme.colour("surface");
+    theme.padding("small_block");
+  }
+
+  .metric {
+    theme.text("small", "no-margin");
+    theme.margin("small_block", "left", "right");
+  }
+</style>
+
+<div class="title">
+  <s:if check=":self.props.icon">
+    <img src=":self.props.icon" alt="" />
+  </s:if>
+  <slot name="title"></slot>
+  <div class="spacer"></div>
+  <s:if check=":self.props.metric">
+    <div class="metric">
+      <s:text use=":metric_text()"></s:text>
+    </div>
+  </s:if>
+  <div class="close" on:click="close">
+    <t-icon name="close" colour="body" size="body" text></t-icon>
+  </div>
+</div>
+
+<div class="body">
+  <slot></slot>
+</div>

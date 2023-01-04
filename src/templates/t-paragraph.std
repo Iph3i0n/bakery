@@ -10,10 +10,6 @@
     display: block;
     theme.text("body");
   }
-
-  :host(:last-child) {
-    margin-bottom: 0;
-  }
 </style>
 
 <slot></slot>

@@ -353,7 +353,7 @@ export const text_styles: TextStyles = {
   small: {
     font_family: "'Poppins', sans-serif",
     font_weight: "300",
-    font_size: "0.6rem",
+    font_size: "0.8rem",
     margin: "paragraph",
   },
   code: {

@@ -41,6 +41,18 @@
               )
             ),
           },
+          toast: {
+            basic: e(
+              "div",
+              { style: "position: relative; height: 25rem" },
+              e(
+                "o-toast",
+                { icon: "/img/logo.png", metric: "20", unit: "second" },
+                e("span", { slot: "title" }, "Title"),
+                e("t-paragraph", {}, "This is a toast")
+              )
+            ),
+          },
         },
       };
     </script>
@@ -65,6 +77,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="overlay.offcanvas.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="overlay.toast.basic"></div>
           </l-col>
         </l-row>
       </l-container>
