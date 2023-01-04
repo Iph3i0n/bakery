@@ -1,0 +1,101 @@
+<script>
+  import c from "../classes.ts";
+  import { On } from "../events.ts";
+
+  export const name = "o-dropdown";
+  export const props = {
+    target: undefined,
+    trigger: undefined,
+    width: undefined,
+    height: "5rem",
+    scrollable: false,
+  };
+
+  const modal = CreateRef();
+
+  let open = false;
+  let target = undefined;
+  On("click", self.props.trigger ?? self.props.target, (_, a) => {
+    target = a;
+    open = true;
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  function close() {
+    open = false;
+  }
+
+  const top = () => {
+    const world_top = (target?.offsetTop ?? 0) + (target?.offsetHeight ?? 0);
+    const screen_top = world_top - window.scrollY;
+    return `calc(${screen_top}px + 0.5rem)`;
+  };
+
+  const left = () => {
+    const world_left = target?.offsetLeft ?? 0;
+    const screen_left = world_left - window.scrollX;
+    return `${screen_left}px`;
+  };
+  const width = () => self.props.width ?? `${target?.clientWidth ?? 0}px`;
+
+  window.addEventListener("scroll", () => {
+    const target = modal.current;
+    if (!target) return;
+    target.style.top = top();
+    target.style.left = left();
+  });
+</script>
+<style>
+  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme.ts");
+  @insert ../styles/overlay.pss;
+  @insert ../styles/custom-scrollbar.pss;
+
+  @if open {
+    @insert ../styles/overlay-open.pss;
+  }
+
+  .overlay {
+    background-color: transparent;
+  }
+
+  .dropdown-container {
+    position: fixed;
+    top: ":top()";
+    left: ":left()";
+    width: ":width()";
+    max-height: 0;
+    height: 100%;
+    overflow: hidden;
+    theme.transition("fast", "max-height");
+    z-index: ":spec.z_indexes.popup";
+  }
+
+  .dropdown-container.open {
+    theme.shadow("small");
+    theme.border("body", "contrast");
+    border-radius: ":spec.borders.body.radius";
+    max-height: ":self.props.height";
+  }
+
+  .dropdown-body {
+    display: flow-root;
+    theme.text("body", "no-margin");
+    theme.colour("surface");
+    box-sizing: border-box;
+    height: ":self.props.height";
+  }
+
+  .dropdown-body.scrollable {
+    overflow-y: auto;
+  }
+
+  @insert ../styles/slotted-spans.pss;
+</style>
+
+<div class="overlay" on:click="close"></div>
+<div class=":c('dropdown-container', ['open', open])" s:ref="modal">
+  <div class=":c('dropdown-body', ['scrollable', self.props.scrollable])">
+    <slot></slot>
+  </div>
+</div>

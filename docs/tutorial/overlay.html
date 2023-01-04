@@ -53,6 +53,30 @@
               )
             ),
           },
+          dropdown: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "test-dropdown-trigger" },
+                "Open the dropdown",
+                e("t-icon", {
+                  name: "arrow-down-s",
+                  size: "body",
+                  colour: "primary",
+                  text: true,
+                })
+              ),
+              e(
+                "o-dropdown",
+                { target: "#test-dropdown-trigger", scrollable: true },
+                e("span", {}, "Item One"),
+                e("span", {}, "Item Two"),
+                e("span", {}, "Item Three")
+              )
+            ),
+          },
         },
       };
     </script>
@@ -80,6 +104,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="overlay.toast.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="overlay.dropdown.basic"></div>
           </l-col>
         </l-row>
       </l-container>

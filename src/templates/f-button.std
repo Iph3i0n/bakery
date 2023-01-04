@@ -44,6 +44,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    gap: 0.5em;
     theme.colour(c);
     theme.padding("small_block");
     theme.border("body");
@@ -65,6 +66,4 @@
   }
 </style>
 
-<span class="text">
-  <slot></slot>
-</span>
+<slot></slot>

@@ -12,36 +12,9 @@
     overflow: hidden;
   }
 
-  ::slotted(a), ::slotted(span) {
-    theme.colour("surface");
-    display: block;
-    theme.text("body", "no-margin");
-    theme.padding("small_block");
-  }
+  @insert ../styles/slotted-spans.pss;
 
   ::slotted(a:not(:last-child)), ::slotted(span:not(:last-child)) {
     theme.border("body", undefined, "bottom");
-  }
-
-  ::slotted(a) {
-    cursor: pointer;
-    text-decoration: none;
-    theme.transition("fast", "color", "background-color");
-  }
-
-  ::slotted(a:hover),
-  ::slotted(a:focus) {
-    outline: none;
-    theme.colour("surface", 0.9);
-  }
-
-  @for const colour in spec.colours {
-    ":`::slotted(a.${colour}), ::slotted(span.${colour})`" {
-      theme.colour(colour);
-    }
-
-    ":`::slotted(a.${colour}:hover), ::slotted(a.${colour}:focus)`" {
-      theme.colour(colour, 0.9);
-    }
   }
 </style>
