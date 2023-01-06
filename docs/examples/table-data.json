@@ -1,0 +1,19 @@
+{
+  "content": [
+    {
+      "username": "Paul Popat",
+      "email": "paul@popatux.co.uk",
+      "dob": "Not Telling"
+    },
+    {
+      "username": "Joe Blogs",
+      "email": "joe.blogs@popatux.co.uk",
+      "dob": "20/13/1964"
+    },
+    {
+      "username": "Jill Doe",
+      "email": "jill.doe@popatux.co.uk",
+      "dob": "45/13/1982"
+    }
+  ]
+}

@@ -34,8 +34,11 @@
             basic: e(
               "u-fetch",
               { url: "/examples/fetch-example.json", key: "data" },
-              e("u-each", { subject: "data.repeated", key: "text" }),
-              e("t-paragraph", {}, e("u-text", { use: "text" }))
+              e(
+                "u-each",
+                { subject: "data.repeated", key: "text" },
+                e("t-paragraph", {}, e("u-text", { use: "text" }))
+              )
             ),
           },
           if: {

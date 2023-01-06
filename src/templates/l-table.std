@@ -1,0 +1,93 @@
+<script>
+  import { Receiver } from "../data.ts";
+
+  export const name = "l-table";
+  export const props = {
+    accessor: undefined,
+  };
+
+  const receiver = new Receiver(self, self.props.accessor);
+
+  let body_schema = [];
+  let head_schema = [];
+
+  function on_body(e) {
+    body_schema = [];
+    /** @type {Array<HTMLElement>} */
+    const data = e.currentTarget.assignedElements();
+    for (const child of data) {
+      const input_row = [];
+      for (const item of child.children) {
+        input_row.push({
+          use: new Function("row", "return " + item.getAttribute("use")),
+          width: item.getAttribute("width"),
+          height: item.getAttribute("height"),
+        });
+      }
+
+      body_schema.push({
+        content: input_row,
+      });
+    }
+  }
+
+  function on_head(e) {
+    head_schema = [];
+    /** @type {Array<HTMLElement>} */
+    const data = e.currentTarget.assignedElements();
+    for (const child of data) {
+      const input_row = [];
+      for (const item of child.children) {
+        input_row.push({
+          text: item.textContent,
+          width: item.getAttribute("width"),
+          height: item.getAttribute("height"),
+        });
+      }
+
+      head_schema.push({
+        content: input_row,
+      });
+    }
+  }
+</script>
+
+<style>
+  :host {
+    display: block;
+  }
+</style>
+
+<div style="display: none">
+  <slot on:slotchange="on_body"></slot>
+  <slot name="head" on:slotchange="on_head"></slot>
+</div>
+
+<table>
+  <thead>
+    <s:for subject=":head_schema" key="row">
+      <tr>
+        <s:for subject=":row.content" key="cell">
+          <th width=":cell.width" height=":cell.height">
+            <s:text use=":cell.text"></s:text>
+          </th>
+        </s:for>
+      </tr>
+    </s:for>
+  </thead>
+  <tbody>
+    <s:if check=":receiver.data">
+      <s:for subject=":receiver.data" key="row_data">
+        <s:for subject=":body_schema" key="row">
+          <tr>
+            <s:for subject=":row.content" key="cell">
+              <td width=":cell.width" height=":cell.height">
+                <s:text use=":cell.use(row_data)"></s:text>
+              </td>
+            </s:for>
+          </tr>
+        </s:for>
+      </s:for>
+    </s:if>
+  </tbody>
+</table>

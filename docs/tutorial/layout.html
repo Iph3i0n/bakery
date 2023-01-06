@@ -67,6 +67,30 @@
               )
             ),
           },
+          table: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/table-data.json" },
+              e(
+                "l-table",
+                { accessor: "content" },
+                e(
+                  "row",
+                  { slot: "head" },
+                  e("cell", {}, "Username"),
+                  e("cell", {}, "Email"),
+                  e("cell", {}, "Date of Birth")
+                ),
+                e(
+                  "row",
+                  {},
+                  e("cell", { use: "row.username" }),
+                  e("cell", { use: "row.email" }),
+                  e("cell", { use: "row.dob" })
+                )
+              )
+            ),
+          },
         },
       };
     </script>
@@ -93,6 +117,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="layout.accordion.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.table.basic"></div>
           </l-col>
         </l-row>
       </l-container>
