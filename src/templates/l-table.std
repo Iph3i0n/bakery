@@ -53,8 +53,44 @@
 </script>
 
 <style>
+  @js const theme = require("../theme.ts");
+
   :host {
     display: block;
+    theme.border("body");
+    theme.colour("surface");
+    theme.shadow("body");
+    overflow: hidden;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  thead tr {
+    theme.border("body", undefined, "bottom");
+    theme.colour("body");
+  }
+
+  tbody tr:not(:last-child) {
+    theme.border("small", undefined, "bottom");
+  }
+
+  tbody tr:nth-child(even) {
+    theme.colour("surface", 0.95);
+  }
+
+  th {
+    text-align: left;
+    theme.text("body_large");
+    theme.padding("small_block");
+  }
+
+  td {
+    text-align: left;
+    theme.text("body");
+    theme.padding("small_block");
   }
 </style>
 

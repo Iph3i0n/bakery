@@ -70,10 +70,10 @@
           table: {
             basic: e(
               "u-fetch",
-              { url: "/examples/table-data.json" },
+              { url: "/examples/table-data.json", key: "table" },
               e(
                 "l-table",
-                { accessor: "content" },
+                { accessor: "table.content" },
                 e(
                   "row",
                   { slot: "head" },
