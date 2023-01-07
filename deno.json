@@ -5,7 +5,7 @@
   "tasks": {
     "install": "deno install --allow-all https://deno.land/x/wholemeal@0.1.0/main.ts",
     "test": "deno test --allow-all",
-    "build": "wholemeal",
+    "build": "wholemeal build",
     "build-docs": "wholemeal build --out=./docs/dist",
     "dev": "wholemeal dev --out=./docs/dist",
     "dev-dev": "wholemeal-dev dev --out=./docs/dist",
