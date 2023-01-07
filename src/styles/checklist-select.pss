@@ -114,10 +114,10 @@
 
 .item .toggle t-icon {
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  top: ":spec.borders.body.width";
+  left: ":spec.borders.body.width";
+  bottom: ":spec.borders.body.width";
+  right: ":spec.borders.body.width";
   opacity: 0;
   theme.transition("fast", "opacity");
   theme.animation("scale-out", "fast");

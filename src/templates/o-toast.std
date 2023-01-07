@@ -17,7 +17,7 @@
       unit: self.props.unit,
       unitDisplay: self.props["unit-display"],
     });
-    return formatter.format(self.props.metric);
+    return formatter.format(parseFloat(self.props.metric));
   };
 </script>
 <style>
