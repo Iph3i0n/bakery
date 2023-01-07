@@ -4,6 +4,7 @@
     logo: undefined,
     "logo-alt": undefined,
     bg: "primary",
+    flush: false,
   };
   export const aria = { Role: "banner" };
 
@@ -26,10 +27,18 @@
 
   @js const bg = self.props.bg ?? 'primary';
   :host {
+    position: sticky;
+    top: 0;
+    left: 0;
     display: block;
+    theme.colour(bg);
     theme.border("body", undefined, "bottom");
     theme.margin("block", "bottom");
-    theme.padding("block", "left", "right");
+    z-index: ":spec.z_indexes.overlay";
+  }
+
+  .content {
+    margin: auto;
   }
 
   .logo-col {
@@ -116,9 +125,8 @@
 
   .right-actions {
     display: block;
-    text-align: right;
     theme.padding("small_block");
-    theme.colour("body");
+    theme.colour("primary");
     theme.border("body", undefined, "top");
   }
 
@@ -139,10 +147,10 @@
   }
 
   @media ":spec.screen_sizes.lg.query" {
-    :host {
+    .content {
       display: flex;
       align-items: center;
-      theme.colour(bg);
+      theme.padding("block", "left", "right");
     }
 
     .logo-col .expand-button {
@@ -173,6 +181,7 @@
       border-top: none;
       background-color: transparent;
       flex: 1;
+      text-align: right;
     }
 
     .main-content ::slotted(a:hover),
@@ -182,29 +191,45 @@
       transform: scale(1.2);
     }
   }
+
+  @if !self.props.flush {
+    @media ":spec.screen_sizes.lg.query" {
+      .content {
+        max-width: ":spec.screen_sizes.lg.width";
+      }
+    }
+
+    @media ":spec.screen_sizes.xl.query" {
+      .content {
+        max-width: ":spec.screen_sizes.xl.width";
+      }
+    }
+  }
 </style>
 
-<div class="logo-col">
-  <a href="/">
-    <img src=":self.props.logo" alt=":self.props['logo-alt']" />
-  </a>
+<div class="content">
+  <div class="logo-col">
+    <a href="/">
+      <img src=":self.props.logo" alt=":self.props['logo-alt']" />
+    </a>
 
-  <div class="expand-button" on:click="on_toggle" tabindex="0">
-    <t-icon
-      name="menu-3"
-      size="body_large"
-      colour=":self.props.bg ?? 'primary'"
-      text
-    ></t-icon>
+    <div class="expand-button" on:click="on_toggle" tabindex="0">
+      <t-icon
+        name="menu-3"
+        size="body_large"
+        colour=":self.props.bg ?? 'primary'"
+        text
+      ></t-icon>
+    </div>
   </div>
-</div>
 
-<div class="main-links">
-  <div class="main-content scrollable">
-    <slot></slot>
+  <div class="main-links">
+    <div class="main-content scrollable">
+      <slot></slot>
+    </div>
   </div>
-</div>
 
-<div class="right-actions">
-  <slot name="right" on:slotchange="on_right"></slot>
+  <div class="right-actions">
+    <slot name="right" on:slotchange="on_right"></slot>
+  </div>
 </div>
