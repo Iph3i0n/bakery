@@ -88,7 +88,7 @@
   }
 
   function linkify() {
-    const url = window.prompt("Enter the link URL");
+    const url = window.prompt("URL");
     if (url) pell.exec("createLink", url);
   }
 
@@ -204,12 +204,16 @@
       <s:for subject=":formats" key="format">
         <s:if check=":state.block_format === format.value">
           <option value=":format.value" selected>
-            <s:text use=":format.title"></s:text>
+            <slot name=":'format-' + format.value">
+              <s:text use=":format.title"></s:text>
+            </slot>
           </option>
         </s:if>
         <s:if check=":state.block_format !== format.value">
           <option value=":format.value">
-            <s:text use=":format.title"></s:text>
+            <slot name=":'format-' + format.value">
+              <s:text use=":format.title"></s:text>
+            </slot>
           </option>
         </s:if>
       </s:for>
