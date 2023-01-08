@@ -16,7 +16,7 @@ export const borders: Borders = {
     radius: "0.5rem",
   },
   small: {
-    width: "1px",
+    width: "0",
     render: "solid",
     radius: "0.25rem",
   },

@@ -1,0 +1,298 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import { unsafe_import, link_css } from "../fetch-resources.ts";
+
+  export const name = "f-richtext";
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    type: "text",
+    required: false,
+    validate: undefined,
+  };
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "input" };
+
+  const editor = CreateRef();
+  const selector = CreateRef();
+  const slot = slotted();
+  self.addEventListener(LoadedEvent.Key, async () => {
+    await unsafe_import("https://unpkg.com/pell");
+    pell.init({
+      element: editor.current,
+      onChange: (html) => {
+        self.value = html;
+      },
+      defaultParagraphSeparator: "p",
+    });
+  });
+
+  let state = {
+    block_format: "p",
+    is_bold: false,
+    is_italic: false,
+    is_strikethrough: false,
+    is_underline: false,
+  };
+  function update_currents() {
+    state = {
+      block_format: document.queryCommandValue("formatBlock") || "p",
+      is_bold: document.queryCommandValue("bold") === "true",
+      is_italic: document.queryCommandValue("italic") === "true",
+      is_strikethrough: document.queryCommandValue("strikethrough") === "true",
+      is_underline: document.queryCommandValue("underline") === "true",
+    };
+    selector.current.value = state.block_format;
+    self.dispatchEvent(new ShouldRender());
+  }
+  self.addEventListener("keyup", update_currents);
+  self.addEventListener("click", update_currents);
+
+  self.addEventListener("focus", () => {});
+
+  function styleify(e) {
+    const target = e.currentTarget.value;
+    pell.exec("formatBlock", `<${target}>`);
+  }
+
+  function boldify() {
+    pell.exec("bold", true);
+  }
+
+  function italicify() {
+    pell.exec("italic", true);
+  }
+
+  function strikethroughify() {
+    pell.exec("strikethrough", true);
+  }
+
+  function underlinify() {
+    pell.exec("underline", true);
+  }
+
+  function ulify() {
+    pell.exec("insertUnorderedList");
+  }
+
+  function olify() {
+    pell.exec("insertOrderedList");
+  }
+
+  function lineify() {
+    pell.exec("insertHorizontalRule");
+  }
+
+  function linkify() {
+    const url = window.prompt("Enter the link URL");
+    if (url) pell.exec("createLink", url);
+  }
+
+  const formats = [
+    { title: "Heading 1", value: "h1" },
+    { title: "Heading 2", value: "h2" },
+    { title: "Heading 3", value: "h3" },
+    { title: "Heading 4", value: "h4" },
+    { title: "Heading 5", value: "h5" },
+    { title: "Heading 6", value: "h6" },
+    { title: "Paragraph", value: "p" },
+    { title: "Quote", value: "blockquote" },
+    { title: "Code", value: "code" },
+  ];
+</script>
+<style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+  @insert ../styles/input.pss;
+  @insert ../styles/richtext.pss;
+
+  .textarea-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    theme.padding("small_block");
+    theme.colour("body");
+    theme.text("body", "no-margin");
+    theme.border("body", "contrast", "bottom");
+    border-top-left-radius: ":spec.borders.body.radius";
+    border-top-right-radius: ":spec.borders.body.radius";
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    min-height: 6rem;
+    theme.text("body", "no-margin");
+    theme.padding("small_block", "left", "right");
+    white-space: pre;
+  }
+
+  span:not(.caret) {
+    animation-play-state: paused;
+  }
+
+  .textarea-label .spacer { flex: 1; }
+
+  .textarea-label button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    theme.border("small");
+    theme.colour("surface");
+    width: 2em;
+    height: 2em;
+    theme.margin("badge", "left", "right");
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .textarea-label button.selected {
+    theme.colour("body");
+  }
+
+  .textarea-label button:focus {
+    outline: none;
+    theme.colour("surface", 0.9);
+  }
+
+  .textarea-label select {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance:none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+
+    cursor: pointer;
+    theme.padding("small_block", "left", "right");
+    padding-right: 2rem;
+    theme.margin("badge", "left", "right");
+    theme.border("small");
+    theme.text("small", "no-margin");
+    theme.colour("surface");
+    height: 2em;
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .textarea-label select:focus {
+    outline: none;
+    theme.colour("surface", 0.9);
+  }
+
+  .pell-actionbar {
+    display: none;
+  }
+
+  .pell-content {
+    flex: 1;
+  }
+
+  .pell-content:focus {
+    outline: none;
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class="textarea-label">
+    <slot></slot>
+    <div class="spacer"></div>
+
+    <select on:change="styleify" s:ref="selector">
+      <s:for subject=":formats" key="format">
+        <s:if check=":state.block_format === format.value">
+          <option value=":format.value" selected>
+            <s:text use=":format.title"></s:text>
+          </option>
+        </s:if>
+        <s:if check=":state.block_format !== format.value">
+          <option value=":format.value">
+            <s:text use=":format.title"></s:text>
+          </option>
+        </s:if>
+      </s:for>
+    </select>
+
+    <button
+      class=":c(['selected', state.is_bold])"
+      type="button"
+      on:click="boldify"
+    >
+      <t-icon name="bold" colour="surface" size="body" plain text></t-icon>
+    </button>
+
+    <button
+      class=":c(['selected', state.is_italic])"
+      type="button"
+      on:click="italicify"
+    >
+      <t-icon name="italic" colour="surface" size="body" plain text></t-icon>
+    </button>
+
+    <button
+      class=":c(['selected', state.is_underline])"
+      type="button"
+      on:click="underlinify"
+    >
+      <t-icon name="underline" colour="surface" size="body" plain text></t-icon>
+    </button>
+
+    <button
+      class=":c(['selected', state.is_strikethrough])"
+      type="button"
+      on:click="strikethroughify"
+    >
+      <t-icon
+        name="strikethrough"
+        colour="surface"
+        size="body"
+        plain
+        text
+      ></t-icon>
+    </button>
+
+    <button type="button" on:click="ulify">
+      <t-icon
+        name="list-unordered"
+        colour="surface"
+        size="body"
+        plain
+        text
+      ></t-icon>
+    </button>
+
+    <button type="button" on:click="olify">
+      <t-icon
+        name="list-ordered"
+        colour="surface"
+        size="body"
+        plain
+        text
+      ></t-icon>
+    </button>
+
+    <button type="button" on:click="linkify">
+      <t-icon name="link" colour="surface" size="body" plain text></t-icon>
+    </button>
+  </div>
+  <div class="content" s:ref="editor"></div>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

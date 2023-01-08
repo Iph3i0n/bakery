@@ -1,11 +1,12 @@
 import { IComponent, RenderEvent, LoadedEvent } from "./deps.ts";
 
-export function link_font(url: string, creator: string, self: IComponent) {
+const loaded_css: Record<string, boolean> = {};
+
+export function link_css(url: string, self: IComponent) {
   function make_sheet() {
     const ele = document.createElement("link");
     ele.href = url;
     ele.rel = "stylesheet";
-    ele.setAttribute("data-creator", creator);
     return ele;
   }
 
@@ -14,8 +15,9 @@ export function link_font(url: string, creator: string, self: IComponent) {
   });
 
   self.addEventListener(LoadedEvent.Key, () => {
-    if (!document.head.querySelector(`link[data-creator="${creator}"]`))
-      document.head.append(make_sheet());
+    if (!loaded_css[url]) document.head.append(make_sheet());
+
+    loaded_css[url] = true;
   });
 }
 

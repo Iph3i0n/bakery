@@ -64,6 +64,9 @@
               e("span", { slot: "on" }, "Option Two")
             ),
           },
+          richtext: {
+            basic: e("f-richtext", { name: "test-richtext" }, "Hello World"),
+          },
         },
       };
     </script>
@@ -111,6 +114,9 @@
             </l-col>
             <l-col xs="12">
               <div data-example="form.singleselect.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="form.richtext.basic"></div>
             </l-col>
           </l-row>
         </l-container>

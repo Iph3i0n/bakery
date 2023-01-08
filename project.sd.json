@@ -15,6 +15,7 @@
     "./src/templates/f-multiselect.std",
     "./src/templates/f-singleselect.std",
     "./src/templates/f-toggle.std",
+    "./src/templates/f-richtext.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",

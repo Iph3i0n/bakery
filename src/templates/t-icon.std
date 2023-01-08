@@ -1,20 +1,20 @@
 <script>
   import * as theme from "../theme.ts";
   import * as spec from "../spec.ts";
-  import { link_font } from "../fetch-resources.ts";
+  import { link_css } from "../fetch-resources.ts";
   export const name = "t-icon";
   export const props = {
     name: undefined,
     fill: false,
+    plain: false,
     size: "body",
     colour: "body",
     text: false,
     spin: false,
   };
 
-  link_font(
+  link_css(
     "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css",
-    "t-icon",
     self
   );
 </script>
@@ -64,5 +64,5 @@
 </style>
 
 <span
-  class=":`ri-${self.props.name}-${self.props.fill ? 'fill' : 'line'}`"
+  class=":`ri-${self.props.name}${self.props.plain ? '' : self.props.fill ? '-fill' : '-line'}`"
 ></span>

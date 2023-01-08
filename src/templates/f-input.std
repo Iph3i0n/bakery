@@ -2,7 +2,7 @@
   import FormElement from "../form-element.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
-  import { link_font } from "../fetch-resources.ts";
+  import { link_css } from "../fetch-resources.ts";
 
   export const name = "f-input";
   export const props = {
@@ -18,9 +18,8 @@
   export const form = true;
   export const aria = { Role: "input" };
 
-  link_font(
+  link_css(
     "https://cdn.rawgit.com/noppa/text-security/master/dist/text-security.css",
-    "f-input",
     self
   );
 

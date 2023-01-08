@@ -1,0 +1,50 @@
+@js const theme = require("../theme.ts");
+@js const spec = require("../spec.ts");
+
+.content p {
+  theme.text("body");
+}
+
+.content h1 {
+  theme.text("h1");
+}
+
+.content h2 {
+  theme.text("h2");
+}
+
+.content h3 {
+  theme.text("h3");
+}
+
+.content h4 {
+  theme.text("h4");
+}
+
+.content h5 {
+  theme.text("h5");
+}
+
+.content h6 {
+  theme.text("h6");
+}
+
+.content code {
+  theme.text("code");
+}
+
+.content blockquote {
+  theme.padding("block");
+  theme.text("body");
+  theme.border("body", "contrast", "left");
+}
+
+.content ul,
+.content ol  {
+  theme.margin("small_block", "top", "bottom");
+  padding: 0 0 0 1.5em;
+}
+
+.content a {
+  theme.textcolour("primary");
+}
