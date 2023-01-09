@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-window-prefix no-unused-vars prefer-const
 const SUPPORTS_SHADOW_SELECTION =
   typeof window.ShadowRoot.prototype.getSelection === "function";
 const SUPPORTS_BEFORE_INPUT =
