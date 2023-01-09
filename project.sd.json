@@ -44,7 +44,8 @@
     "./src/templates/u-text.std",
     "./src/templates/u-global.std",
     "./src/templates/u-if.std",
-    "./src/templates/u-each.std"
+    "./src/templates/u-each.std",
+    "./src/templates/u-paginator.std"
   ],
   "global_css": "./global.pss"
 }

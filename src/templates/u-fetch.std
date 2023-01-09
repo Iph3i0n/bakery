@@ -1,5 +1,6 @@
 <script>
   import { Provider } from "../data.ts";
+  import PaginationEvent from "../pagination.ts";
 
   export const name = "u-fetch";
   export const props = {
@@ -10,6 +11,8 @@
     "no-cache": false,
   };
 
+  let skip = 0;
+  let take = 50;
   const DATA_KEY = () => "__BAKERY_DATA__" + self.props.url;
 
   function Language() {
@@ -21,6 +24,25 @@
 
   let loading = true;
 
+  const options = {
+    locale: () => Language(),
+    skip: () => skip,
+    take: () => take,
+  };
+
+  function process_url(url) {
+    let result = url;
+    for (const key in options) url = url.replaceAll(`{${key}}`, options[key]());
+
+    return url;
+  }
+
+  self.addEventListener(PaginationEvent.Key, (e) => {
+    skip = e.Skip;
+    take = e.Take;
+    get_data();
+  });
+
   async function get_data() {
     if (!self.props["no-cache"]) {
       const cached = window.localStorage.getItem(DATA_KEY());
@@ -29,15 +51,13 @@
 
     loading = !!provider.data;
     self.dispatchEvent(new ShouldRender());
-    const r = await fetch(self.props.url.replace("{locale}", Language()));
+    const r = await fetch(process_url(self.props.url));
     let final;
 
     if (!r.ok)
       if (self.props.fallback) {
         console.error(r);
-        const res = await fetch(
-          self.props.fallback.replace("{locale}", Language())
-        );
+        const res = await fetch(process_url(self.props.fallback));
 
         if (!res.ok) throw res;
 

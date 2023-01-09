@@ -1,0 +1,149 @@
+<script>
+  import { Receiver } from "../data.ts";
+  import PaginationEvent from "../pagination.ts";
+  import c from "../classes.ts";
+
+  export const name = "u-paginator";
+  export const props = {
+    total: undefined,
+    size: "50",
+  };
+  export const base = Receiver;
+
+  self.accessor = "total";
+
+  let skip = 0;
+
+  const take = () => parseInt(self.props.size);
+
+  const page = () => skip / take();
+  const total_pages = () => Math.ceil(self.data / take());
+
+  const pages = () =>
+    Array.apply(null, total_pages()).map((i) => ({
+      label: i + 1,
+      current: page() === i,
+      last: i === total_pages() - 1,
+      first: i === 0,
+    }));
+
+  const label = (page) => (page + 1).toString();
+
+  function set_page(page) {
+    return () => {
+      skip = page * take();
+      self.dispatchEvent(new PaginationEvent(skip, take()));
+    };
+  }
+
+  self.addEventListener(LoadedEvent.Key, () => {
+    self.dispatchEvent(new PaginationEvent(skip, take()));
+  });
+</script>
+
+<style>
+  @js const theme = require("../theme.ts");
+
+  :host {
+    display: flex;
+    theme.colour("body");
+    theme.border("body");
+    theme.shadow("body");
+    align-items: center;
+    justify-content: center;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    theme.border("small");
+    theme.colour("surface");
+    theme.text("body_large", "no-margin");
+    width: 1.2em;
+    height: 1.2em;
+    theme.margin("small_block");
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .option:not(.disabled) {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .option:not(.disabled):hover,
+  .option:not(.disabled):focus {
+    outline: none;
+    theme.colour("surface", 0.9);
+  }
+
+  .option.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .option.disabled {
+    opacity: 0.5;
+  }
+
+  @media screen and (max-width: 500px) {
+    .option.numbered {
+      display: none;
+    }
+  }
+</style>
+
+<div class="option" on:click="set_page(0)">
+  <t-icon name="skip-back" size="body_large" colour="surface" text></t-icon>
+</div>
+
+<div
+  class=":c('option', ['hidden', page() <= 0])"
+  on:click="set_page(page() - 1)"
+>
+  <t-icon name="arrow-left-s" size="body_large" colour="surface" text></t-icon>
+</div>
+
+<div
+  class=":c('option', 'numbered', ['hidden', page() <= 1])"
+  on:click="set_page(page() - 2)"
+>
+  <s:text use=":label(page() - 2)"></s:text>
+</div>
+
+<div
+  class=":c('option', 'numbered', ['hidden', page() <= 0])"
+  on:click="set_page(page() - 1)"
+>
+  <s:text use=":label(page() - 1)"></s:text>
+</div>
+
+<div class="option disabled">
+  <s:text use=":label(page())"></s:text>
+</div>
+
+<div
+  class=":c('option', 'numbered', ['hidden', page() >= total_pages() - 1])"
+  on:click="set_page(page() + 1)"
+>
+  <s:text use=":label(page() + 1)"></s:text>
+</div>
+
+<div
+  class=":c('option', 'numbered', ['hidden', page() >= total_pages() - 2])"
+  on:click="set_page(page() + 2)"
+>
+  <s:text use=":label(page() + 2)"></s:text>
+</div>
+
+<div
+  class=":c('option', ['hidden', page() >= total_pages() - 1])"
+  on:click="set_page(page() + 1)"
+>
+  <t-icon name="arrow-right-s" size="body_large" colour="surface" text></t-icon>
+</div>
+
+<div class="option" on:click="set_page(total_pages() - 1)">
+  <t-icon name="skip-forward" size="body_large" colour="surface" text></t-icon>
+</div>
