@@ -357,6 +357,12 @@ export const text_styles: TextStyles = {
     font_size: "0.8rem",
     margin: "paragraph",
   },
+  badge: {
+    font_family: "'Poppins', sans-serif",
+    font_weight: "300",
+    font_size: "0.6rem",
+    margin: "zero",
+  },
   code: {
     font_family: "'Roboto Mono', monospace",
     font_weight: "400",
@@ -367,6 +373,5 @@ export const text_styles: TextStyles = {
 
 export const animation_speeds: Record<string, string> = {
   fast: "100ms",
-  slow: "500ms",
-  very_slow: "1000ms",
+  slow: "300ms",
 };

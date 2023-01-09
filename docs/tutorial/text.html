@@ -63,6 +63,13 @@
               e("span", {}, "Text")
             ),
           },
+          richtext: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/rich-text.json", key: "text" },
+              e("t-richtext", { use: "text.data" })
+            ),
+          },
         },
       };
     </script>
@@ -104,6 +111,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="text.crumbs.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.richtext.basic"></div>
           </l-col>
         </l-row>
       </l-container>

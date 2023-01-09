@@ -18,3 +18,4 @@
     theme.border("body", undefined, "bottom");
   }
 </style>
+<slot></slot>

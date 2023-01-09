@@ -1,0 +1,116 @@
+<script>
+  import { Receiver } from "../data.ts";
+
+  export const name = "t-richtext";
+  export const props = {
+    use: undefined,
+  };
+
+  const content = CreateRef();
+
+  const allowed_roots = [
+    "p",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "blockquote",
+    "pre",
+    "ul",
+    "ol",
+  ];
+
+  const allowed_children = ["b", "i", "a", "u", "li", "s"];
+
+  const receiver = new Receiver(self, self.props.use);
+
+  /** @param {HTMLAnchorElement} a */
+  function is_current(a) {
+    const input = new URL(a.href);
+    if (
+      input.host !== window.location.host ||
+      input.protocol !== window.location.protocol
+    )
+      return false;
+    return true;
+  }
+
+  /** @param {HTMLElement} e */
+  function parse_children(e) {
+    const result = [];
+    for (const c of e.childNodes)
+      if (c instanceof Text) result.push(c.textContent);
+      else if (!(c instanceof HTMLElement)) continue;
+      else if (c instanceof HTMLAnchorElement)
+        result.push({
+          tag: "a",
+          attr: {
+            href: c.href,
+            target: is_current(c) ? undefined : "_blank",
+            rel: is_current(c) ? undefined : "noopener noreferrer",
+          },
+          children: parse_children(c),
+        });
+      else if (allowed_children.includes(c.tagName.toLowerCase()))
+        result.push(parse_element(c));
+
+    return result;
+  }
+
+  /** @param {HTMLElement} e */
+  function parse_element(e) {
+    return {
+      tag: e.tagName.toLowerCase(),
+      children: parse_children(e),
+    };
+  }
+
+  const data = () => {
+    const result = [];
+    const html = receiver.data;
+    if (!html) return [];
+
+    const template = document.createElement("template");
+    template.innerHTML = html;
+    console.log(template.content);
+    for (const root of template.content.children)
+      if (!(root instanceof HTMLElement)) continue;
+      else if (!allowed_roots.includes(root.tagName.toLowerCase())) continue;
+      else result.push(parse_element(root));
+
+    return result;
+  };
+
+  function insert_children(target, data) {
+    for (const child of data ?? []) {
+      if (typeof child === "string") {
+        target.appendChild(document.createTextNode(child));
+      } else {
+        const input = document.createElement(child.tag);
+        for (const attr in child.attr ?? {})
+          input.setAttribute(attr, child.attr[attr]);
+        insert_children(input, child.children);
+        target.appendChild(input);
+      }
+    }
+  }
+
+  self.addEventListener(RenderEvent.Key, () => {
+    const c = content.current;
+    if (!c) return;
+    c.innerHTML = "";
+    console.log(data());
+    for (const root of data()) {
+      const input = document.createElement(root.tag);
+      insert_children(input, root.children);
+      c.appendChild(input);
+    }
+  });
+</script>
+<style>
+  @insert ../styles/richtext.pss;
+</style>
+
+<div class="content" s:ref="content"></div>

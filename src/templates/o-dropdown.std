@@ -7,7 +7,7 @@
     target: undefined,
     trigger: undefined,
     width: undefined,
-    height: "5rem",
+    height: "12rem",
     scrollable: false,
   };
 

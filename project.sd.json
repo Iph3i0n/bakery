@@ -38,6 +38,7 @@
     "./src/templates/t-localised.std",
     "./src/templates/t-badge.std",
     "./src/templates/t-crumbs.std",
+    "./src/templates/t-richtext.std",
 
     "./src/templates/u-fetch.std",
     "./src/templates/u-text.std",

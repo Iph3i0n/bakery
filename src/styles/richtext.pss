@@ -41,6 +41,7 @@
 
 .content ul,
 .content ol  {
+  theme.text("body", "no-margin");
   theme.margin("small_block", "top", "bottom");
   padding: 0 0 0 1.5em;
 }
