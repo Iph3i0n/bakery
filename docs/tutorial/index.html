@@ -39,7 +39,79 @@
                 This will allow you to use all components with ease in any
                 project if you include this in the head of the HTML. It can be
                 included after the body but this can result in flashes on load,
-                as unknown components will be rendered as if they were
+                as unknown components will be rendered as if they were plain
+                text by your browser.
+              </t-localised>
+            </t-paragraph>
+            <t-paragraph>
+              <t-localised>
+                It would be recommended to include a version number, so as it
+                avoid any risk of breaking changes in the future.
+              </t-localised>
+            </t-paragraph>
+            <t-heading level="h3">
+              <t-localised>NPM install</t-localised>
+            </t-heading>
+            <t-paragraph>
+              <t-localised>
+                If you want to bundle the components in with your own code then
+                you can download the deliverable from NPM. It is a standalone
+                module with dependencies bundled in so this will not improve
+                your deliverable size.
+              </t-localised>
+            </t-paragraph>
+            <t-code language="bash">npm install @paulpopat/bakery</t-code>
+            <t-heading level="h3">
+              <t-localised>Build from source</t-localised>
+            </t-heading>
+            <t-paragraph>
+              <t-localised>
+                If you want to make updates or bundle the components within your
+                own app, whilst allowing for tree shaking and optimisations
+                during minimisation, you could build from source.
+              </t-localised>
+            </t-paragraph>
+            <t-paragraph>
+              <t-localised>
+                <t-link href="https://deno.land/" target="_blank" private>
+                  Deno
+                </t-link>
+                is required by this project so make sure you have that installed
+                first.
+              </t-localised>
+            </t-paragraph>
+            <t-code language="bash">
+              git clone https://github.com/PaulPopat/bakery.git cd bakery deno
+              task install deno task build
+            </t-code>
+            <t-paragraph>
+              <t-localised>
+                The project uses a framework called
+                <t-link
+                  href="https://deno.land/x/wholemeal"
+                  target="_blank"
+                  private
+                >
+                  Wholemeal
+                </t-link>
+                in order to compile the components. Currently, wholemeal
+                contains no methods for including none component code, however
+                adding a standard TypeScript file to the "templates" part of the
+                project json should compile as a workaround.
+              </t-localised>
+            </t-paragraph>
+            <t-paragraph>
+              <t-localised>
+                While this may work, I do not recommend it as the component
+                library is rather clever about asynchronously loading in content
+                that is from large external libraries and the extra work will
+                probably not result in better performance.
+              </t-localised>
+            </t-paragraph>
+            <t-paragraph>
+              <t-localised>
+                A better method would be to include the CDN link for this in
+                your head tag and then including your behaviour elsewhere.
               </t-localised>
             </t-paragraph>
           </l-col>
