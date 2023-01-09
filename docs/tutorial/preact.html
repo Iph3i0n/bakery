@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bakery Docs</title>
+    <script src="/dist/bundle.min.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <div id="root"></div>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+    <script type="text/babel" data-presets="react" data-type="module">
+      import { h, Component, render } from "https://unpkg.com/preact?module";
+      const React = {
+        createElement: h,
+      };
+
+      function Table() {
+        return (
+          <l-table
+            data={[
+              {
+                username: "Paul Popat",
+                email: "paul@popatux.co.uk",
+                dob: "Not Telling",
+              },
+              {
+                username: "Joe Blogs",
+                email: "joe.blogs@popatux.co.uk",
+                dob: "20/13/1964",
+              },
+              {
+                username: "Jill Doe",
+                email: "jill.doe@popatux.co.uk",
+                dob: "45/13/1982",
+              },
+            ]}
+          >
+            <table-row slot="head">
+              <table-cell>Username</table-cell>
+              <table-cell>Email</table-cell>
+              <table-cell>Date of Birth</table-cell>
+            </table-row>
+            <table-row>
+              <table-cell use="row.username"></table-cell>
+              <table-cell use="row.email"></table-cell>
+              <table-cell use="row.dob"></table-cell>
+            </table-row>
+          </l-table>
+        );
+      }
+
+      function RichText() {
+        return <t-richtext language="javascript" data="<p>Hello world</p>" />;
+      }
+
+      function Example({ code, children }) {
+        return (
+          <d-panel colour="surface" bordered>
+            <l-row>
+              <l-col xs="12">{children}</l-col>
+            </l-row>
+            <t-code language="js" file="*.jsx" flush>
+              {code}
+            </t-code>
+          </d-panel>
+        );
+      }
+
+      function App(props) {
+        return (
+          <l-container>
+            <l-row>
+              <l-col xs="12">
+                <t-heading id="forms" level="h2">
+                  <t-localised>Preact</t-localised>
+                </t-heading>
+                <t-paragraph>
+                  <t-localised>
+                    If you have read the React page and are a little
+                    disappointed, there is a better option. Preact works much
+                    better with web components and will automatically set the
+                    data property on the component when instantiating.
+                  </t-localised>
+                </t-paragraph>
+                <t-paragraph>
+                  <t-localised>
+                    Check out the code for it at{" "}
+                    <t-link
+                      href="https://github.com/PaulPopat/bakery/blob/master/docs/tutorial/preact.html"
+                      target="_blank"
+                      private
+                    >
+                      GitHub
+                    </t-link>
+                    .
+                  </t-localised>
+                </t-paragraph>
+              </l-col>
+            </l-row>
+            <l-row>
+              <l-col xs="12">
+                <Example
+                  code={`
+                    function Table() {
+                      return (
+                        <l-table
+                          data={[
+                            {
+                              username: "Paul Popat",
+                              email: "paul@popatux.co.uk",
+                              dob: "Not Telling",
+                            },
+                            {
+                              username: "Joe Blogs",
+                              email: "joe.blogs@popatux.co.uk",
+                              dob: "20/13/1964",
+                            },
+                            {
+                              username: "Jill Doe",
+                              email: "jill.doe@popatux.co.uk",
+                              dob: "45/13/1982",
+                            },
+                          ]}
+                        >
+                          <table-row slot="head">
+                            <table-cell>Username</table-cell>
+                            <table-cell>Email</table-cell>
+                            <table-cell>Date of Birth</table-cell>
+                          </table-row>
+                          <table-row>
+                            <table-cell use="row.username"></table-cell>
+                            <table-cell use="row.email"></table-cell>
+                            <table-cell use="row.dob"></table-cell>
+                          </table-row>
+                        </l-table>
+                      );
+                    }`}
+                >
+                  <Table />
+                </Example>
+              </l-col>
+            </l-row>
+            <l-row>
+              <l-col xs="12">
+                <Example
+                  code={`
+                    function RichText() {
+                      return <t-richtext language="javascript" data="<p>Hello world</p>" />;
+                    }`}
+                >
+                  <RichText />
+                </Example>
+              </l-col>
+            </l-row>
+          </l-container>
+        );
+      }
+
+      render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

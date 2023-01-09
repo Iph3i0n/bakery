@@ -1,4 +1,4 @@
-import { IComponent, ShouldRender } from "./deps.ts";
+import { IComponent, LoadedEvent, ShouldRender } from "./deps.ts";
 
 class ProviderAddedEvent extends Event {
   constructor() {
@@ -108,44 +108,60 @@ export class Provider {
   }
 }
 
-export class Receiver {
-  readonly #self: IComponent;
-  readonly #key: string;
-  readonly #filter: (data: unknown) => unknown;
+export abstract class Receiver extends HTMLElement {
+  abstract readonly props: Record<string, string>;
+
+  #key = "";
+  #filter: (data: unknown) => unknown = (a) => a;
 
   #data: unknown = undefined;
+
+  accessor = "use";
 
   readonly #listener = (e: Event) => {
     if (!(e instanceof DataChangedEvent))
       throw new Error("Change events must come from a DataChangedEvent");
     if (e.Key !== this.#key) return;
 
-    this.#data = e.Value;
+    this.#data = this.#filter(e.Value);
+
     setTimeout(() => {
-      this.#self.dispatchEvent(new ShouldRender());
+      this.dispatchEvent(new ShouldRender());
     });
   };
 
-  constructor(self: IComponent, accessor: string) {
-    this.#self = self;
-    const [key] = accessor.split(/[.\[\(]/, 1);
-    const remainder = accessor.replace(key, "");
-    this.#filter = new Function("data", "return data" + (remainder ?? "")) as (
-      data: unknown
-    ) => unknown;
-    this.#key = key;
+  constructor() {
+    super();
 
-    self.addEventListener(DataChangedEvent.Key, this.#listener);
-    self.dispatchEvent(new RequestDataEvent(key));
+    this.addEventListener(LoadedEvent.Key, () => {
+      const a = this.props[this.accessor];
+      if (!a) return;
 
-    document.addEventListener(ProviderAddedEvent.Key, () =>
-      self.dispatchEvent(new RequestDataEvent(key))
-    );
+      const [key] = a.split(/[.\[\(]/, 1);
+      const remainder = a.replace(key, "");
+      this.#filter = new Function(
+        "data",
+        "return data" + (remainder ?? "")
+      ) as (data: unknown) => unknown;
+      this.#key = key;
+
+      this.addEventListener(DataChangedEvent.Key, this.#listener);
+      this.dispatchEvent(new RequestDataEvent(key));
+
+      document.addEventListener(ProviderAddedEvent.Key, () =>
+        this.dispatchEvent(new RequestDataEvent(key))
+      );
+    });
+  }
+
+  set data(data: unknown) {
+    this.#data = data;
+    this.dispatchEvent(new ShouldRender());
   }
 
   get data() {
     if (!this.#data) return undefined;
 
-    return this.#filter(this.#data);
+    return this.#data;
   }
 }

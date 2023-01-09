@@ -3,10 +3,9 @@
 
   export const name = "l-table";
   export const props = {
-    accessor: undefined,
+    use: undefined,
   };
-
-  const receiver = new Receiver(self, self.props.accessor);
+  export const base = Receiver;
 
   let body_schema = [];
   let head_schema = [];
@@ -69,7 +68,7 @@
   }
 
   thead tr {
-    theme.border("body", undefined, "bottom");
+    theme.border("body", "contrast", "bottom");
     theme.colour("body");
   }
 
@@ -112,8 +111,8 @@
     </s:for>
   </thead>
   <tbody>
-    <s:if check=":receiver.data">
-      <s:for subject=":receiver.data" key="row_data">
+    <s:if check=":self.data">
+      <s:for subject=":self.data" key="row_data">
         <s:for subject=":body_schema" key="row">
           <tr>
             <s:for subject=":row.content" key="cell">

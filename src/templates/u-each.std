@@ -6,11 +6,12 @@
     subject: undefined,
     key: undefined,
   };
+  export const base = Receiver;
+
+  self.accessor = "subject";
 
   self.style.display = "none";
   const id = "c" + crypto.randomUUID();
-
-  const receiver = new Receiver(self, self.props.subject);
   let subject;
 
   function insertAfter(newNode, existingNode) {
@@ -26,14 +27,14 @@
   });
 
   self.addEventListener(RenderEvent.Key, () => {
-    if (!subject || !Array.isArray(receiver.data)) return;
+    if (!subject || !Array.isArray(self.data)) return;
     for (const ele of self.parentElement.querySelectorAll(
       `[data-each-id="${id}"]`
     ))
       ele.remove();
 
     let previous = self;
-    for (const item of receiver.data) {
+    for (const item of self.data) {
       const input = subject.cloneNode(true);
       insertAfter(input, previous);
       previous = input;

@@ -65,7 +65,7 @@ document.addEventListener(
           <t-code
             language="html"
             file="*.html"
-            accessor="ex.${accessor_statement}.toString()"
+            use="ex.${accessor_statement}.toString()"
             flush
           ></t-code>
         </d-panel>`;

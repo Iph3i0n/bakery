@@ -5,6 +5,7 @@
   export const props = {
     use: undefined,
   };
+  export const base = Receiver;
 
   const content = CreateRef();
 
@@ -23,8 +24,6 @@
   ];
 
   const allowed_children = ["b", "i", "a", "u", "li", "s"];
-
-  const receiver = new Receiver(self, self.props.use);
 
   /** @param {HTMLAnchorElement} a */
   function is_current(a) {
@@ -69,12 +68,11 @@
 
   const data = () => {
     const result = [];
-    const html = receiver.data;
+    const html = self.data;
     if (!html) return [];
 
     const template = document.createElement("template");
     template.innerHTML = html;
-    console.log(template.content);
     for (const root of template.content.children)
       if (!(root instanceof HTMLElement)) continue;
       else if (!allowed_roots.includes(root.tagName.toLowerCase())) continue;
@@ -101,7 +99,6 @@
     const c = content.current;
     if (!c) return;
     c.innerHTML = "";
-    console.log(data());
     for (const root of data()) {
       const input = document.createElement(root.tag);
       insert_children(input, root.children);

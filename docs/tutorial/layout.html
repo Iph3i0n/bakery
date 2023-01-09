@@ -73,20 +73,20 @@
               { url: "/examples/table-data.json", key: "table" },
               e(
                 "l-table",
-                { accessor: "table.content" },
+                { use: "table.content" },
                 e(
-                  "row",
+                  "table-row",
                   { slot: "head" },
-                  e("cell", {}, "Username"),
-                  e("cell", {}, "Email"),
-                  e("cell", {}, "Date of Birth")
+                  e("table-cell", {}, "Username"),
+                  e("table-cell", {}, "Email"),
+                  e("table-cell", {}, "Date of Birth")
                 ),
                 e(
-                  "row",
+                  "table-row",
                   {},
-                  e("cell", { use: "row.username" }),
-                  e("cell", { use: "row.email" }),
-                  e("cell", { use: "row.dob" })
+                  e("table-cell", { use: "row.username" }),
+                  e("table-cell", { use: "row.email" }),
+                  e("table-cell", { use: "row.dob" })
                 )
               )
             ),

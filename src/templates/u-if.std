@@ -3,9 +3,10 @@
 
   export const name = "u-if";
   export const props = { check: undefined };
+  export const base = Receiver;
 
-  const receiver = new Receiver(self, self.props.check);
+  self.accessor = "check";
 </script>
-<s:if check=":receiver.data">
+<s:if check=":self.data">
   <slot></slot>
 </s:if>
