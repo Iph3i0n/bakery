@@ -22,8 +22,6 @@
 
   const provider = new Provider(self, self.props.key);
 
-  let loading = true;
-
   const options = {
     locale: () => Language(),
     skip: () => skip,
@@ -49,8 +47,6 @@
       if (cached) provider.data = JSON.parse(cached);
     }
 
-    loading = !!provider.data;
-    self.dispatchEvent(new ShouldRender());
     const r = await fetch(process_url(self.props.url));
     let final;
 
@@ -65,8 +61,6 @@
       } else throw r;
     else final = await r.json();
 
-    loading = false;
-    self.dispatchEvent(new ShouldRender());
     provider.data = final;
     if (!self.props["no-cache"])
       window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
@@ -80,13 +74,5 @@
     get_data();
   });
 </script>
-<s:if check=":!loading">
-  <slot></slot>
-</s:if>
-<s:if check=":loading && !self.props.overlay">
-  <slot name="loading"></slot>
-</s:if>
 
-<d-loading
-  open=":(loading && !self.props.overlay) ? 'true' : undefined"
-></d-loading>
+<slot></slot>

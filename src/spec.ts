@@ -374,4 +374,5 @@ export const text_styles: TextStyles = {
 export const animation_speeds: Record<string, string> = {
   fast: "100ms",
   slow: "300ms",
+  very_slow: "2000ms",
 };

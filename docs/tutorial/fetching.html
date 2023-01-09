@@ -11,7 +11,7 @@
             basic: e(
               "u-fetch",
               { url: "/examples/fetch-example.json", key: "data" },
-              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              e("t-paragraph", {}, e("u-text", { use: "data.example_text", lines: "3" }))
             ),
             locale: e(
               "u-fetch",

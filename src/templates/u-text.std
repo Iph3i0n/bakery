@@ -2,8 +2,56 @@
   import { Receiver } from "../data.ts";
 
   export const name = "u-text";
-  export const props = { use: undefined };
+  export const props = { use: undefined, lines: "1" };
   export const base = Receiver;
+
+  const lines = () => Array.apply(null, Array(parseInt(self.props.lines)));
 </script>
 
-<s:text use=":self.data ?? ''"></s:text>
+<style>
+  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme.ts");
+
+  @keyframes placeholder-fade {
+    0% {
+      background-position-x: 0%;
+    }
+
+    50% {
+      background-position-x: 100%;
+    }
+
+    100% {
+      background-position-x: 0%;
+    }
+  }
+
+  .placeholder {
+    display: inline-block;
+    height: 1em;
+    width: 100%;
+    margin: ":(spec.line_height - 1).toString() + 'em 0'";
+    theme.animation("placeholder-fade", "very_slow", "infinite");
+  }
+
+  .placeholder:nth-child(odd) {
+    background: linear-gradient(to left, #eee, #fff, #eee, #fff);
+    background-size: 200% 100%;
+    animation-duration: 6000ms;
+  }
+
+  .placeholder:nth-child(even) {
+    background: linear-gradient(to left, #fff, #eee, #fff, #eee);
+    background-size: 200% 100%;
+    animation-duration: 5000ms;
+  }
+</style>
+
+<s:if check=":self.data">
+  <s:text use=":self.data"></s:text>
+</s:if>
+<s:if check=":!self.data">
+  <s:for subject=":lines()">
+    <span class="placeholder"></span>
+  </s:for>
+</s:if>

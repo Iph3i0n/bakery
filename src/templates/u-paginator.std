@@ -19,14 +19,6 @@
   const page = () => skip / take();
   const total_pages = () => Math.ceil(self.data / take());
 
-  const pages = () =>
-    Array.apply(null, total_pages()).map((i) => ({
-      label: i + 1,
-      current: page() === i,
-      last: i === total_pages() - 1,
-      first: i === 0,
-    }));
-
   const label = (page) => (page + 1).toString();
 
   function set_page(page) {
