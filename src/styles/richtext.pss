@@ -29,7 +29,7 @@
   theme.text("h6");
 }
 
-.content code {
+.content pre {
   theme.text("code");
 }
 

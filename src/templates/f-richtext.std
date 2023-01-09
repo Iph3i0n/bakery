@@ -1,5 +1,6 @@
 <script>
-  import FormElement from "../form-element.ts";
+  import "../selection-polyfill.js";
+  import RichText from "../rich-text.ts";
   import c from "../classes.ts";
   import slotted from "../toggleable-slot.ts";
   import { unsafe_import, link_css } from "../fetch-resources.ts";
@@ -13,102 +14,19 @@
     required: false,
     validate: undefined,
   };
-  export const base = FormElement;
+  export const base = RichText;
   export const form = true;
   export const aria = { Role: "input" };
-
-  const editor = CreateRef();
-  const selector = CreateRef();
-  const slot = slotted();
-  self.addEventListener(LoadedEvent.Key, async () => {
-    await unsafe_import("https://unpkg.com/pell");
-    pell.init({
-      element: editor.current,
-      onChange: (html) => {
-        self.value = html;
-      },
-      defaultParagraphSeparator: "p",
-    });
-  });
-
-  let state = {
-    block_format: "p",
-    is_bold: false,
-    is_italic: false,
-    is_strikethrough: false,
-    is_underline: false,
-  };
-  function update_currents() {
-    state = {
-      block_format: document.queryCommandValue("formatBlock") || "p",
-      is_bold: document.queryCommandValue("bold") === "true",
-      is_italic: document.queryCommandValue("italic") === "true",
-      is_strikethrough: document.queryCommandValue("strikethrough") === "true",
-      is_underline: document.queryCommandValue("underline") === "true",
-    };
-    selector.current.value = state.block_format;
-    self.dispatchEvent(new ShouldRender());
-  }
-  self.addEventListener("keyup", update_currents);
-  self.addEventListener("click", update_currents);
-
-  self.addEventListener("focus", () => {});
-
-  function styleify(e) {
-    const target = e.currentTarget.value;
-    pell.exec("formatBlock", `<${target}>`);
-  }
-
-  function boldify() {
-    pell.exec("bold", true);
-  }
-
-  function italicify() {
-    pell.exec("italic", true);
-  }
-
-  function strikethroughify() {
-    pell.exec("strikethrough", true);
-  }
-
-  function underlinify() {
-    pell.exec("underline", true);
-  }
-
-  function ulify() {
-    pell.exec("insertUnorderedList");
-  }
-
-  function olify() {
-    pell.exec("insertOrderedList");
-  }
-
-  function lineify() {
-    pell.exec("insertHorizontalRule");
-  }
-
-  function linkify() {
-    const url = window.prompt("URL");
-    if (url) pell.exec("createLink", url);
-  }
-
-  const formats = [
-    { title: "Heading 1", value: "h1" },
-    { title: "Heading 2", value: "h2" },
-    { title: "Heading 3", value: "h3" },
-    { title: "Heading 4", value: "h4" },
-    { title: "Heading 5", value: "h5" },
-    { title: "Heading 6", value: "h6" },
-    { title: "Paragraph", value: "p" },
-    { title: "Quote", value: "blockquote" },
-    { title: "Code", value: "code" },
-  ];
 </script>
 <style>
   @js const theme = require("../theme.ts");
   @js const spec = require("../spec.ts");
   @insert ../styles/input.pss;
   @insert ../styles/richtext.pss;
+
+  :host {
+    position: relative;
+  }
 
   .textarea-label {
     display: flex;
@@ -123,11 +41,9 @@
   }
 
   .content {
-    display: flex;
-    flex-direction: column;
     min-height: 6rem;
     theme.text("body", "no-margin");
-    theme.padding("small_block", "left", "right");
+    theme.padding("small_block");
     white-space: pre;
   }
 
@@ -137,7 +53,7 @@
 
   .textarea-label .spacer { flex: 1; }
 
-  .textarea-label button {
+  button {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -167,7 +83,7 @@
     appearance: none !important;
 
     cursor: pointer;
-    theme.padding("small_block", "left", "right");
+    theme.padding("super_small");
     padding-right: 2rem;
     theme.margin("badge", "left", "right");
     theme.border("small");
@@ -182,34 +98,78 @@
     theme.colour("surface", 0.9);
   }
 
-  .pell-actionbar {
-    display: none;
-  }
-
-  .pell-content {
-    flex: 1;
-  }
-
-  .pell-content:focus {
+  .content:focus {
     outline: none;
+  }
+
+  .link-editor {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .link-editor input {
+    flex: 1;
+    theme.text("small", "no-margin");
+    theme.padding("super_small");
+    theme.colour("surface");
+    theme.border("small");
+    margin: 0;
+  }
+
+  .textarea-label select:focus,
+  .link-editor input:focus {
+    outline: none;
+    theme.colour("surface", 0.9);
+  }
+
+  @if self.CurrentAnchor {
+    .input-name {
+      display: none;
+    }
+  }
+
+  @if !self.CurrentAnchor {
+    .link-editor {
+      display: none;
+    }
   }
 </style>
 
 <div class=":self.label_class">
   <div class="textarea-label">
-    <slot></slot>
+    <div class="input-name">
+      <slot></slot>
+    </div>
+    <div class="link-editor">
+      <input
+        type="url"
+        s:ref="self.LinkInputRef"
+        on:input="() => self.Urlify()"
+      />
+
+      <button type="button" on:click="() => self.Unlinkify()">
+        <t-icon
+          name="link-unlink"
+          colour="surface"
+          size="body"
+          plain
+          text
+        ></t-icon>
+      </button>
+    </div>
     <div class="spacer"></div>
 
-    <select on:change="styleify" s:ref="selector">
-      <s:for subject=":formats" key="format">
-        <s:if check=":state.block_format === format.value">
+    <select on:change="() => self.Stylify()" s:ref="self.SelectorRef">
+      <s:for subject=":self.FormatOptions" key="format">
+        <s:if check=":self.Format === format.value">
           <option value=":format.value" selected>
             <slot name=":'format-' + format.value">
               <s:text use=":format.title"></s:text>
             </slot>
           </option>
         </s:if>
-        <s:if check=":state.block_format !== format.value">
+        <s:if check=":self.Format !== format.value">
           <option value=":format.value">
             <slot name=":'format-' + format.value">
               <s:text use=":format.title"></s:text>
@@ -220,33 +180,33 @@
     </select>
 
     <button
-      class=":c(['selected', state.is_bold])"
+      class=":c(['selected', self.IsBold])"
       type="button"
-      on:click="boldify"
+      on:click="() => self.Boldify()"
     >
       <t-icon name="bold" colour="surface" size="body" plain text></t-icon>
     </button>
 
     <button
-      class=":c(['selected', state.is_italic])"
+      class=":c(['selected', self.IsItalic])"
       type="button"
-      on:click="italicify"
+      on:click="() => self.Italicify()"
     >
       <t-icon name="italic" colour="surface" size="body" plain text></t-icon>
     </button>
 
     <button
-      class=":c(['selected', state.is_underline])"
+      class=":c(['selected', self.IsUnderlined])"
       type="button"
-      on:click="underlinify"
+      on:click="() => self.Underlinify()"
     >
       <t-icon name="underline" colour="surface" size="body" plain text></t-icon>
     </button>
 
     <button
-      class=":c(['selected', state.is_strikethrough])"
+      class=":c(['selected', self.IsStrikethrough])"
       type="button"
-      on:click="strikethroughify"
+      on:click="() => self.Strikethroughify()"
     >
       <t-icon
         name="strikethrough"
@@ -257,7 +217,7 @@
       ></t-icon>
     </button>
 
-    <button type="button" on:click="ulify">
+    <button type="button" on:click="() => self.Ulify()">
       <t-icon
         name="list-unordered"
         colour="surface"
@@ -267,7 +227,7 @@
       ></t-icon>
     </button>
 
-    <button type="button" on:click="olify">
+    <button type="button" on:click="() => self.Olify()">
       <t-icon
         name="list-ordered"
         colour="surface"
@@ -277,12 +237,13 @@
       ></t-icon>
     </button>
 
-    <button type="button" on:click="linkify">
+    <button type="button" on:click="() => self.Linkify()">
       <t-icon name="link" colour="surface" size="body" plain text></t-icon>
     </button>
   </div>
-  <div class="content" s:ref="editor"></div>
+  <div class="content" s:ref="self.EditorRef" contenteditable="true"></div>
 </div>
+
 <s:if check=":self.should_show_validation">
   <s:if check=":self.is_bad_empty">
     <div class="error-text">
@@ -296,7 +257,7 @@
   </s:if>
 </s:if>
 <s:if check=":!self.should_show_validation">
-  <div class=":c('help-text', ['empty', !slot.has_children])">
-    <slot name="help" on:slotchange="slot.on_change"></slot>
+  <div class=":c('help-text', ['empty', !self.Slot.has_children])">
+    <slot name="help" on:slotchange="self.Slot.on_change"></slot>
   </div>
 </s:if>
