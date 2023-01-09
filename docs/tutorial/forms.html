@@ -67,14 +67,22 @@
           richtext: {
             basic: e("f-richtext", { name: "test-richtext" }, "Hello World"),
           },
+          image: {
+            basic: e("f-image", { name: "test-image" }, "Hello World"),
+          },
         },
       };
+
+      function on_submit(e) {
+        e.preventDefault();
+        console.log([...new FormData(e.target).entries()]);
+      }
     </script>
     <script src="/dist/bundle.min.js"></script>
   </head>
   <body>
     <l-templated use="/tutorial/layout.template.html" remote>
-      <form onsubmit="event.preventDefault()">
+      <form onsubmit="on_submit(event)">
         <l-container>
           <l-row>
             <l-col xs="12">
@@ -117,6 +125,9 @@
             </l-col>
             <l-col xs="12">
               <div data-example="form.richtext.basic"></div>
+            </l-col>
+            <l-col xs="12">
+              <div data-example="form.image.basic"></div>
             </l-col>
           </l-row>
         </l-container>

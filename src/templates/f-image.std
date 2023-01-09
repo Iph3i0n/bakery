@@ -1,0 +1,139 @@
+<script>
+  import FormElement from "../form-element.ts";
+  import c from "../classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import { link_css } from "../fetch-resources.ts";
+
+  export const name = "f-image";
+  export const props = {
+    default: "",
+    disabled: false,
+    name: undefined,
+    required: false,
+    validate: undefined,
+  };
+  export const base = FormElement;
+  export const form = true;
+  export const aria = { Role: "input" };
+
+  let preview = "";
+  let dragging = false;
+  const slot = slotted();
+
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    preview = reader.result;
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  self.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    self.value = file;
+    if (file) reader.readAsDataURL(file);
+  });
+
+  function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
+
+  const clear = debounce(() => {
+    dragging = false;
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  self.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const old = dragging;
+    dragging = true;
+    if (old !== dragging) self.dispatchEvent(new ShouldRender());
+    clear();
+  });
+</script>
+
+<style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+  @insert ../styles/input.pss;
+
+  .label {
+    overflow: hidden;
+  }
+
+  .textarea-label {
+    display: block;
+    theme.padding("small_block");
+    theme.colour("body");
+    theme.text("body", "no-margin");
+    theme.border("body", "contrast", "bottom");
+    border-top-left-radius: ":spec.borders.body.radius";
+    border-top-right-radius: ":spec.borders.body.radius";
+  }
+
+  span:not(.caret) {
+    animation-play-state: paused;
+  }
+
+  .droparea {
+    position: relative;
+    min-height: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    theme.colour("surface");
+    theme.transition("slow", "background-color");
+  }
+
+  @if dragging {
+    .droparea {
+      theme.colour("body");
+    }
+  }
+
+  .droparea img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    max-height: 100%;
+  }
+
+  .droparea t-icon {
+    opacity: 0.7;
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class="textarea-label">
+    <slot></slot>
+  </div>
+  <div class="droparea">
+    <img src=":preview" />
+    <t-icon name="upload-2" colour="body" size="h1_display" text></t-icon>
+  </div>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

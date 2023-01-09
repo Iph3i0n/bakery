@@ -4,7 +4,7 @@ import c from "./classes.ts";
 export default abstract class FormElement extends HTMLElement {
   abstract readonly internals: ElementInternals;
   abstract readonly props: Record<string, string>;
-  #value: string | boolean | undefined = undefined;
+  #value: string | boolean | undefined | File = undefined;
   #touched = false;
   #focused = false;
 
@@ -72,9 +72,10 @@ export default abstract class FormElement extends HTMLElement {
     return this.#value;
   }
 
-  set value(v: string | boolean | undefined) {
+  set value(v: string | boolean | undefined | File) {
     this.#value = v;
-    this.internals.setFormValue(v?.toString() ?? null);
+    const input = v instanceof File ? v : v?.toString() ?? null;
+    this.internals.setFormValue(input);
     this.dispatchEvent(new ShouldRender());
   }
 
