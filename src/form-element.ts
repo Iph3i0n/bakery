@@ -108,7 +108,7 @@ export default abstract class FormElement extends HTMLElement {
     const test = this.#value;
     if (typeof test !== "string") return true;
 
-    return test.match(new RegExp(this.props.validate, "gm"));
+    return !test.match(new RegExp(this.props.validate, "gm"))?.length;
   }
 
   get validity() {

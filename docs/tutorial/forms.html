@@ -50,7 +50,11 @@
             ),
           },
           textarea: {
-            basic: e("f-textarea", { name: "test-textarea" }, "Hello World"),
+            basic: e(
+              "f-textarea",
+              { name: "test-textarea", validate: "\\A(?:.|\\n){0,255}\\Z" },
+              "Hello World"
+            ),
           },
           date: {
             basic: e("f-date", { name: "test-date" }, "Hello World"),
