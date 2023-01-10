@@ -1,15 +1,18 @@
 type Nightised<T> = { light: T; dark: T };
 
+// deno-lint-ignore no-explicit-any
+const win: any = window;
+
 type ZIndex = number;
 type ZIndexes = Record<string, ZIndex>;
-export const z_indexes: ZIndexes = {
+export const z_indexes: ZIndexes = win.z_indexes ?? {
   popup: 1,
   overlay: 2,
 };
 
 type Border = { width: string; render: string; radius: string };
 type Borders = Record<string, Border>;
-export const borders: Borders = {
+export const borders: Borders = win.borders ?? {
   body: {
     width: "2px",
     render: "solid",
@@ -24,7 +27,7 @@ export const borders: Borders = {
 
 type Spacing = [string, string, string, string];
 type Spacings = Record<string, Spacing>;
-export const spacings: Spacings = {
+export const spacings: Spacings = win.spacings ?? {
   zero: ["0", "0", "0", "0"],
   block: ["0.75rem", "1rem", "0.75rem", "1rem"],
   small_block: ["0.5rem", "0.75rem", "0.5rem", "0.75rem"],
@@ -38,7 +41,7 @@ export const spacings: Spacings = {
 
 type ScreenSize = { query: string; width: string };
 type ScreenSizes = Record<string, ScreenSize>;
-export const screen_sizes: ScreenSizes = {
+export const screen_sizes: ScreenSizes = win.screen_sizes ?? {
   xs: { query: "(min-width: 0)", width: "320px" },
   sm: { query: "(min-width: 420px)", width: "410px" },
   md: { query: "(min-width: 600px)", width: "580px" },
@@ -51,7 +54,7 @@ type Colour = Nightised<{
   foreground: string;
 }>;
 type Colours = Record<string, Colour>;
-export const colours: Colours = {
+export const colours: Colours = win.colours ?? {
   body: {
     light: {
       background: [249, 244, 239],
@@ -222,7 +225,7 @@ type Shadow = Nightised<{
   colour: string;
 }>;
 type Shadows = Record<string, Shadow>;
-export const shadows: Shadows = {
+export const shadows: Shadows = win.shadows ?? {
   body: {
     light: {
       x: "5px",
@@ -266,7 +269,7 @@ type TextStyle = {
 
 export const line_height = "1.2";
 type TextStyles = Record<string, TextStyle>;
-export const text_styles: TextStyles = {
+export const text_styles: TextStyles = win.text_styles ?? {
   h1_display: {
     font_family: "'Poppins', sans-serif",
     font_weight: "100",
@@ -371,8 +374,9 @@ export const text_styles: TextStyles = {
   },
 };
 
-export const animation_speeds: Record<string, string> = {
-  fast: "100ms",
-  slow: "300ms",
-  very_slow: "2000ms",
-};
+export const animation_speeds: Record<string, string> =
+  win.animation_speeds ?? {
+    fast: "100ms",
+    slow: "300ms",
+    very_slow: "2000ms",
+  };
