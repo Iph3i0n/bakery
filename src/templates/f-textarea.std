@@ -56,7 +56,6 @@
     min-height: 6rem;
     theme.text("body", "no-margin");
     theme.padding("small_block");
-    white-space: pre;
   }
 
   .content.sensitive {
