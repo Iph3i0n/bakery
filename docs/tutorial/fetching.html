@@ -10,14 +10,14 @@
           external: {
             basic: e(
               "u-fetch",
-              { url: "/examples/fetch-example.json", key: "data" },
+              { url: "/examples/fetch-example.json", name: "data" },
               e("t-paragraph", {}, e("u-text", { use: "data.example_text", lines: "3" }))
             ),
             locale: e(
               "u-fetch",
               {
                 url: "/examples/{locale}/locale-example.json",
-                key: "data",
+                name: "data",
                 fallback: "/examples/fetch-example.json",
               },
               e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
@@ -26,17 +26,17 @@
           global: {
             basic: e(
               "u-global",
-              { var: "TEST_TEXT", key: "text" },
+              { var: "TEST_TEXT", name: "text" },
               e("t-paragraph", {}, e("u-text", { use: "text.title" }))
             ),
           },
           each: {
             basic: e(
               "u-fetch",
-              { url: "/examples/fetch-example.json", key: "data" },
+              { url: "/examples/fetch-example.json", name: "data" },
               e(
                 "u-each",
-                { subject: "data.repeated", key: "text" },
+                { subject: "data.repeated", name: "text" },
                 e("t-paragraph", {}, e("u-text", { use: "text" }))
               )
             ),
@@ -44,7 +44,7 @@
           if: {
             basic: e(
               "u-fetch",
-              { url: "/examples/fetch-example.json", key: "data" },
+              { url: "/examples/fetch-example.json", name: "data" },
               e(
                 "u-if",
                 { check: "data.should_show" },
@@ -60,7 +60,7 @@
           pagination: {
             basic: e(
               "u-fetch",
-              { url: "/examples/pagination/{take}/{skip}.json", key: "pages" },
+              { url: "/examples/pagination/{take}/{skip}.json", name: "pages" },
               e("t-paragraph", {}, e("u-text", { use: "pages.content" })),
               e("u-paginator", { total: "pages.metadata.total" })
             ),

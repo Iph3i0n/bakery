@@ -12,6 +12,7 @@
   };
 
   const modal = CreateRef();
+  const body = CreateRef();
 
   let open = false;
   let target = undefined;
@@ -19,6 +20,9 @@
     target = a;
     open = true;
     self.dispatchEvent(new ShouldRender());
+    setTimeout(() => {
+      self.dispatchEvent(new ShouldRender());
+    });
   });
 
   function close() {
@@ -37,6 +41,7 @@
     return `${screen_left}px`;
   };
   const width = () => self.props.width ?? `${target?.clientWidth ?? 0}px`;
+  const height = () => (body.current?.clientHeight ?? 0) + "px";
 
   window.addEventListener("scroll", () => {
     const target = modal.current;
@@ -64,18 +69,18 @@
     top: ":top()";
     left: ":left()";
     width: ":width()";
-    max-height: 0;
-    height: 100%;
+    height: 0;
     overflow: hidden;
-    theme.transition("fast", "max-height");
-    z-index: ":spec.z_indexes.popup";
-  }
-
-  .dropdown-container.open {
+    theme.transition("fast", "height");
     theme.shadow("small");
     theme.border("body", "contrast");
     border-radius: ":spec.borders.body.radius";
+    z-index: ":spec.z_indexes.popup";
     max-height: ":self.props.height";
+  }
+
+  .dropdown-container.open {
+    height: ":height()";
   }
 
   .dropdown-body {
@@ -83,7 +88,7 @@
     theme.text("body", "no-margin");
     theme.colour("surface");
     box-sizing: border-box;
-    height: ":self.props.height";
+    width: ":width()";
   }
 
   .dropdown-body.scrollable {
@@ -95,7 +100,10 @@
 
 <div class="overlay" on:click="close"></div>
 <div class=":c('dropdown-container', ['open', open])" s:ref="modal">
-  <div class=":c('dropdown-body', ['scrollable', self.props.scrollable])">
+  <div
+    class=":c('dropdown-body', ['scrollable', self.props.scrollable])"
+    s:ref="body"
+  >
     <slot></slot>
   </div>
 </div>

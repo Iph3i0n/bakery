@@ -5,9 +5,8 @@
   export const name = "u-fetch";
   export const props = {
     url: undefined,
-    key: undefined,
+    name: undefined,
     fallback: undefined,
-    overlay: false,
     "no-cache": false,
   };
 
@@ -20,7 +19,7 @@
     return navigator.language;
   }
 
-  const provider = new Provider(self, self.props.key);
+  const provider = new Provider(self, self.props.name);
 
   const options = {
     locale: () => Language(),

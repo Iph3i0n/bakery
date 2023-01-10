@@ -4,7 +4,7 @@
   export const name = "u-each";
   export const props = {
     subject: undefined,
-    key: undefined,
+    name: undefined,
   };
   export const base = Receiver;
 
@@ -38,7 +38,7 @@
       const input = subject.cloneNode(true);
       insertAfter(input, previous);
       previous = input;
-      const provider = new Provider(input, self.props.key);
+      const provider = new Provider(input, self.props.name);
       provider.data = item;
     }
   });
