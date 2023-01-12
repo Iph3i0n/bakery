@@ -14,12 +14,7 @@
 
   self.tabIndex = 0;
 
-  let initialised = false;
-
-  self.addEventListener("loaded", () => {
-    if (initialised) return;
-    initialised = true;
-
+  self.addEventListener(LoadedEvent.Key, () => {
     self.addEventListener("click", () => {
       if (self.props.type === "button") return;
       else if (self.props.type === "submit") {
@@ -35,6 +30,35 @@
           );
         else window.location.href = self.props.href;
     });
+
+    const observer = new MutationObserver(() => {
+      if (!self) {
+        observer.disconnect();
+        return;
+      }
+
+      self.dispatchEvent(new ShouldRender());
+    });
+
+    observer.observe(self.parentElement, { childList: true });
+  });
+
+  const is_last_button = () => {
+    const next = self.nextSibling;
+    if (next instanceof Text && next.wholeText.trim()) return false;
+    return self.nextElementSibling?.tagName !== "F-BUTTON";
+  };
+  const is_first_button = () => {
+    const next = self.previousSibling;
+    if (next instanceof Text && next.wholeText.trim()) return false;
+    return self.previousElementSibling?.tagName !== "F-BUTTON";
+  };
+
+  self.addEventListener(RenderEvent.Key, () => {
+    if (is_last_button()) return;
+    while (self.nextSibling instanceof Text) {
+      self.nextSibling.remove();
+    }
   });
 </script>
 
@@ -63,6 +87,24 @@
     theme.colour(c, 1.1);
     theme.border("body", "contrast");
     theme.shadow("small");
+  }
+
+  @if !is_last_button() {
+    :host {
+      border-right: none !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  @if !is_first_button() {
+    :host {
+      border-left: none !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      box-shadow: none !important;
+    }
   }
 </style>
 
