@@ -6,11 +6,9 @@
 
   export const name = "f-image";
   export const props = {
-    default: "",
     disabled: false,
     name: undefined,
     required: false,
-    validate: undefined,
   };
   export const base = FormElement;
   export const form = true;

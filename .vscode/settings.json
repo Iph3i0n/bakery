@@ -17,5 +17,6 @@
     ".vscode": true,
     "dist": true,
     "deno.lock": true
-  }
+  },
+  "html.customData": ["./docs/bakery.html-data.json"]
 }

@@ -5,7 +5,6 @@
   export const name = "o-dropdown";
   export const props = {
     target: undefined,
-    trigger: undefined,
     width: undefined,
     height: "12rem",
     scrollable: false,
@@ -16,7 +15,7 @@
 
   let open = false;
   let target = undefined;
-  On("click", self.props.trigger ?? self.props.target, (_, a) => {
+  On("click", self.props.target, (_, a) => {
     target = a;
     open = true;
     self.dispatchEvent(new ShouldRender());

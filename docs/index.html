@@ -3,20 +3,60 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        cdn_install: e("script", {
+          src: "https://cdn.jsdelivr.net/npm/@paulpopat/bakery",
+        }),
+      };
+    </script>
     <script src="/dist/bundle.min.js"></script>
   </head>
   <body>
     <l-templated use="./layout.template.html" remote>
-      <l-row>
-        <l-col xs="12">
-          <t-heading level="h1" display>
-            <t-localised>BakeryJS</t-localised>
-          </t-heading>
-          <t-heading level="h6">
-            <t-localised>Web Components for modern PWA</t-localised>
-          </t-heading>
-        </l-col>
-      </l-row>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading level="h1" display>
+              <t-localised>BakeryJS</t-localised>
+            </t-heading>
+            <t-heading level="h6">
+              <t-localised>Web Components for modern PWA</t-localised>
+            </t-heading>
+            <t-paragraph>
+              <t-localised>
+                Get started in seconds with a simple CDN import.
+              </t-localised>
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <u-global var="CODE_EXAMPLES" name="ex">
+              <t-code
+                language="html"
+                file="*.html"
+                use="ex.cdn_install.toString()"
+              ></t-code>
+            </u-global>
+          </l-col>
+          <l-col xs="12">
+            <t-heading level="h6">Easy in VSCode</t-heading>
+            <t-paragraph>
+              Simply download
+              <t-link href="/bakery.html-data.json" target="_blank">
+                here
+              </t-link>
+              to get the data and then put this snippet in your VSCode project
+              settings.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <t-code language="json" file="*.html">
+              { "html.customData": ["./docs/bakery.html-data.json"] }
+            </t-code>
+          </l-col>
+        </l-row>
+      </l-container>
     </l-templated>
   </body>
 </html>

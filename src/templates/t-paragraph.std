@@ -2,13 +2,16 @@
   import * as theme from "../theme.ts";
 
   export const name = "t-paragraph";
+  export const props = {
+    large: false,
+  };
   export const aria = { Role: "paragraph" };
 </script>
 
 <style>
   :host {
     display: block;
-    theme.text("body");
+    theme.text(self.props.large ? "body_large" : "body");
   }
 </style>
 

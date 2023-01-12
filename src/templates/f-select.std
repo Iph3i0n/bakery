@@ -6,6 +6,7 @@
 
   export const name = "f-select";
   export const props = {
+    default: undefined,
     name: "",
     required: false,
     validate: undefined,

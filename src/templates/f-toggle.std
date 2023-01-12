@@ -10,7 +10,6 @@
     disabled: false,
     name: undefined,
     required: false,
-    validate: undefined,
   };
   export const base = FormElement;
   export const form = true;

@@ -10,8 +10,6 @@
     disabled: false,
     name: undefined,
     required: false,
-    min: undefined,
-    max: undefined,
   };
   export const base = FormElement;
   export const form = true;

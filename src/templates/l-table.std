@@ -21,6 +21,8 @@
           use: new Function("row", "return " + item.getAttribute("use")),
           width: item.getAttribute("width"),
           height: item.getAttribute("height"),
+          colspan: item.getAttribute("colspan"),
+          rowspan: item.getAttribute("rowspan"),
         });
       }
 
@@ -41,6 +43,8 @@
           text: item.textContent,
           width: item.getAttribute("width"),
           height: item.getAttribute("height"),
+          colspan: item.getAttribute("colspan"),
+          rowspan: item.getAttribute("rowspan"),
         });
       }
 
@@ -103,7 +107,12 @@
     <s:for subject=":head_schema" key="row">
       <tr>
         <s:for subject=":row.content" key="cell">
-          <th width=":cell.width" height=":cell.height">
+          <th
+            width=":cell.width"
+            height=":cell.height"
+            colspan=":cell.colspan"
+            rowspan=":cell.rowspan"
+          >
             <s:text use=":cell.text"></s:text>
           </th>
         </s:for>
@@ -116,7 +125,12 @@
         <s:for subject=":body_schema" key="row">
           <tr>
             <s:for subject=":row.content" key="cell">
-              <td width=":cell.width" height=":cell.height">
+              <td
+                width=":cell.width"
+                height=":cell.height"
+                colspan=":cell.colspan"
+                rowspan=":cell.rowspan"
+              >
                 <s:text use=":cell.use(row_data)"></s:text>
               </td>
             </s:for>
