@@ -69,10 +69,10 @@ export default abstract class RichText extends FormElement {
     });
 
     document.addEventListener("selectchange", () => this.#update_state());
-    self.addEventListener("click", () => this.#update_state());
-    self.addEventListener("keyup", () => this.#update_state());
+    this.addEventListener("click", () => this.#update_state());
+    this.addEventListener("keyup", () => this.#update_state());
 
-    self.addEventListener("focus", () => this.#editor.focus());
+    this.addEventListener("focus", () => this.#editor.focus());
   }
 
   get Format() {
