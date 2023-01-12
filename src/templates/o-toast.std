@@ -5,6 +5,7 @@
     metric: undefined,
     unit: "minute",
     "unit-display": "short",
+    position: "bottom right",
   };
 
   function close() {
@@ -32,6 +33,30 @@
     bottom: 0;
     right: 0;
     width: 20rem;
+  }
+
+  @if self.props.position.includes("top") {
+    :host {
+      top: 0;
+    }
+  }
+
+  @if self.props.position.includes("bottom") {
+    :host {
+      bottom: 0;
+    }
+  }
+
+  @if self.props.position.includes("left") {
+    :host {
+      left: 0;
+    }
+  }
+
+  @if self.props.position.includes("right") {
+    :host {
+      right: 0;
+    }
   }
 
   .title {
