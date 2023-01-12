@@ -60,11 +60,15 @@ export default abstract class FormElement extends HTMLElement {
         this.dispatchEvent(new ShouldRender());
       });
 
-      this.form.addEventListener("submit", (e) => {
-        this.#touched = true;
-        if (!this.validity.valid) e.preventDefault();
-        self.dispatchEvent(new ShouldRender());
-      });
+      this.form.addEventListener(
+        "submit",
+        (e) => {
+          this.#touched = true;
+          if (!this.validity.valid) e.preventDefault();
+          self.dispatchEvent(new ShouldRender());
+        },
+        { capture: true }
+      );
     });
   }
 
