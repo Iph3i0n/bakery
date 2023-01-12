@@ -43,7 +43,8 @@
   .content {
     min-height: 6rem;
     theme.text("body", "no-margin");
-    theme.padding("small_block");
+    theme.padding("small_block", "left", "right");
+    theme.margin("small_block", "top", "bottom");
   }
 
   span:not(.caret) {
