@@ -98,8 +98,8 @@
     overflow-y: auto;
   }
 
-  .main-content ::slotted(a),
-  .main-content ::slotted(span) {
+  ::slotted(a),
+  ::slotted(span) {
     display: block;
     theme.colour("surface");
     theme.text("body", "no-margin");
@@ -108,8 +108,8 @@
     text-decoration: none;
   }
 
-  .main-content ::slotted(a:last-child),
-  .main-content ::slotted(span:last-child) {
+  ::slotted(a:last-child),
+  ::slotted(span:last-child) {
     border-bottom: none;
   }
 
@@ -117,8 +117,8 @@
     cursor: pointer;
   }
 
-  .main-content ::slotted(a:hover),
-  .main-content ::slotted(a:focus) {
+  ::slotted(a:hover),
+  ::slotted(a:focus) {
     outline: none;
     theme.colour("surface", 0.9);
   }
@@ -128,10 +128,6 @@
     theme.padding("small_block");
     theme.colour("primary");
     theme.border("body", undefined, "top");
-  }
-
-  .right-actions ::slotted(a) {
-    text-decoration: none;
   }
 
   .right-actions ::slotted(form) {
@@ -168,8 +164,8 @@
       overflow: hidden;
     }
 
-    .main-content ::slotted(a),
-    .main-content ::slotted(span) {
+    ::slotted(a),
+    ::slotted(span) {
       border: none;
       color: inherit;
       background-color: transparent;
@@ -185,11 +181,11 @@
       text-align: right;
     }
 
-    .main-content ::slotted(a:hover),
-    .main-content ::slotted(a:focus) {
+    ::slotted(a:hover),
+    ::slotted(a:focus) {
       background-color: transparent;
       color: inherit;
-      transform: scale(1.2);
+      text-decoration: underline;
     }
   }
 
