@@ -6,6 +6,7 @@
     "./src/templates/d-listgroup.std",
     "./src/templates/d-alert.std",
     "./src/templates/d-carousel.std",
+    "./src/templates/d-progress.std",
 
     "./src/templates/f-button.std",
     "./src/templates/f-input.std",

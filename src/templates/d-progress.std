@@ -1,0 +1,41 @@
+<script>
+  export const name = "d-progress";
+  export const props = {
+    value: undefined,
+    colour: "primary",
+  };
+  export const aria = { Role: "progressbar" };
+</script>
+
+<style>
+  @js const theme = require("../theme.ts");
+
+  :host {
+    display: block;
+    position: relative;
+    theme.padding("small_block");
+    theme.border("body");
+    theme.colour("surface");
+    theme.text("small");
+    overflow: hidden;
+  }
+
+  .bar {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ":self.props.value + '%'";
+    theme.colour(self.props.colour);
+
+    text-align: center;
+    overflow: hidden;
+    theme.transition("fast", "width");
+  }
+</style>
+
+<div class="bar">
+  <slot></slot>
+</div>

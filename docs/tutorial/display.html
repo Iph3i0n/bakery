@@ -42,6 +42,9 @@
               e("t-paragraph", { slot: "slide-2" }, "Slide Two")
             ),
           },
+          progress: {
+            basic: e("d-progress", { value: "75", colour: "warning" }, "75%"),
+          },
         },
       };
     </script>
@@ -66,6 +69,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="display.listgroup.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="display.progress.basic"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="display.panel.basic"></div>
