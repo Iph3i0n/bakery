@@ -8,6 +8,13 @@
   <attr name="independent" type="boolean">
     If set then the accordion item will not close when another one opens.
   </attr>
+
+  <event name="accordion-opened" type="AccordionOpenEvent">
+    When the user clicks on the accordion and it opens.
+    <key name="Id" type="string">
+      The current accordion
+    </key>
+  </event>
 </meta>
 
 <script>

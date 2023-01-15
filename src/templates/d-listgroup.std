@@ -4,6 +4,8 @@
   `span` and `a` tags as children are supported.
   The children may have a theme colour as a class
   name in order to style them.
+
+  <aria role="list" />
 </meta>
 
 <style>

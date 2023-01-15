@@ -7,10 +7,9 @@
   </attr>
   <slot>The body of the card.</slot>
   <slot name="title">
-    The title content of the card.
-    Does not require text styling.
+    The title content of the card. Does not require text styling.
   </slot>
-  <aria role="section" />
+  <aria role="landmark" />
 </meta>
 
 <script>

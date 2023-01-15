@@ -3,6 +3,8 @@
   <attr name="cols" type="number" default="12">
     The number of columns to have per row.
   </attr>
+
+  <aria role="grid" />
 </meta>
 
 <style>

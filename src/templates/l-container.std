@@ -4,6 +4,8 @@
     If true then the element will always fill the screen. Consider
     the need for this element in this scenario.
   </attr>
+
+  <aria role="section" />
 </meta>
 <style>
   @js const spec = require("../spec.ts");

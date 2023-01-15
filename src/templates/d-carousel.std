@@ -15,6 +15,7 @@
   </attr>
 
   <import use="c" from="../classes.ts" default />
+  <aria role="figure" />
 </meta>
 
 <script>

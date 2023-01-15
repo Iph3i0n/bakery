@@ -11,6 +11,7 @@
     using with JS frameworks, consider a custom
     implementation in that scenario.
   </attr>
+  <aria role="alert" />
 </meta>
 
 <script>
