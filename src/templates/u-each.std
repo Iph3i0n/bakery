@@ -1,13 +1,17 @@
+<meta name="u-each">
+  Repeats its children once for each item accessed from the context.
+  <attr name="subject">
+    A JavaScript snippet to extract the array from the context.
+  </attr>
+  <attr name="name">
+    The name to use in sub items to extract the item from the context.
+  </attr>
+  <prop name="data">Data to use instead of items from the use attribute.</prop>
+  <base use="Receiver" from="../data.ts" />
+  <import use="Provider" from="../data.ts" />
+</meta>
+
 <script>
-  import { Receiver, Provider } from "../data.ts";
-
-  export const name = "u-each";
-  export const props = {
-    subject: undefined,
-    name: undefined,
-  };
-  export const base = Receiver;
-
   self.accessor = "subject";
 
   self.style.display = "none";

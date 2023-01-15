@@ -1,3 +1,5 @@
+import AddToGlobal from "./global.ts";
+
 export default class PaginationEvent extends Event {
   readonly #skip: number;
   readonly #take: number;
@@ -20,3 +22,5 @@ export default class PaginationEvent extends Event {
     return this.#take;
   }
 }
+
+AddToGlobal("PaginationEvent", PaginationEvent);

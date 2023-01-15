@@ -1,12 +1,23 @@
+<meta name="d-carousel">
+  A simple carousel to display slides to the user.
+  Each child should be assigned to a slot with any
+  name. The user will then be able to cycle between
+  each child in turn.
+
+  <attr name="height" default="30rem">
+    The height of the carousel and, as such, each slide.
+    Should be a CSS height value.
+  </attr>
+
+  <attr name="no-tabs" type="boolean">
+    If true, the navigation tabs at the bottom of
+    the slides will not be displayed.
+  </attr>
+
+  <import use="c" from="../classes.ts" default />
+</meta>
+
 <script>
-  import c from "../classes.ts";
-
-  export const name = "d-carousel";
-  export const props = {
-    height: "30rem",
-    "no-tabs": false,
-  };
-
   let slots = [];
   let current = 0;
   let context = "";

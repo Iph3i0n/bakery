@@ -1,7 +1,21 @@
-<script>
-  export const name = "l-templated";
-  export const props = { use: undefined, remote: false };
+<meta name="l-templated">
+  Insert a generic template into the project.
+  Should only be used with trusted data.
+  <attr name="use">
+    The HTML ID or URL of the template desired. If a
+    HTML ID then it should point to a `template`
+    tag. If a URL then it should point to a HTML file.
+    That file should contain no `html` or
+    `body` tags and should only container the
+    content as if it was in a `template` tag.
+  </attr>
+  <attr name="remote" type="boolean">
+    If set then the use attribute will be treated as a URL.
+    If not then it will be treated as a HTML ID.
+  </attr>
+</meta>
 
+<script>
   async function get_data() {
     if (!self.props.remote) {
       return document.getElementById(self.props.use);

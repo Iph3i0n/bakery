@@ -18,5 +18,5 @@
     "dist": true,
     "deno.lock": true
   },
-  "html.customData": ["./docs/bakery.html-data.json"]
+  "html.customData": ["./docs/dist/bakery.html-data.json"]
 }

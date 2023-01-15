@@ -1,17 +1,29 @@
-<script>
-  import * as theme from "../theme.ts";
-  import * as spec from "../spec.ts";
+<meta name="l-col">
+  A column within a grid. They can wrap on to new lines without upsetting the flow.
+  <attr name="flush" type="boolean">
+    If true then the element will not have padding.
+  </attr>
+  <attr name="xs">
+    The size of the column on the smallest screen size.
+  </attr>
+  <attr name="sm" optional>
+    The size of the column on small screens.
+  </attr>
+  <attr name="md" optional>
+    The size of the column on medium screens.
+  </attr>
+  <attr name="lg" optional>
+    The size of the column on large screens.
+  </attr>
+  <attr name="xl" optional>
+    The size of the column on extra large screens.
+  </attr>
+</meta>
 
-  export const name = "l-col";
-  export const props = {
-    flush: false,
-    ...Object.keys(spec.screen_sizes).reduce(
-      (c, n) => ({ ...c, [n]: undefined }),
-      {}
-    ),
-  };
-</script>
 <style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+
   :host {
     display: block;
   }

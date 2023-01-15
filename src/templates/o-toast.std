@@ -1,13 +1,32 @@
-<script>
-  export const name = "o-toast";
-  export const props = {
-    icon: undefined,
-    metric: undefined,
-    unit: "minute",
-    "unit-display": "short",
-    position: "bottom right",
-  };
+<meta name="o-toast">
+  A small window to display notification information to the user.
+  <slot name="title">The top of the toast</slot>
+  <attr name="icon" optional>
+    Image URL for the icon.
+  </attr>
+  <attr name="metric" type="number">
+    Numeric information for relevant metrics such as how long ago or distance.
+  </attr>
+  <attr name="unit" type="unit" default="minute">
+    The unit for the metric. Conforms to the `Intl.NumberFormat`
+    constructor.
+    <ref url="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options">
+      MDN Reference
+    </ref>
+  </attr>
+  <attr name="unit-display" type="unit_display" default="short">
+    The length of display for the unit. Conforms to the
+    `Intl.NumberFormat` constructor.
+    <ref url="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options">
+      MDN Reference
+    </ref>
+  </attr>
+  <attr name="position" type="position" default="bottom right">
+    Where on the screen shall it render?
+  </attr>
+</meta>
 
+<script>
   function close() {
     self.remove();
   }

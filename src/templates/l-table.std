@@ -1,12 +1,20 @@
+<meta name="l-table">
+  A data table to display tabular data to the user.
+  Intentionally limited. Only intended to be used for
+  actual data. If you require interaction then consider
+  using a solution with list groups or cards.
+  Should only contain `l-table-row` and `l-table-cell` tags.
+  <slot>The body of the schema</slot>
+  <slot name="head">The head of the schema</slot>
+  <attr name="use">
+    A JavaScript snippet to get the data from the
+    `u-` namespace.
+  </attr>
+  <prop name="data">Data to use instead of items from the use attribute.</prop>
+  <base use="Receiver" from="../data.ts" />
+</meta>
+
 <script>
-  import { Receiver } from "../data.ts";
-
-  export const name = "l-table";
-  export const props = {
-    use: undefined,
-  };
-  export const base = Receiver;
-
   let body_schema = [];
   let head_schema = [];
 

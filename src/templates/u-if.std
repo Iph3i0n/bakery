@@ -1,10 +1,13 @@
+<meta name="u-if">
+  Will only render its children if data retrieved from the context is truthy.
+  <attr name="check">
+    The JavaScript snippet used to get the data from the context.
+  </attr>
+  <prop name="data">Data to use instead of items from the use attribute.</prop>
+  <base use="Receiver" from="../data.ts" />
+</meta>
+
 <script>
-  import { Receiver } from "../data.ts";
-
-  export const name = "u-if";
-  export const props = { check: undefined };
-  export const base = Receiver;
-
   self.accessor = "check";
 </script>
 <s:if check=":self.data">

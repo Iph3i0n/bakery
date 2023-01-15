@@ -1,17 +1,35 @@
+<meta name="f-button">
+  A simple button that the user can click for various actions.
+  If the `type` is included then the button can be a standard
+  or submit button. If the `href` is included the the button
+  is a link. Buttons that are placed next to other buttons
+  will automatically merge into a group.
+
+  <attr name="colour" type="colour" default="primary">
+    The colour for the button to render.
+  </attr>
+  <attr name="type" type="button_type" optional>
+    The button type when used as a standard button.
+    Should not be included with `href` for consistent behavior.
+  </attr>
+  <attr name="href" optional>
+    The URL to send the user to if the button is being used as
+    a link. Should not be included with `type`.
+  </attr>
+  <attr name="target" type="target" optional>
+    The standard target from an anchor element.
+    Should only be included if `href` is present.
+  </attr>
+  <attr name="private" type="boolean">
+    If set then the link will be treated as external.
+    This means that `rel="noreferrer noopener"` will be applied.
+  </attr>
+
+  <aria role="button" />
+  <import use="FindForm" from="../form-element.ts" />
+</meta>
+
 <script>
-  import { FindForm } from "../form-element.ts";
-  import * as theme from "../theme.ts";
-
-  export const name = "f-button";
-  export const props = {
-    colour: "primary",
-    type: undefined,
-    href: undefined,
-    target: undefined,
-    private: false,
-  };
-  export const aria = { Role: "button" };
-
   self.tabIndex = 0;
 
   self.addEventListener(LoadedEvent.Key, () => {
@@ -63,6 +81,7 @@
 </script>
 
 <style>
+  @js const theme = require("../theme.ts");
   @js const c = self.props.colour ?? 'primary';
   :host {
     position: relative;

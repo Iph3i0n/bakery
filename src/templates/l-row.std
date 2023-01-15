@@ -1,7 +1,10 @@
-<script>
-  export const name = "l-row";
-  export const props = { cols: "12" };
-</script>
+<meta name="l-row">
+  A row to contain `l-col` tags.
+  <attr name="cols" type="number" default="12">
+    The number of columns to have per row.
+  </attr>
+</meta>
+
 <style>
   :host {
     display: grid;

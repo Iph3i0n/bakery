@@ -1,19 +1,34 @@
+<meta name="f-image">
+  A upload box for images. Must be placed within a `form` tag.
+  <attr name="disabled" type="boolean">
+    If set then the field is readonly.
+  </attr>
+  <attr name="name">
+    The name of the value field in the form data. Should be unique.
+  </attr>
+  <attr name="required" type="boolean">
+    If set then the form will not be submittable until
+    the element field a value.
+  </attr>
+  <slot>The label text</slot>
+  <slot name="help">
+    The small help text at the bottom of the input.
+  </slot>
+  <slot name="empty">
+    The error text for if the slot is empty and required is true.
+  </slot>
+  <slot name="invalid">
+    The error text for if validate is set and the RegExp does not match
+  </slot>
+  <base use="FormElement" from="../form-element.ts" default />
+  <import use="c" from="../classes.ts" default />
+  <import use="slotted" from="../toggleable-slot.ts" default />
+  <import use="link_css" from="../fetch-resources.ts" />
+  <aria role="input" />
+  <form />
+</meta>
+
 <script>
-  import FormElement from "../form-element.ts";
-  import c from "../classes.ts";
-  import slotted from "../toggleable-slot.ts";
-  import { link_css } from "../fetch-resources.ts";
-
-  export const name = "f-image";
-  export const props = {
-    disabled: false,
-    name: undefined,
-    required: false,
-  };
-  export const base = FormElement;
-  export const form = true;
-  export const aria = { Role: "input" };
-
   let preview = "";
   let dragging = false;
   const slot = slotted();

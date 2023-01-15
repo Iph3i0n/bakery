@@ -1,0 +1,15 @@
+<meta name="l-table-cell">
+  A data tag for a cell in a table.
+  <attr name="width">
+    The width of the cell in the table.
+  </attr>
+  <attr name="height">
+    The height of the cell in the table.
+  </attr>
+  <attr name="colspan">
+    The colspan of the cell in the table.
+  </attr>
+  <attr name="rowspan">
+    The rowspan of the cell in the table.
+  </attr>
+</meta>

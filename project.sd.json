@@ -26,6 +26,8 @@
     "./src/templates/l-header.std",
     "./src/templates/l-accordion.std",
     "./src/templates/l-table.std",
+    "./src/templates/l-table-cell.std",
+    "./src/templates/l-table-row.std",
 
     "./src/templates/o-modal.std",
     "./src/templates/o-offcanvas.std",
@@ -49,5 +51,277 @@
     "./src/templates/u-each.std",
     "./src/templates/u-paginator.std"
   ],
-  "global_css": "./global.pss"
+  "description": "Simple web components for all of your web application needs.",
+  "global_css": "./global.pss",
+  "docs": {
+    "value_sets": [
+      {
+        "name": "colour",
+        "values": [
+          {
+            "name": "body",
+            "description": "The main colour for the site, used for the body background colour."
+          },
+          {
+            "name": "headline",
+            "description": "Background from the body colour but with a darker text so as to stand out."
+          },
+          {
+            "name": "surface",
+            "description": "For blocks to stand out from rest of the document body. Should still be part of the document flow. Useful for things like cards and inputs."
+          },
+          {
+            "name": "contrast",
+            "description": "The opposite of surface. Part of the standard document flow but darker and normal text colour. Should be used for aside content."
+          },
+          {
+            "name": "primary",
+            "description": "The primary theme colour for the site. Should be used for most buttons and interactive content. Normally used for the site header."
+          },
+          {
+            "name": "warning",
+            "description": "Normally red. Used to indicate issues that require the immediate attention of the user. Normally form submission errors."
+          },
+          {
+            "name": "rainbow_0",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_1",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_2",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_3",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_4",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_5",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_6",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_7",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_8",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          },
+          {
+            "name": "rainbow_9",
+            "description": "Rainbow colours are for more flexible or designed content. Good for graphics, syntax highlighting, and the like."
+          }
+        ]
+      },
+      {
+        "name": "target",
+        "values": [
+          {
+            "name": "_self",
+            "description": "the current browsing context. (Default)",
+            "references": [
+              {
+                "name": "MDN Reference",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target"
+              }
+            ]
+          },
+          {
+            "name": "_blank",
+            "description": "usually a new tab, but users can configure browsers to open a new window instead.",
+            "references": [
+              {
+                "name": "MDN Reference",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target"
+              }
+            ]
+          },
+          {
+            "name": "_parent",
+            "description": "the parent browsing context of the current one. If no parent, behaves as `_self`.",
+            "references": [
+              {
+                "name": "MDN Reference",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target"
+              }
+            ]
+          },
+          {
+            "name": "_top",
+            "description": "the topmost browsing context (the \"highest\" context that's an ancestor of the current one). If no ancestors, behaves as `_self`.",
+            "references": [
+              {
+                "name": "MDN Reference",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "keyboard",
+        "values": [
+          {
+            "name": "none",
+            "description": "No virtual keyboard. For when the page implements its own keyboard input control."
+          },
+          {
+            "name": "text",
+            "description": "Standard input keyboard for the user's current locale."
+          },
+          {
+            "name": "decimal",
+            "description": "Fractional numeric input keyboard containing the digits and decimal separator for the user's locale (typically . or ,). Devices may or may not show a minus key (-)."
+          },
+          {
+            "name": "numeric",
+            "description": "Numeric input keyboard, but only requires the digits 0-9. Devices may or may not show a minus key."
+          },
+          {
+            "name": "tel",
+            "description": "A telephone keypad input, including the digits 0-9, the asterisk (*), and the pound (#) key. "
+          },
+          {
+            "name": "search",
+            "description": "A virtual keyboard optimized for search input. For instance, the return/submit key may be labeled \"Search\", along with possible other optimizations."
+          },
+          {
+            "name": "email",
+            "description": "A virtual keyboard optimized for entering email addresses. Typically includes the @character as well as other optimizations."
+          },
+          {
+            "name": "url",
+            "description": "A keypad optimized for entering URLs. This may have the / key more prominent, for example. Enhanced features could include history access and so on."
+          }
+        ]
+      },
+      {
+        "name": "heading_level",
+        "values": [
+          { "name": "h1" },
+          { "name": "h2" },
+          { "name": "h3" },
+          { "name": "h4" },
+          { "name": "h5" },
+          { "name": "h6" }
+        ]
+      },
+      {
+        "name": "position",
+        "values": [
+          { "name": "bottom right" },
+          { "name": "bottom left" },
+          { "name": "top right" },
+          { "name": "top right" }
+        ]
+      },
+      {
+        "name": "unit_display",
+        "values": [
+          { "name": "long" },
+          { "name": "short" },
+          { "name": "narrow" }
+        ]
+      },
+      {
+        "name": "unit",
+        "values": [
+          { "name": "acre" },
+          { "name": "bit" },
+          { "name": "byte" },
+          { "name": "celsius" },
+          { "name": "centimeter" },
+          { "name": "day" },
+          { "name": "degree" },
+          { "name": "fahrenheit" },
+          { "name": "fluid-ounce" },
+          { "name": "foot" },
+          { "name": "gallon" },
+          { "name": "gigabit" },
+          { "name": "gigabyte" },
+          { "name": "gram" },
+          { "name": "hectare" },
+          { "name": "hour" },
+          { "name": "inch" },
+          { "name": "kilobit" },
+          { "name": "kilobyte" },
+          { "name": "kilogram" },
+          { "name": "kilometer" },
+          { "name": "liter" },
+          { "name": "megabit" },
+          { "name": "megabyte" },
+          { "name": "meter" },
+          { "name": "mile" },
+          { "name": "mile-scandinavian" },
+          { "name": "milliliter" },
+          { "name": "millimeter" },
+          { "name": "millisecond" },
+          { "name": "minute" },
+          { "name": "month" },
+          { "name": "ounce" },
+          { "name": "percent" },
+          { "name": "petabyte" },
+          { "name": "pound" },
+          { "name": "second" },
+          { "name": "stone" },
+          { "name": "terabit" },
+          { "name": "terabyte" },
+          { "name": "week" },
+          { "name": "yard" },
+          { "name": "year" }
+        ]
+      },
+      {
+        "name": "size",
+        "values": [
+          { "name": "small" },
+          { "name": "medium" },
+          { "name": "large" }
+        ]
+      },
+      {
+        "name": "button_type",
+        "values": [
+          {
+            "name": "button",
+            "description": "Use if the button should do nothing and you intend to handle click events for yourself."
+          },
+          {
+            "name": "submit",
+            "description": "Use if the button is within a `form` tag and you intend for the button to submit said form."
+          }
+        ]
+      }
+    ]
+  },
+  "package": {
+    "name": "@paulpopat/bakery",
+    "scripts": {},
+    "author": "Paul Popat",
+    "license": "ISC",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/PaulPopat/bakery.git"
+    },
+    "readme": "https://github.com/PaulPopat/bakery/blob/master/readme.md",
+    "bugs": {
+      "url": "https://github.com/PaulPopat/bakery/issues"
+    },
+    "homepage": "https://paulpopat.github.io/bakery/",
+    "publishConfig": {
+      "access": "public"
+    },
+    "keywords": ["webcomponents", "pwa", "components"]
+  }
 }

@@ -1,18 +1,40 @@
-<script>
-  import * as theme from "../theme.ts";
-  import * as spec from "../spec.ts";
-  import { link_css } from "../fetch-resources.ts";
-  export const name = "t-icon";
-  export const props = {
-    name: undefined,
-    fill: false,
-    plain: false,
-    size: "body",
-    colour: "body",
-    text: false,
-    spin: false,
-  };
+<meta name="t-icon">
+  A icon from RemixIcon to be used to provide richness to a document.
+  <ref url="https://remixicon.com/">
+    RemixIcon Website
+  </ref>
+  <attr name="name">
+    The name taken from RemixIcon
+    <ref url="https://remixicon.com/">
+      RemixIcon Website
+    </ref>
+  </attr>
+  <attr name="fill" type="boolean">
+    If true then the filled variant of the RemixIcon will be used.
+  </attr>
+  <attr name="plain" type="boolean">
+    Certain icons do not have a fill or outlined variant. Set this to
+    true if that is the case for you.
+  </attr>
+  <attr name="size" default="body">
+    A size of one of the text variants from the theme. Use `body`
+    and `body_large`for paragraph sizes. Use
+    `h{NUMBER}_display` for display headings.
+  </attr>
+  <attr name="colour" type="colour" default="body">
+    The colour of the icon.
+  </attr>
+  <attr name="text" type="boolean">
+    If set to true then the text colour from the
+    provided theme colour will be used.
+  </attr>
+  <attr name="spin" type="boolean">
+    If true then the icon will spin. Useful for loading indicators.
+  </attr>
+  <import use="link_css" from="../fetch-resources.ts" />
+</meta>
 
+<script>
   link_css(
     "https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css",
     self
@@ -20,6 +42,9 @@
 </script>
 
 <style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+
   :host {
     display: inline-flex;
     align-items: center;

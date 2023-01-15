@@ -1,12 +1,14 @@
+<meta name="t-richtext">
+  Display rich text from a text editor. Will filter the
+  content to make sure that nothing harmful is displayed to the user.
+  <attr name="use">
+    A JavaScript snippet to access the data from the `u-` namespace.
+  </attr>
+  <prop name="data">Data to use instead of items from the use attribute.</prop>
+  <base use="Receiver" from="../data.ts" />
+</meta>
+
 <script>
-  import { Receiver } from "../data.ts";
-
-  export const name = "t-richtext";
-  export const props = {
-    use: undefined,
-  };
-  export const base = Receiver;
-
   const content = CreateRef();
 
   const allowed_roots = [

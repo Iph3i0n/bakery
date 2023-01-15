@@ -1,10 +1,16 @@
-<script>
-  export const name = "l-accordion";
-  export const props = {
-    open: false,
-    independent: false,
-  };
+<meta name="l-accordion">
+  An accordion item that is expanded with a click. If
+  another accordion within the parent is opened then
+  it will collapse automatically.
+  <attr name="open" type="boolean">
+    If set then the accordion item defaults to open on load.
+  </attr>
+  <attr name="independent" type="boolean">
+    If set then the accordion item will not close when another one opens.
+  </attr>
+</meta>
 
+<script>
   class AccordionOpenEvent extends Event {
     #id;
 

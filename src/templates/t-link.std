@@ -1,15 +1,24 @@
+<meta name="t-link">
+  A styled link for usage around the site.
+  <attr name="href">
+    The URL to send the user to if the button is being used as a link.
+  </attr>
+  <attr name="target" type="target">
+    The standard target from an anchor element.
+  </attr>
+  <attr name="private" type="boolean">
+    If set then the link will be treated as external.
+    This means that `rel="noreferrer noopener"`
+    will be applied.
+  </attr>
+  <attr name="block" type="boolean">
+    If set then the link will be displayed as a block rather
+    than an inline block.
+  </attr>
+  <aria role="button" />
+</meta>
+
 <script>
-  import * as theme from "../theme.ts";
-
-  export const name = "t-link";
-  export const props = {
-    href: undefined,
-    target: undefined,
-    private: false,
-    block: false,
-  };
-  export const aria = { Role: "button" };
-
   self.tabIndex = 0;
 
   self.addEventListener("loaded", () => {
@@ -26,6 +35,8 @@
 </script>
 
 <style>
+  @js const theme = require("../theme.ts");
+
   :host {
     display: ":self.props.block ? 'block' : 'inline-block'";
     theme.text("body", self.props.block ? undefined : "no-margin");

@@ -1,7 +1,11 @@
-<script>
-  export const name = "t-localised";
-  export const props = {};
+<meta name="t-localised">
+  Only displays text for the preferred locale of the user. Put content in
+  a slot with the name of the locale it is written in. If there is no
+  content in the slot with the preferred locale of the user, content from
+  the unnamed slot will be used as a fallback.
+</meta>
 
+<script>
   function Languages() {
     if (navigator.languages != undefined) return navigator.languages;
     return [navigator.language];

@@ -1,16 +1,26 @@
+<meta name="t-code">
+  A code highlighter. It uses highlight.js to correctly colour code.
+  <attr name="language">
+    The name of a language as listed in highlight.js.
+    <ref url="https://highlightjs.org/static/demo/">
+      Highlight.js Language Demo
+    </ref>
+  </attr>
+  <attr name="use">
+    A JavaScript snippet to extract the data from the `u-` namespace.
+  </attr>
+  <attr name="file">
+    A file name to provide the user with a bit of context. Display
+    only and does not change functionality.
+  </attr>
+  <attr name="flush" type="boolean">
+    If true then no padding or borders will be applied.
+  </attr>
+  <base use="Receiver" from="../data.ts" />
+  <import use="unsafe_import" from="../fetch-resources.ts" />
+</meta>
+
 <script>
-  import { Receiver } from "../data.ts";
-  import { unsafe_import } from "../fetch-resources.ts";
-
-  export const name = "t-code";
-  export const props = {
-    language: undefined,
-    file: undefined,
-    use: undefined,
-    flush: false,
-  };
-  export const base = Receiver;
-
   const preceding_whitespace = (l) => {
     const tester = l.split(" ");
     for (let i = 0; i < tester.length; i++) if (tester[i].trim()) return i;

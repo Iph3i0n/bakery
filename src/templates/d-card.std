@@ -1,10 +1,19 @@
-<script>
-  export const name = "d-card";
-  export const props = {
-    colour: "surface",
-  };
-  export const aria = { Role: "section" };
+<meta name="d-card">
+  A card to segment content in the document flow.
+  Useful for grouped information so as to easily
+  display those divisions to the user.
+  <attr name="colour" type="colour" default="surface">
+    A colour to fill the card with.
+  </attr>
+  <slot>The body of the card.</slot>
+  <slot name="title">
+    The title content of the card.
+    Does not require text styling.
+  </slot>
+  <aria role="section" />
+</meta>
 
+<script>
   function get_colour() {
     return self.props.colour ?? "surface";
   }

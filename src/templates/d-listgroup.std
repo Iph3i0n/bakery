@@ -1,10 +1,14 @@
-<script>
-  import * as theme from "../theme.ts";
-  import * as spec from "../spec.ts";
+<meta name="d-listgroup">
+  Uses the children to display a list of items.
+  Each one a block with a standard border. Only
+  `span` and `a` tags as children are supported.
+  The children may have a theme colour as a class
+  name in order to style them.
+</meta>
 
-  export const name = "d-listgroup";
-</script>
 <style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
   :host {
     display: block;
     theme.border("body");

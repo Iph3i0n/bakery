@@ -1,12 +1,14 @@
-<script>
-  import * as theme from "../theme.ts";
+<meta name="d-loading">
+  A loading overlay that covers the whole page.
+  Should be used sparingly.
 
-  export const name = "d-loading";
-  export const props = {
-    open: false,
-  };
-</script>
+  <attr name="open" type="boolean">
+    If true then the overlay will render.
+  </attr>
+</meta>
+
 <style>
+  @js const theme = require("../theme.ts");
   @js const spec = require("../spec.ts");
 
   :host {

@@ -20,13 +20,13 @@ jobs:
           deno-version: vx.x.x
       - run: deno task install
       - run: deno task build-docs
+      - run: deno task build-docs-types
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './docs'
+          path: "./docs"
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v1
-

@@ -1,15 +1,28 @@
+<meta name="o-dropdown">
+  A simple dropdown that can be triggered by a
+  separate element on the page. It is automatically
+  position below its target.
+  <attr name="target">
+    A CSS selector for the desired target. It will listen
+    for click events from any element matching that selector
+    and will position below the one that is clicked.
+  </attr>
+  <attr name="width">
+    The width of the dropdown menu. If unset then the width
+    of the target will be used. Should be a CSS width.
+  </attr>
+  <attr name="height" default="12rem">
+    The max height of the drop down.
+  </attr>
+  <attr name="scrollable" type="boolean">
+    If true then the dropdown will have a scroll bar when
+    there are too many elements within.
+  </attr>
+  <import use="c" from="../classes.ts" default />
+  <import use="On" from="../events.ts" />
+</meta>
+
 <script>
-  import c from "../classes.ts";
-  import { On } from "../events.ts";
-
-  export const name = "o-dropdown";
-  export const props = {
-    target: undefined,
-    width: undefined,
-    height: "12rem",
-    scrollable: false,
-  };
-
   const modal = CreateRef();
   const body = CreateRef();
 

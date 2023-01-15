@@ -1,10 +1,16 @@
-<script>
-  export const name = "t-crumbs";
-  export const props = {
-    divider: "/",
-    colour: "primary",
-  };
+<meta name="t-crumbs">
+  Breadcrumbs designed to inform the user of the path to the
+  current page. Only `span` and `a`
+  tags are accepted as children.
+  <attr name="divider" default="/">
+    The character that should be used to separate the crumbs.
+  </attr>
+  <attr name="colour" type="colour" default="primary">
+    The text colour for anchor crumbs.
+  </attr>
+</meta>
 
+<script>
   let options = [];
 
   function on_options(e) {

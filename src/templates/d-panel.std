@@ -1,18 +1,25 @@
+<meta name="d-panel">
+  A simple panel to set the colour of a block.
+  Offers no padding and no borders by default.
+
+  <attr name="colour" type="colour" default="body">
+    The colour for the block. Will update background and text colour.
+  </attr>
+  <attr name="bordered" type="boolean">
+    If set then the panel will have a border
+    and shadow but still no padding.
+  </attr>
+</meta>
+
 <script>
-  import * as theme from "../theme.ts";
-
-  export const name = "d-panel";
-  export const props = {
-    colour: "body",
-    bordered: false,
-  };
-
   function get_colour() {
     return self.props.colour ?? "body";
   }
 </script>
 
 <style>
+  @js const theme = require("../theme.ts");
+
   :host {
     display: block;
     theme.colour(get_colour());

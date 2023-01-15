@@ -1,14 +1,14 @@
-<script>
-  import * as theme from "../theme.ts";
-
-  export const name = "t-paragraph";
-  export const props = {
-    large: false,
-  };
-  export const aria = { Role: "paragraph" };
-</script>
+<meta name="t-paragraph">
+  A paragraph element
+  <attr name="large" type="boolean">
+    If set then larger text is displayed
+  </attr>
+  <aria role="paragraph" />
+</meta>
 
 <style>
+  @js const theme = require("../theme.ts");
+
   :host {
     display: block;
     theme.text(self.props.large ? "body_large" : "body");

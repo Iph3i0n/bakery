@@ -1,11 +1,16 @@
-<script>
-  export const name = "d-progress";
-  export const props = {
-    value: undefined,
-    colour: "primary",
-  };
-  export const aria = { Role: "progressbar" };
-</script>
+<meta name="d-progress">
+  A simple progress bar. Children can be used to set display text.
+  <attr name="value" type="number">
+    A percentage value of the progress. Should not include anything
+    other than numbers and a decimal place.
+  </attr>
+  <attr name="colour" type="colour" default="primary">
+    The colour for the progress foreground.
+    The background will always be surface.
+  </attr>
+
+  <aria role="progressbar" />
+</meta>
 
 <style>
   @js const theme = require("../theme.ts");

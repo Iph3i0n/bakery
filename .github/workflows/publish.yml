@@ -17,7 +17,7 @@ jobs:
           deno-version: vx.x.x
       - run: deno task install
       - run: deno task build
-      - run: deno task prepublish
+      - run: deno task build-types --version=${GITHUB_REF#refs/*/}
       - run: npm publish
         working-directory: ./dist
         env:

@@ -1,15 +1,23 @@
+<meta name="u-paginator">
+  Paginate using the context for data management. It will provide `{skip}` and
+  `{take}` options to any `u-fetch` element containing it.
+  <attr name="total">
+    The JavaScript snippet used to get the data from the context. Should result
+    in a number showing the total items available.
+  </attr>
+  <attr name="size" default="50">The page size.</attr>
+  <prop name="data">Data to use instead of items from the use attribute.</prop>
+  <event name="pagination" type="PaginationEvent">
+    When the user performs a pagination interaction. `Skip` and `Take` are provided.
+    <key name="Skip" type="number">Number of items in the list to skip.</key>
+    <key name="Take" type="number">Number of items in the list to take.</key>
+  </event>
+  <base use="Receiver" from="../data.ts" />
+  <import use="PaginationEvent" from="../pagination.ts" default />
+  <import use="c" from="../classes.ts" default />
+</meta>
+
 <script>
-  import { Receiver } from "../data.ts";
-  import PaginationEvent from "../pagination.ts";
-  import c from "../classes.ts";
-
-  export const name = "u-paginator";
-  export const props = {
-    total: undefined,
-    size: "50",
-  };
-  export const base = Receiver;
-
   self.accessor = "total";
 
   let skip = 0;

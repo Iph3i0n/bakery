@@ -1,10 +1,19 @@
-<script>
-  export const name = "d-alert";
-  export const props = {
-    colour: "warning",
-    closeable: false,
-  };
+<meta name="d-alert">
+  A simple coloured alert to display update information
+  to the user. Commonly used to display error or success
+  messages after a submission or interaction.
+  <attr name="colour" type="colour" default="warning">
+    A the colour to fill the alert with.
+  </attr>
+  <attr name="closeable" type="boolean">
+    If true, a close button is displayed and the element
+    will be removed when it is clicked. Be careful when
+    using with JS frameworks, consider a custom
+    implementation in that scenario.
+  </attr>
+</meta>
 
+<script>
   function close() {
     self.remove();
   }

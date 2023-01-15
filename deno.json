@@ -3,13 +3,14 @@
     "lib": ["dom", "deno.ns", "deno.unstable"]
   },
   "tasks": {
-    "install": "deno install --allow-all https://deno.land/x/wholemeal@0.1.0/main.ts",
+    "install": "deno install --allow-all https://deno.land/x/wholemeal@0.1.2/main.ts",
     "test": "deno test --allow-all",
     "build": "wholemeal build",
+    "build-types": "wholemeal types",
     "build-docs": "wholemeal build --out=./docs/dist",
+    "build-docs-types": "wholemeal types --out=./docs/dist",
     "dev": "wholemeal dev --out=./docs/dist",
-    "dev-dev": "wholemeal-dev dev --out=./docs/dist",
-    "prepublish": "deno run --allow-write --allow-env --allow-read ./create-package.ts"
+    "dev-dev": "wholemeal-dev dev --out=./docs/dist"
   },
   "lint": {
     "rules": {

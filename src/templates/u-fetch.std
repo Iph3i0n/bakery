@@ -1,15 +1,25 @@
+<meta name="u-fetch">
+  Fetches data from a URL and adds them to the context.
+  <attr name="url">
+    The main URL to use. May include parameters like `{locale}`
+    to customise the URL for the user.
+  </attr>
+  <attr name="name">
+    The name given to the result in the context.
+  </attr>
+  <attr name="fallback">
+    The fallback URL for if the fetch fails. Useful for when fetching
+    locale specific data from a CMS.
+  </attr>
+  <attr name="no-cache" type="boolean">
+    By default all data is cached on the users machine. If set then
+    that cache is disabled. Only use if you have to.
+  </attr>
+  <import use="Provider" from="../data.ts" />
+  <import use="PaginationEvent" from="../pagination.ts" default />
+</meta>
+
 <script>
-  import { Provider } from "../data.ts";
-  import PaginationEvent from "../pagination.ts";
-
-  export const name = "u-fetch";
-  export const props = {
-    url: undefined,
-    name: undefined,
-    fallback: undefined,
-    "no-cache": false,
-  };
-
   let skip = 0;
   let take = 50;
   const DATA_KEY = () => "__BAKERY_DATA__" + self.props.url;
