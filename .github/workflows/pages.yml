@@ -19,8 +19,7 @@ jobs:
         with:
           deno-version: vx.x.x
       - run: deno task install
-      - run: deno task build-docs
-      - run: deno task build-docs-types
+      - run: wholemeal build --out=./docs/dist --ver=${GITHUB_REF#refs/*/}
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact

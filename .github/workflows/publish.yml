@@ -16,7 +16,7 @@ jobs:
         with:
           deno-version: vx.x.x
       - run: deno task install
-      - run: wholemeal build --version=${GITHUB_REF#refs/*/}
+      - run: wholemeal build --ver=${GITHUB_REF#refs/*/}
       - run: npm publish
         working-directory: ./dist
         env:
