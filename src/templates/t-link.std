@@ -15,7 +15,18 @@
     If set then the link will be displayed as a block rather
     than an inline block.
   </attr>
+  <attr name="spa" type="boolean">
+    If set then the link will use a SPA push to navigate rather
+    than loading the page. Will be ignored if `target` or
+    `private` are set.
+  </attr>
+  <attr name="replace" type="boolean">
+    Only used if `spa` is set. Will make the link replace the state
+    rather than push. Useful if you don't want the back button to
+    keep people on the page.
+  </attr>
   <aria role="button" />
+  <base use="Router" from="../router.ts" default />
 </meta>
 
 <script>
@@ -29,6 +40,9 @@
           self.props.target,
           self.props.private ? "noreferrer" : undefined
         );
+      else if (self.props.spa)
+        if (self.props.replace) self.Replace(self.props.href);
+        else self.Push(self.props.href);
       else window.location.href = self.props.href;
     });
   });

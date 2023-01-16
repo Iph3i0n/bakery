@@ -17,11 +17,14 @@
   </attr>
   <import use="Provider" from="../data.ts" />
   <import use="PaginationEvent" from="../pagination.ts" default />
+  <base use="Receiver" from="../data.ts" />
 </meta>
 
 <script>
   let skip = 0;
   let take = 50;
+  self.fetcher_override = "routing_data";
+
   const DATA_KEY = () => "__BAKERY_DATA__" + self.props.url;
 
   function Language() {
@@ -31,15 +34,22 @@
 
   const provider = new Provider(self, self.props.name);
 
-  const options = {
-    locale: () => Language(),
-    skip: () => skip,
-    take: () => take,
+  const options = () => {
+    const existing = self.data;
+
+    const params = existing ? existing.params : {};
+    return ({
+      locale: () => Language(),
+      skip: () => skip,
+      take: () => take,
+      ...Object.keys(params).reduce((c, n) => ({ ...c, ["params." + n]: () => params[n] }), {})
+    })
   };
 
   function process_url(url) {
     let result = url;
-    for (const key in options) url = url.replaceAll(`{${key}}`, options[key]());
+    const opts = options();
+    for (const key in opts) url = url.replaceAll(`{${key}}`, opts[key]());
 
     return url;
   }
@@ -50,7 +60,18 @@
     get_data();
   });
 
+  const is_visible = () => {
+    let current = self.parentElement;
+    while (current && current.tagName !== "body") {
+      if (current.tagName.includes("-")) return !!self.assignedSlot;
+      current = current.parentElement;
+    }
+
+    return true;
+  }
+
   async function get_data() {
+    if (!is_visible()) return;
     if (!self.props["no-cache"]) {
       const cached = window.localStorage.getItem(DATA_KEY());
       if (cached) provider.data = JSON.parse(cached);
@@ -82,6 +103,17 @@
       console.warn("Changing keys for providers is current not supported.");
     get_data();
   });
+
+  let existing_route = window.location.pathname;
+  const handler = () => {
+    const next = window.location.pathname;
+    if (next === existing_route) return;
+    existing_route = next;
+    get_data();
+  }
+
+  document.addEventListener("navigation-event", handler);
+  self.addEventListener("popstate", handler);
 </script>
 
 <slot></slot>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script src="/js/utils.js"></script>
+    <script>
+      window.CODE_EXAMPLES = {
+        link: {
+          basic: e(
+            "div",
+            {},
+            e(
+              "u-route",
+              { path: "/tutorial/routing/test" },
+              e("t-paragraph", {}, "You have reached the sub route")
+            ),
+            e(
+              "t-link",
+              { href: "/tutorial/routing/test", block: true, spa: true },
+              "Perform a SPA navigation"
+            )
+          ),
+          replace: e(
+            "div",
+            {},
+            e(
+              "u-route",
+              { path: "/tutorial/routing/test" },
+              e("t-paragraph", {}, "You have reached the sub route")
+            ),
+            e(
+              "t-link",
+              {
+                href: "/tutorial/routing/test",
+                block: true,
+                spa: true,
+                replace: true,
+              },
+              "Replace the URL"
+            )
+          ),
+        },
+        modal: {
+          basic: e(
+            "div",
+            {},
+            e(
+              "u-route",
+              { path: "/tutorial/routing" },
+              e(
+                "o-modal",
+                { path: "open-modal", size: "medium" },
+                e("span", { slot: "title" }, "Modal Title"),
+                e("t-paragraph", {}, "Modal Content")
+              ),
+              e(
+                "t-link",
+                {
+                  href: "/tutorial/routing/open-modal",
+                  block: true,
+                  spa: true,
+                },
+                "Open the modal"
+              )
+            )
+          ),
+        },
+        fetching: {
+          basic: e(
+            "div",
+            {},
+            e(
+              "u-route",
+              { path: "/tutorial/routing/:find" },
+              e(
+                "u-fetch",
+                { url: "/examples/{params.find}.json", name: "text" },
+                e("t-richtext", { use: "text.data" })
+              )
+            ),
+              e(
+                "t-link",
+                {
+                  href: "/tutorial/routing/rich-text",
+                  block: true,
+                  spa: true,
+                },
+                "Fetch some text"
+              )
+          ),
+        },
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="text" level="h2">
+              <t-localised>Text</t-localised>
+            </t-heading>
+            <t-paragraph>
+              Bakery is capable of SPA routing. Check out the examples below.
+              Please do not try to navigate to a subpage of this directly
+              because of limitations of GitHub pages.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="link.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="link.replace"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="modal.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetching.basic"></div>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

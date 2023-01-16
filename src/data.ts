@@ -63,6 +63,8 @@ export class Provider {
         "Only RequestDataEvent objects can be used to request data"
       );
 
+    if (e.target === this.#self) return;
+
     if (e.Key !== this.#key) return;
 
     const target = e.target;
@@ -117,6 +119,7 @@ export abstract class Receiver extends HTMLElement {
   #data: unknown = undefined;
 
   accessor = "use";
+  fetcher_override: string | undefined = undefined;
 
   readonly #listener = (e: Event) => {
     if (!(e instanceof DataChangedEvent))
@@ -134,7 +137,7 @@ export abstract class Receiver extends HTMLElement {
     super();
 
     this.addEventListener(LoadedEvent.Key, () => {
-      const a = this.props[this.accessor];
+      const a = this.fetcher_override ?? this.props[this.accessor];
       if (!a) return;
 
       const [key] = a.split(/[.\[\(]/, 1);

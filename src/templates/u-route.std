@@ -1,0 +1,16 @@
+<meta name="u-route">
+  Only displays the children if the browser matches the particular route.
+  Provided routes are relative to the route used below, even if they start
+  with a /.
+  <attr name="path" type="string">
+    The current path to match. Will be relative to the current URL.
+    Use `:` at the start of a segment to use it as a parameter. The parameters
+    will be available to any `u-fetch` tag that is a child.
+  </attr>
+  <import use="Provider" from="../data.ts" />
+  <base use="Router" from="../router.ts" default />
+</meta>
+
+<s:if check=":self.Matches">
+  <slot></slot>
+</s:if>

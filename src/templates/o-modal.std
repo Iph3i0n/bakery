@@ -1,17 +1,23 @@
 <meta name="o-modal">
   A modal dialogue to be triggered by another element on the screen.
-  <attr name="trigger">
+  <attr name="trigger" optional>
     A CSS selector to listen to for opening the dialogue.
     Will listen for clicks of any elements matching the selector.
   </attr>
   <attr name="size" type="size" default="medium">
     The size of the modal on the screen.
   </attr>
+  <attr name="path" type="string" optional>
+    If set then the modal will be treated like a `u-router` and show
+    if the route matches. In this case then the modal will replace the
+    state when closed so make sure that it only routes modal specific things.
+  </attr>
 
   <slot name="title">The top of the modal.</slot>
   <slot name="footer">The bottom of the modal, will be hidden if empty.</slot>
   <aria role="dialog" />
   <import use="On" from="../events.ts" />
+  <base use="Router" from="../router.ts" default />
 </meta>
 
 <script>
@@ -36,7 +42,17 @@
   }
 
   function close() {
-    open = false;
+    if (self.props.trigger) {
+      open = false;
+    } else {
+      const target = window.location.pathname.split("/").slice(0, self.data.used + 1).filter(p => p).join("/");
+      self.Replace("/" + target);
+    }
+  }
+
+  function is_open() {
+    if (self.props.trigger) return open;
+    else return self.Matches;
   }
 
   function on_footer(e) {
@@ -44,15 +60,17 @@
   }
 
   self.addEventListener(LoadedEvent.Key, () => {
-    const off_click = On("click", self.props.trigger, () => {
-      if (typeof self === "undefined") {
-        off_click();
-        return;
-      }
+    if (self.props.trigger) {
+      const off_click = On("click", self.props.trigger, () => {
+        if (typeof self === "undefined") {
+          off_click();
+          return;
+        }
 
-      open = true;
-      self.dispatchEvent(new ShouldRender());
-    });
+        open = true;
+        self.dispatchEvent(new ShouldRender());
+      });
+    }
 
     const slot = self.root.querySelector("slot[name=footer]");
     slot.addEventListener("slotchange", on_footer);
@@ -64,7 +82,7 @@
 
   @insert ../styles/overlay.pss;
 
-  @if open {
+  @if is_open() {
     @insert ../styles/overlay-open.pss;
   }
 
@@ -93,7 +111,7 @@
     height: 100%;
   }
 
-  @if !open {
+  @if !is_open() {
     .modal {
       transform: translateY(-10px);
     }

@@ -49,7 +49,8 @@
     "./src/templates/u-global.std",
     "./src/templates/u-if.std",
     "./src/templates/u-each.std",
-    "./src/templates/u-paginator.std"
+    "./src/templates/u-paginator.std",
+    "./src/templates/u-route.std"
   ],
   "description": "Simple web components for all of your web application needs.",
   "global_css": "./global.pss",
