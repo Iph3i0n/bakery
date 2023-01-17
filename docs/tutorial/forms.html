@@ -79,73 +79,119 @@
             e("f-button", { type: "button", colour: "warning" }, "World")
           ),
         },
+        manager: {
+          basic: e(
+            "f-form",
+            { url: "/tutorial", method: "get", submit: "page-form-data" },
+            e(
+              "l-row",
+              {},
+              e(
+                "l-col",
+                { xs: "12" },
+                e("f-input", { name: "test" }, "Test Input")
+              ),
+              e(
+                "l-col",
+                { xs: "12" },
+                e("f-button", { type: "submit" }, "Submit")
+              )
+            )
+          ),
+          ajax: e(
+            "f-form",
+            { url: "/examples/fetch-example.json", method: "get" },
+            e(
+              "l-row",
+              {},
+              e(
+                "l-col",
+                { xs: "12" },
+                e("f-input", { name: "test" }, "Test Input")
+              ),
+              e(
+                "l-col",
+                { xs: "12" },
+                e("f-button", { type: "submit" }, "Submit")
+              ),
+              e(
+                "l-col",
+                { xs: "12" },
+                e(
+                  "t-paragraph",
+                  {},
+                  e("u-text", { use: "form_state.json.example_text" })
+                )
+              )
+            )
+          ),
+        },
       };
-
-      function on_submit(e) {
-        e.preventDefault();
-        console.log([...new FormData(e.target).entries()]);
-      }
     </script>
     <script src="/dist/bundle.min.js"></script>
   </head>
   <body>
     <l-templated use="/tutorial/layout.template.html" remote>
-      <form onsubmit="on_submit(event)">
-        <l-container>
-          <l-row>
-            <l-col xs="12">
-              <t-heading id="forms" level="h2">
-                <t-localised>Forms</t-localised>
-              </t-heading>
-              <t-paragraph>
-                <t-localised>
-                  All forms are compatible with the standard HTML form element.
-                  The provide added functionality around validation and styling.
-                </t-localised>
-              </t-paragraph>
-              <t-paragraph>
-                <t-localised>
-                  They are included in the f- namespace and must be withing a
-                  form element to function.
-                </t-localised>
-              </t-paragraph>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="select.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="date.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="textarea.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="text.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="toggle.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="multiselect.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="singleselect.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="richtext.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="image.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="button.basic"></div>
-            </l-col>
-            <l-col xs="12">
-              <div data-example="button.group"></div>
-            </l-col>
-          </l-row>
-        </l-container>
-      </form>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="forms" level="h2">
+              <t-localised>Forms</t-localised>
+            </t-heading>
+            <t-paragraph>
+              <t-localised>
+                All forms are compatible with the standard HTML form element.
+                The provide added functionality around validation and styling.
+              </t-localised>
+            </t-paragraph>
+            <t-paragraph>
+              <t-localised>
+                They are included in the f- namespace and must be withing a form
+                element to function.
+              </t-localised>
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="select.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="date.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="textarea.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="toggle.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="multiselect.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="singleselect.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="richtext.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="image.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="button.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="button.group"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="manager.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="manager.ajax"></div>
+          </l-col>
+        </l-row>
+      </l-container>
     </l-templated>
     <div style="position: fixed; bottom: 1rem; left: 1rem">
       <f-button type="button" id="toc" colour="primary">

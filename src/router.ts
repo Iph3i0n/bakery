@@ -27,14 +27,22 @@ export default abstract class Router extends Receiver {
     );
   }
 
-  Push(url: string) {
+  static Push(url: string) {
     window.history.pushState({}, "", url);
     document.dispatchEvent(new NavigateEvent());
   }
 
-  Replace(url: string) {
+  static Replace(url: string) {
     window.history.replaceState({}, "", url);
     document.dispatchEvent(new NavigateEvent());
+  }
+
+  Push(url: string) {
+    Router.Push(url);
+  }
+
+  Replace(url: string) {
+    Router.Replace(url);
   }
 
   get Matches() {

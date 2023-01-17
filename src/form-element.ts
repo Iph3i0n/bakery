@@ -1,40 +1,215 @@
 import { ShouldRender, LoadedEvent, RenderEvent } from "./deps.ts";
 import c from "./classes.ts";
+import { Provider } from "./data.ts";
+import Router from "./router.ts";
 
-export default abstract class FormElement extends HTMLElement {
-  abstract readonly internals: ElementInternals;
-  abstract readonly props: Record<string, string>;
-  #value: string | boolean | undefined | File = undefined;
-  #touched = false;
-  #focused = false;
+const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
+const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";
 
-  #on_change = () => {
-    this.#update_from_form();
-    this.dispatchEvent(new ShouldRender());
-  };
+type FormElementValue = string | File | boolean | undefined;
+type FormValue = Record<string, FormElementValue>;
 
-  get form(): HTMLFormElement {
-    const form = this.internals.form;
-    if (!form) throw new Error("Form elements must be inside a form");
+class RegisterFormElementEvent extends Event {
+  #form_manager: FormManagerElement | undefined;
 
-    return form;
+  constructor() {
+    super(REGISTER_KEY, { bubbles: true });
   }
 
-  get #form_values() {
-    const data = new FormData(this.form);
-    const result: Record<string, string | boolean> = {};
-    data.forEach((value, key) => {
-      const v = value.toString();
-      result[key] = v === "" || v === "true" ? true : v === "false" ? false : v;
+  get Manager() {
+    return this.#form_manager;
+  }
+
+  set Manager(ele: FormManagerElement | undefined) {
+    this.#form_manager = ele;
+  }
+}
+
+class SubmittedEvent extends Event {
+  readonly #data: FormValue;
+
+  constructor(data: FormValue) {
+    super("submitted", { bubbles: true });
+    this.#data = data;
+  }
+
+  get FormData() {
+    return this.#data;
+  }
+}
+
+export abstract class FormManagerElement extends HTMLElement {
+  abstract readonly internals: ElementInternals;
+  abstract readonly props: Record<string, string>;
+  abstract readonly root: ShadowRoot;
+
+  readonly #elements: Array<FormElement> = [];
+  readonly #provider: Provider;
+
+  constructor() {
+    super();
+    this.addEventListener(REGISTER_KEY, (event) => {
+      if (!(event instanceof RegisterFormElementEvent))
+        throw new Error(
+          "Only the register form element event class may be used to register an element."
+        );
+      const target = event.target;
+      if (!(target instanceof FormElement))
+        throw new Error("Only FormElement components may register themselves.");
+
+      if (event.Manager) return;
+      this.#elements.push(target);
+      event.Manager = this;
     });
+
+    this.#provider = new Provider(this, "form_state");
+  }
+
+  async #ajax_submit(data: FormData | FormValue) {
+    let url = this.props.url;
+    if (this.props.method === "get") {
+      const query = new URLSearchParams();
+      if (data instanceof FormData) {
+        data.forEach((v, k) => {
+          if (v instanceof Blob)
+            throw new Error("Only strings may be used in a get request");
+          query.set(k, v);
+        });
+      } else {
+        for (const key in data) {
+          const value = data[key];
+          if (value instanceof Blob)
+            throw new Error("Only strings may be used in a get request");
+
+          query.set(key, value?.toString() ?? "");
+        }
+      }
+
+      url += "?" + query.toString();
+    }
+
+    const response = await fetch(url, {
+      method: this.props.method,
+      body:
+        this.props.method === "get"
+          ? undefined
+          : data instanceof FormData
+          ? data
+          : JSON.stringify(data),
+      credentials: this.props["no-credentials"] as RequestCredentials,
+      headers:
+        data instanceof FormData
+          ? undefined
+          : { "content-type": "application/json" },
+    });
+
+    let json: unknown;
+    try {
+      json = await response.json();
+      // We swallow this error because no all endpoints return JSON.
+      // deno-lint-ignore no-empty
+    } catch {}
+
+    this.#provider.data = { response, json };
+    if (!response.ok) return;
+
+    const go_to = this.props["success-url"];
+    if (!go_to) return;
+
+    Router.Push(go_to);
+  }
+
+  get #values() {
+    const values: FormValue = {};
+    for (const ele of this.#elements)
+      if (!ele) continue;
+      else values[ele.name] = ele.value;
+
+    return values;
+  }
+
+  #form_data_value(v: FormElementValue) {
+    if (!v) return "";
+    else if (typeof v === "boolean") return v ? "true" : "false";
+    else if (typeof v === "string") return v;
+    else if (v instanceof File) return v;
+    else throw new Error("Unrecognised value type " + v);
+  }
+
+  get #form_data() {
+    const result = new FormData();
+
+    const values = this.#values;
+    for (const key in values)
+      result.set(key, this.#form_data_value(values[key]));
 
     return result;
   }
 
-  #update_from_form() {
-    const value = this.#form_values[this.name] || undefined;
-    if (value) this.#value = value;
+  #page_submit() {
+    const form = document.createElement("form");
+    form.action = this.props.url;
+    form.method = this.props.method;
+
+    const values = this.#values;
+    for (const key in values) {
+      const value = this.#form_data_value(values[key]);
+      const input = document.createElement("input");
+      input.name = key;
+      if (typeof value === "string") {
+        input.type = "text";
+        input.value = value;
+      } else {
+        const container = new DataTransfer();
+        container.items.add(value);
+        input.type = "file";
+        input.files = container.files;
+      }
+
+      form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
   }
+
+  Submit() {
+    const validate_event = new CustomEvent(VALIDATION_KEY, { bubbles: false });
+    this.dispatchEvent(validate_event);
+    if (validate_event.defaultPrevented) return;
+
+    const submit_event = new SubmittedEvent(this.#values);
+    this.dispatchEvent(submit_event);
+    if (submit_event.defaultPrevented) return;
+
+    switch (this.props.submit ?? "ajax-json") {
+      case "ajax-json": {
+        this.#ajax_submit(this.#values);
+        break;
+      }
+      case "ajax-form-data": {
+        this.#ajax_submit(this.#form_data);
+        break;
+      }
+      case "page-form-data": {
+        this.#page_submit();
+        break;
+      }
+      case "event-only": {
+        break;
+      }
+    }
+  }
+}
+
+export default abstract class FormElement extends HTMLElement {
+  abstract readonly internals: ElementInternals;
+  abstract readonly props: Record<string, string>;
+  #value: FormElementValue = undefined;
+  #touched = false;
+  #focused = false;
+  #form: FormManagerElement | undefined;
 
   constructor() {
     super();
@@ -44,31 +219,33 @@ export default abstract class FormElement extends HTMLElement {
       else this.tabIndex = parseInt(this.props.tabindex ?? "0");
     });
 
+    this.addEventListener("focus", () => {
+      this.#focused = true;
+      this.dispatchEvent(new ShouldRender());
+    });
+
+    this.addEventListener("blur", () => {
+      this.#touched = true;
+      this.#focused = false;
+      this.dispatchEvent(new ShouldRender());
+    });
+
     this.addEventListener(LoadedEvent.Key, () => {
       if (this.props.default) this.value = this.props.default;
-      this.#on_change();
-      this.form.addEventListener("change", this.#on_change);
 
-      this.addEventListener("focus", () => {
-        this.#focused = true;
-        this.dispatchEvent(new ShouldRender());
-      });
+      const event = new RegisterFormElementEvent();
+      this.dispatchEvent(event);
 
-      this.addEventListener("blur", () => {
+      const form = event.Manager;
+      if (!form) return;
+
+      this.#form = form;
+
+      this.#form.addEventListener(VALIDATION_KEY, (e) => {
         this.#touched = true;
-        this.#focused = false;
-        this.dispatchEvent(new ShouldRender());
+        if (!this.validity.valid) e.preventDefault();
+        self.dispatchEvent(new ShouldRender());
       });
-
-      this.form.addEventListener(
-        "submit",
-        (e) => {
-          this.#touched = true;
-          if (!this.validity.valid) e.preventDefault();
-          self.dispatchEvent(new ShouldRender());
-        },
-        { capture: true }
-      );
     });
   }
 
@@ -78,8 +255,6 @@ export default abstract class FormElement extends HTMLElement {
 
   set value(v: string | boolean | undefined | File) {
     this.#value = v;
-    const input = v instanceof File ? v : v?.toString() ?? null;
-    this.internals.setFormValue(input);
     this.dispatchEvent(new ShouldRender());
   }
 
@@ -91,15 +266,7 @@ export default abstract class FormElement extends HTMLElement {
   }
 
   submit() {
-    this.internals.form?.requestSubmit();
-  }
-
-  formDisabledCallback(disabled: boolean) {
-    this.setAttribute("disabled", disabled.toString());
-  }
-
-  formResetCallback() {
-    this.value = this.getAttribute("default") ?? "";
+    this.#form?.Submit();
   }
 
   get is_bad_empty() {
@@ -138,9 +305,9 @@ export default abstract class FormElement extends HTMLElement {
   }
 }
 
-export function FindForm(submit: HTMLElement): HTMLFormElement | undefined {
+export function FindForm(submit: HTMLElement): FormManagerElement | undefined {
   const parent = submit.parentElement;
   if (!parent) return undefined;
-  if (parent.tagName === "FORM") return parent as HTMLFormElement;
+  if (parent.tagName === "F-FORM") return parent as FormManagerElement;
   return FindForm(parent);
 }

@@ -38,7 +38,7 @@
       else if (self.props.type === "submit") {
         const form = FindForm(self);
         if (!form) throw new Error("Cannot use a submit outside of a form");
-        form.requestSubmit();
+        form.Submit();
       } else if (self.props.href)
         if (self.props.target)
           window.open(

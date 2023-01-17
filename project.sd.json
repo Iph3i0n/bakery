@@ -18,6 +18,7 @@
     "./src/templates/f-toggle.std",
     "./src/templates/f-richtext.std",
     "./src/templates/f-image.std",
+    "./src/templates/f-form.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",
@@ -302,6 +303,25 @@
             "name": "submit",
             "description": "Use if the button is within a `form` tag and you intend for the button to submit said form."
           }
+        ]
+      },
+      {
+        "name": "request_method",
+        "values": [
+          { "name": "get" },
+          { "name": "put" },
+          { "name": "post" },
+          { "name": "delete" },
+          { "name": "patch" }
+        ]
+      },
+      {
+        "name": "submission_type",
+        "values": [
+          { "name": "ajax-json" },
+          { "name": "ajax-form-data" },
+          { "name": "page-form-data" },
+          { "name": "event-only" }
         ]
       }
     ]
