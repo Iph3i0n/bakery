@@ -30,7 +30,17 @@
     self.dispatchEvent(new ShouldRender());
   });
 
-  self.addEventListener(RenderEvent.Key, () => {
+  function debounce(func, timeout = 50) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
+
+  const rendered = debounce(() => {
     if (!subject || !Array.isArray(self.data)) return;
     for (const ele of self.parentElement.querySelectorAll(
       `[data-each-id="${id}"]`
@@ -46,4 +56,6 @@
       provider.data = item;
     }
   });
+
+  self.addEventListener(RenderEvent.Key, rendered);
 </script>

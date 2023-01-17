@@ -6,8 +6,86 @@
     <script src="/dist/bundle.min.js"></script>
   </head>
   <body>
-    <l-templated use="./layout.template.html" remote>
-      <l-row></l-row>
-    </l-templated>
+    <u-fetch url="/dist/custom-elements.json" name="schema">
+      <l-templated use="./layout.template.html" remote>
+        <l-container>
+          <l-row>
+            <l-col xs="12">
+              <t-heading level="h1">API Documentation</t-heading>
+              <t-paragraph>
+                This is currently generated from the API docs sheet and it looks
+                it. More complete docs and styling to come.
+              </t-paragraph>
+            </l-col>
+          </l-row>
+          <u-each subject="schema.modules[0].declarations" name="comp">
+            <l-row>
+              <l-col xs="12">
+                <t-heading level="h5">
+                  <u-text use="comp.tagName"></u-text>
+                </t-heading>
+                <t-paragraph>
+                  <u-text use="comp.description"></u-text>
+                </t-paragraph>
+              </l-col>
+              <l-col xs="12" md="6" lg="4">
+                <t-heading level="h6">Attributes</t-heading>
+                <u-if check="comp.attributes.length">
+                  <d-listgroup>
+                    <u-each subject="comp.attributes" name="attr">
+                      <span>
+                        <b>
+                          <u-text use="attr.name"></u-text>
+                        </b>
+                        (
+                        <i><u-text use="attr.type.text"></u-text></i>
+                        ) -
+                        <u-text use="attr.description"></u-text>
+                      </span>
+                    </u-each>
+                  </d-listgroup>
+                </u-if>
+              </l-col>
+              <l-col xs="12" md="6" lg="4">
+                <t-heading level="h6">Events</t-heading>
+                <u-if check="comp.events.length">
+                  <d-listgroup>
+                    <u-each subject="comp.events" name="event">
+                      <span>
+                        <b>
+                          <u-text use="event.name"></u-text>
+                        </b>
+                        (
+                        <i><u-text use="event.type.text"></u-text></i>
+                        ) -
+                        <u-text use="event.description"></u-text>
+                      </span>
+                    </u-each>
+                  </d-listgroup>
+                </u-if>
+              </l-col>
+              <l-col xs="12" md="6" lg="4">
+                <t-heading level="h6">Properties</t-heading>
+                <u-if check="comp.members.length">
+                  <d-listgroup>
+                    <u-each subject="comp.members" name="member">
+                      <span>
+                        <b>
+                          <u-text use="member.name"></u-text>
+                        </b>
+                        (
+                        <i><u-text use="member.type.text"></u-text></i>
+                        ) -
+                        <u-text use="member.description"></u-text>
+                      </span>
+                    </u-each>
+                  </d-listgroup>
+                </u-if>
+              </l-col>
+            </l-row>
+          </u-each>
+        </l-container>
+      </l-templated>
+    </u-fetch>
   </body>
 </html>
