@@ -25,8 +25,6 @@
   let take = 50;
   self.fetcher_override = "routing_data";
 
-  const DATA_KEY = () => "__BAKERY_DATA__" + self.props.url;
-
   function Language() {
     if (navigator.languages != undefined) return navigator.languages[0];
     return navigator.language;
@@ -54,6 +52,8 @@
     return url;
   }
 
+  const DATA_KEY = () => "__BAKERY_DATA__" + process_url(self.props.url);
+
   self.addEventListener(PaginationEvent.Key, (e) => {
     skip = e.Skip;
     take = e.Take;
@@ -63,21 +63,32 @@
   const is_visible = () => {
     let current = self.parentElement;
     while (current && current.tagName !== "body") {
-      if (current.tagName.includes("-")) return !!self.assignedSlot;
+      if (current.tagName === "U-ROUTE") return !!self.data;
       current = current.parentElement;
     }
 
     return true;
   }
 
-  async function get_data() {
-    if (!is_visible()) return;
+  let existing_route = window.location.pathname;
+
+  const rendered_url = () => {
+    if (!is_visible()) return undefined;
+
+    return process_url(self.props.url);
+  }
+
+  self.addEventListener(RenderEvent.Key, async () => {
+    const next = rendered_url();
+    if (!next || next === existing_route) return;
+    existing_route = next;
+
     if (!self.props["no-cache"]) {
       const cached = window.localStorage.getItem(DATA_KEY());
       if (cached) provider.data = JSON.parse(cached);
     }
 
-    const r = await fetch(process_url(self.props.url));
+    const r = await fetch(next);
     let final;
 
     if (!r.ok)
@@ -94,22 +105,10 @@
     provider.data = final;
     if (!self.props["no-cache"])
       window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
-  }
-
-  get_data();
-
-  self.addEventListener(PropsEvent.Key, (e) => {
-    if (e.Key === "key")
-      console.warn("Changing keys for providers is current not supported.");
-    get_data();
   });
 
-  let existing_route = window.location.pathname;
   const handler = () => {
-    const next = window.location.pathname;
-    if (next === existing_route) return;
-    existing_route = next;
-    get_data();
+    self.dispatchEvent(new ShouldRender());
   }
 
   document.addEventListener("navigation-event", handler);

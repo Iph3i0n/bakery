@@ -72,7 +72,7 @@
             {},
             e(
               "u-route",
-              { path: "/tutorial/routing/:find" },
+              { path: "/tutorial/routing/show-text/:find" },
               e(
                 "u-fetch",
                 { url: "/examples/{params.find}.json", name: "text" },
@@ -82,7 +82,7 @@
               e(
                 "t-link",
                 {
-                  href: "/tutorial/routing/rich-text",
+                  href: "/tutorial/routing/show-text/rich-text",
                   block: true,
                   spa: true,
                 },
