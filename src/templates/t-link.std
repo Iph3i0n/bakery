@@ -33,19 +33,28 @@
 <script>
   self.tabIndex = 0;
 
+  function activate() {
+    const url = self.Render(self.props.href);
+    if (self.props.target)
+      window.open(
+        url,
+        self.props.target,
+        self.props.private ? "noreferrer" : undefined
+      );
+    else if (self.props.spa)
+      if (self.props.replace) Router.Replace(url);
+      else Router.Push(url);
+    else window.location.href = url;
+  }
+
   self.addEventListener("loaded", () => {
-    self.addEventListener("click", () => {
-      const url = this.Render(self.props.href);
-      if (self.props.target)
-        window.open(
-          url,
-          self.props.target,
-          self.props.private ? "noreferrer" : undefined
-        );
-      else if (self.props.spa)
-        if (self.props.replace) Router.Replace(url);
-        else Router.Push(url);
-      else window.location.href = url;
+    self.addEventListener("click", activate);
+
+    self.addEventListener("keyup", e => {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      activate();
     });
   });
 </script>
@@ -57,20 +66,33 @@
     display: ":self.props.block ? 'block' : 'inline-block'";
     theme.text("body", self.props.block ? undefined : "no-margin");
     cursor: pointer;
-    theme.border("body", "contrast", "bottom");
-    theme.transition("fast", "color", "background-color");
+    theme.border("small");
+    theme.transition("fast", "color", "background-color", "box-shadow");
+    theme.textcolour("primary");
+    text-decoration: underline;
   }
 
   @if self.props.block {
     :host {
       theme.padding("small_block");
+      theme.border("body", "contrast", "bottom");
+      theme.colour("body");
+      text-decoration: none;
     }
   }
 
   :host(:hover),
   :host(:focus) {
     outline: none;
-    theme.colour("primary", 1, 0.5);
+    theme.colour("primary", 1);
+    text-decoration: none;
+  }
+
+  @if !self.props.block {
+    :host(:hover),
+    :host(:focus) {
+      theme.outline("primary", 1);
+    }
   }
 </style>
 

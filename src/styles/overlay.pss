@@ -25,6 +25,20 @@
 
 .close-button {
   cursor: pointer;
+  theme.colour("body");
+  theme.border("small");
+  theme.transition("fast", "color", "background-color");
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover,
+.close-button:focus {
+  outline: none;
+  theme.colour("surface");
 }
 
 .modal {

@@ -43,26 +43,35 @@
 <script>
   self.tabIndex = 0;
 
+  function activate() {
+    if (self.props.type === "button") return;
+    else if (self.props.type === "submit") {
+      const form = FindForm(self);
+      if (!form) throw new Error("Cannot use a submit outside of a form");
+      form.Submit();
+    } else if (self.props.href) {
+      const url = this.Render(self.props.href);
+      if (self.props.target)
+        window.open(
+          url,
+          self.props.target,
+          self.props.private ? "noreferrer" : undefined
+        );
+      else if (self.props.spa)
+        if (self.props.replace) Router.Replace(url);
+        else Router.Push(url);
+      else window.location.href = url;
+    }
+  }
+
   self.addEventListener(LoadedEvent.Key, () => {
-    self.addEventListener("click", () => {
-      if (self.props.type === "button") return;
-      else if (self.props.type === "submit") {
-        const form = FindForm(self);
-        if (!form) throw new Error("Cannot use a submit outside of a form");
-        form.Submit();
-      } else if (self.props.href) {
-        const url = this.Render(self.props.href);
-        if (self.props.target)
-          window.open(
-            url,
-            self.props.target,
-            self.props.private ? "noreferrer" : undefined
-          );
-        else if (self.props.spa)
-          if (self.props.replace) Router.Replace(url);
-          else Router.Push(url);
-        else window.location.href = url;
-      }
+    self.addEventListener("click", activate);
+
+    self.addEventListener("keyup", e => {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      activate();
     });
 
     const observer = new MutationObserver(() => {

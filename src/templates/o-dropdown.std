@@ -19,12 +19,15 @@
     there are too many elements within.
   </attr>
   <import use="c" from="../classes.ts" default />
+  <import use="unsafe_import" from="../fetch-resources.ts" />
   <import use="On" from="../events.ts" />
 </meta>
 
 <script>
   const modal = CreateRef();
   const body = CreateRef();
+
+  unsafe_import("https://cdn.jsdelivr.net/npm/wicg-inert/dist/inert.min.js");
 
   let open = false;
   let target = undefined;
@@ -55,12 +58,23 @@
   const width = () => self.props.width ?? `${target?.clientWidth ?? 0}px`;
   const height = () => (body.current?.clientHeight ?? 0) + "px";
 
+  self.addEventListener(RenderEvent.Key, () => {
+    self.inert = !open;
+  });
+
   window.addEventListener("scroll", () => {
     const target = modal.current;
     if (!target) return;
     target.style.top = top();
     target.style.left = left();
   });
+
+  self.addEventListener("keyup", (e) => {
+    if (e.key !== "Escape") return;
+    e.preventDefault();
+    open = false;
+    self.dispatchEvent(new ShouldRender());
+  })
 </script>
 <style>
   @js const spec = require("../spec.ts");

@@ -46,11 +46,11 @@
       else if (!(c instanceof HTMLElement)) continue;
       else if (c instanceof HTMLAnchorElement)
         result.push({
-          tag: "a",
+          tag: "t-link",
           attr: {
             href: c.href,
             target: is_current(c) ? undefined : "_blank",
-            rel: is_current(c) ? undefined : "noopener noreferrer",
+            private: is_current(c) ? undefined : true,
           },
           children: parse_children(c),
         });

@@ -17,6 +17,7 @@
   <slot name="footer">The bottom of the modal, will be hidden if empty.</slot>
   <aria role="dialog" />
   <import use="On" from="../events.ts" />
+  <import use="unsafe_import" from="../fetch-resources.ts" />
   <base use="Router" from="../router.ts" default />
 </meta>
 
@@ -25,6 +26,8 @@
   let width = "0";
   let height = "0";
   let has_footer = false;
+
+  unsafe_import("https://cdn.jsdelivr.net/npm/wicg-inert/dist/inert.min.js");
 
   switch (self.props.size) {
     case "small":
@@ -50,6 +53,12 @@
     }
   }
 
+  function on_close_enter(e) {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    close();
+  }
+
   function is_open() {
     if (self.props.trigger) return open;
     else return self.Matches;
@@ -58,6 +67,10 @@
   function on_footer(e) {
     has_footer = e.currentTarget.assignedNodes().length > 0;
   }
+
+  self.addEventListener(RenderEvent.Key, () => {
+    self.inert = !is_open();
+  });
 
   self.addEventListener(LoadedEvent.Key, () => {
     if (self.props.trigger) {
@@ -129,7 +142,7 @@
   <div class="modal">
     <div class="title">
       <slot name="title"></slot>
-      <div class="close-button" on:click="close">
+      <div class="close-button" tabindex="0" on:click="close" on:keyup="on_close_enter">
         <t-icon name="close" colour="body" size="body_large" text></t-icon>
       </div>
     </div>

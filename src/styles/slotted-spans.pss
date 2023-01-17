@@ -1,31 +1,31 @@
 @js const spec = require("../spec.ts");
 @js const theme = require("../theme.ts");
 
-::slotted(a), ::slotted(span) {
+::slotted(t-link), ::slotted(span) {
   theme.colour("surface");
   display: block;
   theme.text("body", "no-margin");
   theme.padding("small_block");
 }
 
-::slotted(a) {
+::slotted(t-link) {
   cursor: pointer;
   text-decoration: none;
   theme.transition("fast", "color", "background-color");
 }
 
-::slotted(a:hover),
-::slotted(a:focus) {
+::slotted(t-link:hover),
+::slotted(t-link:focus) {
   outline: none;
   theme.colour("surface", 0.9);
 }
 
 @for const colour in spec.colours {
-  ":`::slotted(a.${colour}), ::slotted(span.${colour})`" {
+  ":`::slotted(t-link.${colour}), ::slotted(span.${colour})`" {
     theme.colour(colour);
   }
 
-  ":`::slotted(a.${colour}:hover), ::slotted(a.${colour}:focus)`" {
+  ":`::slotted(t-link.${colour}:hover), ::slotted(a.${colour}:focus)`" {
     theme.colour(colour, 0.9);
   }
 }

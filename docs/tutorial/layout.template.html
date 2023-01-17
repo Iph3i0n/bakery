@@ -1,8 +1,3 @@
-<l-templated use="/layout.template.html" remote>
-  <u-global var="CODE_EXAMPLES" name="ex">
-    <slot></slot>
-  </u-global>
-</l-templated>
 <o-offcanvas trigger="#toc" size="small">
   <span slot="title">
     <t-localised>Contents</t-localised>
@@ -38,3 +33,8 @@
     <t-localised>Routing</t-localised>
   </t-link>
 </o-offcanvas>
+<l-templated use="/layout.template.html" remote>
+  <u-global var="CODE_EXAMPLES" name="ex">
+    <slot></slot>
+  </u-global>
+</l-templated>

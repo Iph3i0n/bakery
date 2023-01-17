@@ -20,7 +20,7 @@
 
   @insert ../styles/slotted-spans.pss;
 
-  ::slotted(a:not(:last-child)), ::slotted(span:not(:last-child)) {
+  ::slotted(t-link:not(:last-child)), ::slotted(span:not(:last-child)) {
     theme.border("body", undefined, "bottom");
   }
 </style>

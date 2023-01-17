@@ -7,7 +7,8 @@ type ZIndex = number;
 type ZIndexes = Record<string, ZIndex>;
 export const z_indexes: ZIndexes = win.z_indexes ?? {
   popup: 1,
-  overlay: 2,
+  header: 2,
+  overlay: 3,
 };
 
 type Border = { width: string; render: string; radius: string };

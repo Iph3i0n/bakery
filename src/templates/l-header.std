@@ -55,7 +55,7 @@
     theme.colour(bg);
     theme.border("body", undefined, "bottom");
     theme.margin("block", "bottom");
-    z-index: ":spec.z_indexes.overlay";
+    z-index: ":spec.z_indexes.header";
   }
 
   .content {
@@ -70,7 +70,7 @@
     justify-content: space-between;
   }
 
-  .logo-col a {
+  .logo-col .logo-container {
     display: block;
     max-height: 3rem;
     theme.border("small");
@@ -119,7 +119,7 @@
     overflow-y: auto;
   }
 
-  ::slotted(a),
+  ::slotted(t-link),
   ::slotted(span) {
     display: block;
     theme.colour("surface");
@@ -129,7 +129,7 @@
     text-decoration: none;
   }
 
-  ::slotted(a:last-child),
+  ::slotted(t-link:last-child),
   ::slotted(span:last-child) {
     border-bottom: none;
   }
@@ -138,9 +138,10 @@
     cursor: pointer;
   }
 
-  ::slotted(a:hover),
-  ::slotted(a:focus) {
+  ::slotted(t-link:hover),
+  ::slotted(t-link:focus) {
     outline: none;
+    box-shadow: none;
     theme.colour("surface", 0.9);
   }
 
@@ -185,7 +186,7 @@
       overflow: hidden;
     }
 
-    ::slotted(a),
+    ::slotted(t-link),
     ::slotted(span) {
       border: none;
       color: inherit;
@@ -202,8 +203,8 @@
       text-align: right;
     }
 
-    ::slotted(a:hover),
-    ::slotted(a:focus) {
+    ::slotted(t-link:hover),
+    ::slotted(t-link:focus) {
       background-color: transparent;
       color: inherit;
       text-decoration: underline;
@@ -227,9 +228,9 @@
 
 <div class="content">
   <div class="logo-col">
-    <a href="/">
+    <div class="logo-container">
       <img src=":self.props.logo" alt=":self.props['logo-alt']" />
-    </a>
+    </div>
 
     <div class="expand-button" on:click="on_toggle" tabindex="0">
       <t-icon
