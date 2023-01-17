@@ -1,9 +1,57 @@
 import { Provider, Receiver } from "./data.ts";
 import { ShouldRender } from "./deps.ts";
+import PaginationEvent from "./pagination.ts";
 
 class NavigateEvent extends Event {
   constructor() {
     super("navigation-event");
+  }
+}
+
+export abstract class UrlBuilder extends Receiver {
+  override fetcher_override = "routing_data";
+
+  #skip = 0;
+  #take = 50;
+
+  get #language() {
+    if (navigator.languages != undefined) return navigator.languages[0];
+    return navigator.language;
+  }
+
+  get #options() {
+    const existing = this.data;
+
+    // deno-lint-ignore no-explicit-any
+    const params = existing ? (existing as any).params : {};
+    return {
+      locale: this.#language,
+      skip: this.#skip.toString(),
+      take: this.#take.toString(),
+      ...Object.keys(params).reduce(
+        (c, n) => ({ ...c, ["params." + n]: params[n] }),
+        {}
+      ),
+    };
+  }
+
+  constructor() {
+    super();
+
+    this.addEventListener(PaginationEvent.Key, (e) => {
+      if (!(e instanceof PaginationEvent)) return;
+
+      this.#skip = e.Skip;
+      this.#take = e.Take;
+    });
+  }
+
+  Render(url: string) {
+    const opts = this.#options;
+    for (const key in opts)
+      url = url.replaceAll(`{${key}}`, opts[key as keyof typeof opts]);
+
+    return url;
   }
 }
 

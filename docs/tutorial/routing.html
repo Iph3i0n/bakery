@@ -40,6 +40,15 @@
               "Replace the URL"
             )
           ),
+          params: e(
+            "div",
+            {},
+            e(
+              "t-link",
+              { href: "/tutorial/routing/{locale}", block: true, spa: true },
+              "Check your URL after clicking. It should be your current locale."
+            )
+          ),
         },
         modal: {
           basic: e(
@@ -79,15 +88,15 @@
                 e("t-richtext", { use: "text.data" })
               )
             ),
-              e(
-                "t-link",
-                {
-                  href: "/tutorial/routing/show-text/rich-text",
-                  block: true,
-                  spa: true,
-                },
-                "Fetch some text"
-              )
+            e(
+              "t-link",
+              {
+                href: "/tutorial/routing/show-text/rich-text",
+                block: true,
+                spa: true,
+              },
+              "Fetch some text"
+            )
           ),
         },
       };
@@ -113,6 +122,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="link.replace"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="link.params"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="modal.basic"></div>

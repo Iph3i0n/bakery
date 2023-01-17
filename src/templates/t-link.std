@@ -26,7 +26,8 @@
     keep people on the page.
   </attr>
   <aria role="button" />
-  <base use="Router" from="../router.ts" default />
+  <base use="UrlBuilder" from="../router.ts" />
+  <import use="Router" from="../router.ts" default />
 </meta>
 
 <script>
@@ -34,16 +35,17 @@
 
   self.addEventListener("loaded", () => {
     self.addEventListener("click", () => {
+      const url = this.Render(self.props.href);
       if (self.props.target)
         window.open(
-          self.props.href,
+          url,
           self.props.target,
           self.props.private ? "noreferrer" : undefined
         );
       else if (self.props.spa)
-        if (self.props.replace) self.Replace(self.props.href);
-        else self.Push(self.props.href);
-      else window.location.href = self.props.href;
+        if (self.props.replace) Router.Replace(url);
+        else Router.Push(url);
+      else window.location.href = url;
     });
   });
 </script>
