@@ -26,12 +26,12 @@
 
   const provider = new Provider(self, self.props.name);
 
-  const DATA_KEY = () => "__BAKERY_DATA__" + process_url(self.props.url);
+  const DATA_KEY = () => "__BAKERY_DATA__" + this.Render(self.props.url);
 
   self.addEventListener(PaginationEvent.Key, (e) => {
     skip = e.Skip;
     take = e.Take;
-    get_data();
+    self.dispatchEvent(new ShouldRender())
   });
 
   const is_visible = () => {
