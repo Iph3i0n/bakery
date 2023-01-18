@@ -123,11 +123,16 @@
   ::slotted(t-link),
   ::slotted(span) {
     display: block;
-    theme.colour("surface");
     theme.text("body", "no-margin");
     theme.padding("small_block");
     theme.border("body", "contrast", "bottom");
     text-decoration: none;
+    border-radius: 0;
+  }
+
+  .main-content ::slotted(t-link),
+  .main-content ::slotted(span) {
+    theme.colour("surface");
   }
 
   ::slotted(t-link:last-child),
@@ -143,6 +148,10 @@
   ::slotted(t-link:focus) {
     outline: none;
     box-shadow: none;
+  }
+  
+  .main-content ::slotted(t-link:hover),
+  .main-content ::slotted(t-link:focus) {
     theme.colour("surface", 0.9);
   }
 
@@ -151,6 +160,11 @@
     theme.padding("small_block");
     theme.colour("primary");
     theme.border("body", undefined, "top");
+  }
+
+  .right-actions ::slotted(t-link),
+  .right-actions ::slotted(span) {
+    display: inline-block;
   }
 
   .right-actions ::slotted(form) {
@@ -190,8 +204,8 @@
     ::slotted(t-link),
     ::slotted(span) {
       border: none;
-      color: inherit;
-      background-color: transparent;
+      color: inherit !important;
+      background-color: transparent !important;
       transform: scale(1);
       theme.transition("fast", "transform");
     }
