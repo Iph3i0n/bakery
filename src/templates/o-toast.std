@@ -24,6 +24,7 @@
   <attr name="position" type="position" default="bottom right">
     Where on the screen shall it render?
   </attr>
+  <import use="on_key_handler" from="../events/keyboard.ts" />
 </meta>
 
 <script>
@@ -31,11 +32,10 @@
     self.remove();
   }
 
-  function on_close_key(e) {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
-    close();
-  }
+
+  const on_close_key = on_key_handler({
+    Enter: () => close()
+  });
 
   const metric_text = () => {
     const formatter = new Intl.NumberFormat(undefined, {

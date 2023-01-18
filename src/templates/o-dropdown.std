@@ -20,6 +20,7 @@
   </attr>
   <import use="c" from="../classes.ts" default />
   <import use="unsafe_import" from="../fetch-resources.ts" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <import use="On" from="../events.ts" />
 </meta>
 
@@ -69,12 +70,12 @@
     target.style.left = left();
   });
 
-  self.addEventListener("keyup", (e) => {
-    if (e.key !== "Escape") return;
-    e.preventDefault();
-    open = false;
-    self.dispatchEvent(new ShouldRender());
-  })
+  self.addEventListener("keyup", on_key_handler({
+    Escape: () => {
+      open = false;
+      self.dispatchEvent(new ShouldRender());
+    }
+  }));
 </script>
 <style>
   @js const spec = require("../spec.ts");

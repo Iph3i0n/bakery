@@ -28,6 +28,7 @@
   <aria role="button" />
   <base use="UrlBuilder" from="../router.ts" />
   <import use="Router" from="../router.ts" default />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
 </meta>
 
 <script>
@@ -47,16 +48,14 @@
     else window.location.href = url;
   }
 
-  self.addEventListener("loaded", () => {
-    self.addEventListener("click", activate);
+  self.addEventListener("click", activate);
 
-    self.addEventListener("keyup", e => {
-      if (e.key !== "Enter") return;
-      e.preventDefault();
+  self.addEventListener("keyup", on_key_handler({
+    Enter: () => {
       self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
       activate();
-    });
-  });
+    }
+  }));
 </script>
 
 <style>

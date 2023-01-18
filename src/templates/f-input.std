@@ -42,6 +42,7 @@
   <import use="c" from="../classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="link_css" from="../fetch-resources.ts" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="input" />
   <form />
 </meta>
@@ -63,11 +64,9 @@
     textarea.current.innerHTML = self.value ?? "";
   });
 
-  self.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
-    self.submit();
-  });
+  self.addEventListener("keydown", on_key_handler({
+    Enter: () => self.submit()
+  }));
 
   function update_value() {
     self.value = textarea.current.innerText.replace(/\n/gm, "");

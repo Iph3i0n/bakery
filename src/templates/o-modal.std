@@ -18,6 +18,7 @@
   <aria role="dialog" />
   <import use="On" from="../events.ts" />
   <import use="unsafe_import" from="../fetch-resources.ts" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <base use="Router" from="../router.ts" default />
 </meta>
 
@@ -53,11 +54,9 @@
     }
   }
 
-  function on_close_enter(e) {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
-    close();
-  }
+  const on_close_enter = on_key_handler({
+    Enter: () => close()
+  });
 
   function is_open() {
     if (self.props.trigger) return open;

@@ -41,19 +41,27 @@
   }
 
   const rendered = debounce(() => {
-    if (!subject || !Array.isArray(self.data)) return;
-    for (const ele of self.parentElement.querySelectorAll(
+    if (!subject) return;
+    const data = self.data ?? [];
+
+    const existing = self.parentElement.querySelectorAll(
       `[data-each-id="${id}"]`
-    ))
-      ele.remove();
+    );
 
     let previous = self;
-    for (const item of self.data) {
+    let i = 0;
+    for (i ; i < existing.length ; i++) {
+      if (data[i]) existing[i].provider.data = d;
+      else existing[i].remove();
+      previous = existing[i];
+    }
+
+    for (i ; i < data.length ; i++) {
       const input = subject.cloneNode(true);
       insertAfter(input, previous);
       previous = input;
-      const provider = new Provider(input, self.props.name);
-      provider.data = item;
+      input.provider = new Provider(input, self.props.name);
+      input.provider.data = data[i];
     }
   });
 

@@ -52,13 +52,7 @@ export function backgroundcolour(variant: string, shift = 1, alpha = 1) {
 
 export function outline(variant: string, shift = 1, alpha = 1) {
   const { background } = get_colour(variant, shift, alpha);
-  return [
-    ...background.map(([c, m]) => [
-      "box-shadow",
-      `0 0 0 ${spec.borders.body.width} ${c}`,
-      m,
-    ]),
-  ];
+  return [...background.map(([c, m]) => ["box-shadow", `0 0 0 4px ${c}`, m])];
 }
 
 export function shadow(variant: string) {

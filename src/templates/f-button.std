@@ -38,6 +38,7 @@
   <import use="FindForm" from="../form-element.ts" />
   <base use="UrlBuilder" from="../router.ts" />
   <import use="Router" from="../router.ts" default />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
 </meta>
 
 <script>
@@ -64,27 +65,25 @@
     }
   }
 
-  self.addEventListener(LoadedEvent.Key, () => {
-    self.addEventListener("click", activate);
+  self.addEventListener("click", activate);
 
-    self.addEventListener("keyup", e => {
-      if (e.key !== "Enter") return;
-      e.preventDefault();
+  self.addEventListener("keyup", on_key_handler({
+    Enter: () => {
       self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
       activate();
-    });
+    }
+  }));
 
-    const observer = new MutationObserver(() => {
-      if (!self) {
-        observer.disconnect();
-        return;
-      }
+  const observer = new MutationObserver(() => {
+    if (!self) {
+      observer.disconnect();
+      return;
+    }
 
-      self.dispatchEvent(new ShouldRender());
-    });
-
-    observer.observe(self.parentElement, { childList: true });
+    self.dispatchEvent(new ShouldRender());
   });
+
+  observer.observe(self.parentElement, { childList: true });
 
   const is_last_button = () => {
     const next = self.nextSibling;

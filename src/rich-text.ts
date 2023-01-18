@@ -2,6 +2,7 @@ import "./selection-polyfill.js";
 import { CreateRef, LoadedEvent, ShouldRender } from "./deps.ts";
 import FormElement from "./form-element.ts";
 import Slotted from "./toggleable-slot.ts";
+import { on_key_handler } from "./events/keyboard.ts";
 
 export default abstract class RichText extends FormElement {
   abstract readonly internals: ElementInternals;
@@ -62,10 +63,14 @@ export default abstract class RichText extends FormElement {
         this.value = this.#editor.innerHTML;
       });
 
-      this.#editor.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && this.Format === "blockquote")
-          setTimeout(() => (this.Format = "p"), 0);
-      });
+      this.#editor.addEventListener(
+        "keydown",
+        on_key_handler({
+          Enter: () =>
+            this.Format === "blockquote" &&
+            setTimeout(() => (this.Format = "p"), 0),
+        })
+      );
     });
 
     document.addEventListener("selectchange", () => this.#update_state());
