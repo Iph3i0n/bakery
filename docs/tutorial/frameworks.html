@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bakery Docs</title>
+    <script src="/dist/bundle.min.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading level="h2">Working with frameworks</t-heading>
+            <t-paragraph>
+              Bakery should work out of the box with most frameworks. It has
+              been tested with Preact and React and typings have been provided
+              for both. These have been generated with Wholemeal (the tool used
+              to create these components) but the compiler can be adapted to
+              make more typings if required.
+            </t-paragraph>
+            <t-paragraph>
+              For working with React, there are some issues when working with
+              web components. These have been navigated already and can be fixed
+              by importing "@paulpopat/bakery/typescript/react". This exports a
+              component for each one in Bakery and provides an adapter for all
+              document events and properties. It has also been generated via
+              Wholemeal.
+            </t-paragraph>
+            <t-paragraph>
+              Another TypeScript file has been generated for Preact in the same
+              location. It does not provide a wrapper because that is not needed
+              for Preact to operate.
+            </t-paragraph>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

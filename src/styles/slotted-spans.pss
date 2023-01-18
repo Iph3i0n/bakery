@@ -4,6 +4,9 @@
 ::slotted(t-link), ::slotted(span) {
   theme.colour("surface");
   display: block;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   theme.text("body", "no-margin");
   theme.padding("small_block");
 }

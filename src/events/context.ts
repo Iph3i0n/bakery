@@ -5,7 +5,11 @@ export class RequestContextEvent extends Event {
   readonly #data: Record<string, unknown> = {};
 
   constructor() {
-    super(ContextEventKey, { bubbles: true, cancelable: false });
+    super(ContextEventKey, {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+    });
   }
 
   AddData(key: string, data: unknown) {
@@ -21,6 +25,10 @@ export class RequestContextEvent extends Event {
 
 export class ContextChangedEvent extends Event {
   constructor() {
-    super(ContextChangedKey, { bubbles: true, cancelable: false });
+    super(ContextChangedKey, {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+    });
   }
 }

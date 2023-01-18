@@ -14,6 +14,10 @@ export default abstract class BakeryBase
   abstract readonly internals: ElementInternals;
   abstract readonly root: ShadowRoot;
 
+  constructor() {
+    super();
+  }
+
   #get_value(fetcher: (ctx: Record<string, unknown>) => unknown) {
     const event = new RequestContextEvent();
     this.dispatchEvent(event);
@@ -25,17 +29,21 @@ export default abstract class BakeryBase
     }
   }
 
+  #listener: ((e: Event) => void) | undefined;
+
   use_context(fetcher: (ctx: Record<string, unknown>) => unknown) {
     const result = this.#get_value(fetcher);
 
-    const handler = (e: Event) => {
+    if (this.#listener) {
+      document.removeEventListener(ContextChangedKey, this.#listener);
+    }
+
+    this.#listener = (e: Event) => {
       if (e.target === this || this.#get_value(fetcher) === result) return;
-      document.removeEventListener(ContextChangedKey, handler);
       this.dispatchEvent(new ShouldRender());
     };
 
-    document.addEventListener(ContextChangedKey, handler);
-
+    document.addEventListener(ContextChangedKey, this.#listener);
     return result;
   }
 
@@ -51,7 +59,7 @@ export default abstract class BakeryBase
       this.#context_providing = true;
 
       this.addEventListener(ContextEventKey, (e: Event) => {
-        if (!(e instanceof RequestContextEvent)) return;
+        if (!(e instanceof RequestContextEvent) || e.target === this) return;
         e.AddData(this.#context_key ?? "", this.#context_value);
       });
     }
