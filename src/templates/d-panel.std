@@ -9,6 +9,7 @@
     If set then the panel will have a border
     and shadow but still no padding.
   </attr>
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

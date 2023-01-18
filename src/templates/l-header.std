@@ -26,6 +26,7 @@
     Could have anchors or a form as the children.
   </slot>
   <aria role="banner" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

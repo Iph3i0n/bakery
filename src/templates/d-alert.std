@@ -12,6 +12,7 @@
     implementation in that scenario.
   </attr>
   <aria role="alert" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

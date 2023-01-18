@@ -35,12 +35,12 @@
   <slot name="invalid">
     The error text for if validate is set and the RegExp does not match
   </slot>
-  <base use="RichText" from="../rich-text.ts" default />
-  <import use="c" from="../classes.ts" default />
+  <base use="RichText" from="../base-classes/rich-text.ts" default />
+  <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="unsafe_import" from="../fetch-resources.ts" />
   <import use="link_css" from="../fetch-resources.ts" />
-  <import from="../selection-polyfill.js" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="input" />
   <form />
 </meta>
@@ -187,7 +187,7 @@
     </div>
     <div class="spacer"></div>
 
-    <select on:change="() => self.Stylify()" s:ref="self.SelectorRef">
+    <select on:change="() => self.Stylify()" s:ref="self.SelectorRef" tabindex="0">
       <s:for subject=":self.FormatOptions" key="format">
         <s:if check=":self.Format === format.value">
           <option value=":format.value" selected>

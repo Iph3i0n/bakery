@@ -16,7 +16,7 @@
   <attr name="flush" type="boolean">
     If true then no padding or borders will be applied.
   </attr>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
   <import use="unsafe_import" from="../fetch-resources.ts" />
 </meta>
 
@@ -27,7 +27,7 @@
     return l.length;
   };
 
-  const raw_code = () => self.data ?? self.innerHTML;
+  const raw_code = () => self.use_string_context("use") ?? self.innerHTML;
 
   const code = () => {
     const code =

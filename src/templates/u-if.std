@@ -4,12 +4,9 @@
     The JavaScript snippet used to get the data from the context.
   </attr>
   <prop name="data">Data to use instead of items from the use attribute.</prop>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
 </meta>
 
-<script>
-  self.accessor = "check";
-</script>
-<s:if check=":self.data">
+<s:if check=":self.use_string_context('check')">
   <slot></slot>
 </s:if>

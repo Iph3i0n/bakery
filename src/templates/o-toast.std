@@ -25,6 +25,7 @@
     Where on the screen shall it render?
   </attr>
   <import use="on_key_handler" from="../events/keyboard.ts" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

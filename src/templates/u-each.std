@@ -7,8 +7,8 @@
     The name to use in sub items to extract the item from the context.
   </attr>
   <prop name="data">Data to use instead of items from the use attribute.</prop>
-  <base use="Receiver" from="../data.ts" />
-  <import use="Provider" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
+  <import use="ContextEventKey, ContextChangedEvent" from="../events/context.ts" />
 </meta>
 
 <script>
@@ -42,7 +42,7 @@
 
   const rendered = debounce(() => {
     if (!subject) return;
-    const data = self.data ?? [];
+    const data = self.use_string_context("subject") ?? [];
 
     const existing = self.parentElement.querySelectorAll(
       `[data-each-id="${id}"]`
@@ -51,7 +51,7 @@
     let previous = self;
     let i = 0;
     for (i ; i < existing.length ; i++) {
-      if (data[i]) existing[i].provider.data = d;
+      if (data[i]) existing[i]._foreach_data = data[i];
       else existing[i].remove();
       previous = existing[i];
     }
@@ -60,9 +60,13 @@
       const input = subject.cloneNode(true);
       insertAfter(input, previous);
       previous = input;
-      input.provider = new Provider(input, self.props.name);
-      input.provider.data = data[i];
+      input._foreach_data = data[i];
+      input.addEventListener(ContextEventKey, e => {
+        e.AddData(self.props.name, input._foreach_data);
+      });
     }
+
+    self.dispatchEvent(new ContextChangedEvent());
   });
 
   self.addEventListener(RenderEvent.Key, rendered);

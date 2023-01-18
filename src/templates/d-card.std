@@ -10,6 +10,7 @@
     The title content of the card. Does not require text styling.
   </slot>
   <aria role="landmark" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

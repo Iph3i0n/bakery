@@ -4,6 +4,7 @@
     If set then larger text is displayed
   </attr>
   <aria role="paragraph" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <style>

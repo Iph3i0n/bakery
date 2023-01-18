@@ -5,6 +5,7 @@
   </attr>
 
   <aria role="grid" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <style>

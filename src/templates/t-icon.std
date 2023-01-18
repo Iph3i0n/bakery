@@ -32,6 +32,7 @@
     If true then the icon will spin. Useful for loading indicators.
   </attr>
   <import use="link_css" from="../fetch-resources.ts" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

@@ -20,6 +20,7 @@
   </attr>
 
   <aria role="gridcell" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <style>

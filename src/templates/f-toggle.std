@@ -24,8 +24,8 @@
   <slot name="invalid">
     The error text for if validate is set and the RegExp does not match
   </slot>
-  <base use="FormElement" from="../form-element.ts" default />
-  <import use="c" from="../classes.ts" default />
+  <base use="FormElement" from="../base-classes/form.ts" default />
+  <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="options" from="../options.ts" default />
   <aria role="select" />

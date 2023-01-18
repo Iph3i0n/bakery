@@ -35,9 +35,9 @@
     keep people on the page.
   </attr>
   <aria role="button" />
-  <import use="FindForm" from="../form-element.ts" />
-  <base use="UrlBuilder" from="../router.ts" />
-  <import use="Router" from="../router.ts" default />
+  <import use="FindForm" from="../html/form.ts" />
+  <base use="UrlBuilder" from="../base-classes/router.ts" />
+  <import use="Router" from="../base-classes/router.ts" default />
   <import use="on_key_handler" from="../events/keyboard.ts" />
 </meta>
 

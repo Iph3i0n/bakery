@@ -8,6 +8,7 @@
     be used to make the text stand out.
   </attr>
   <aria role="heading" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

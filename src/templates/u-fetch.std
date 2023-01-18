@@ -15,16 +15,13 @@
     By default all data is cached on the users machine. If set then
     that cache is disabled. Only use if you have to.
   </attr>
-  <import use="Provider" from="../data.ts" />
   <import use="PaginationEvent" from="../pagination.ts" default />
-  <base use="UrlBuilder" from="../router.ts" />
+  <base use="UrlBuilder" from="../base-classes/router.ts" />
 </meta>
 
 <script>
   let skip = 0;
   let take = 50;
-
-  const provider = new Provider(self, self.props.name);
 
   const DATA_KEY = () => "__BAKERY_DATA__" + this.Render(self.props.url);
 
@@ -37,7 +34,7 @@
   const is_visible = () => {
     let current = self.parentElement;
     while (current && current.tagName !== "body") {
-      if (current.tagName === "U-ROUTE") return !!self.data;
+      if (current.tagName === "U-ROUTE") return !!self.use_context(ctx => ctx.routing_data);
       current = current.parentElement;
     }
 
@@ -59,7 +56,7 @@
 
     if (!self.props["no-cache"]) {
       const cached = window.localStorage.getItem(DATA_KEY());
-      if (cached) provider.data = JSON.parse(cached);
+      if (cached) self.provide_context(self.props.name, JSON.parse(cached));
     }
 
     const r = await fetch(next);
@@ -76,7 +73,7 @@
       } else throw r;
     else final = await r.json();
 
-    provider.data = final;
+    self.provide_context(self.props.name, final);
     if (!self.props["no-cache"])
       window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
   });

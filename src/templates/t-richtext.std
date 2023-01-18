@@ -5,7 +5,7 @@
     A JavaScript snippet to access the data from the `u-` namespace.
   </attr>
   <prop name="data">Data to use instead of items from the use attribute.</prop>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
 </meta>
 
 <script>
@@ -70,7 +70,7 @@
 
   const data = () => {
     const result = [];
-    const html = self.data;
+    const html = self.use_string_context("use");
     if (!html) return [];
 
     const template = document.createElement("template");

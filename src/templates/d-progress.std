@@ -10,6 +10,7 @@
   </attr>
 
   <aria role="progressbar" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <style>

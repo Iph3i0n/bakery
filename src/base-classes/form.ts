@@ -1,7 +1,7 @@
-import { ShouldRender, LoadedEvent, RenderEvent } from "./deps.ts";
-import c from "./classes.ts";
-import { Provider } from "./data.ts";
+import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
+import c from "../html/classes.ts";
 import Router from "./router.ts";
+import BakeryBase from "./main.ts";
 
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
 const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";
@@ -38,13 +38,8 @@ class SubmittedEvent extends Event {
   }
 }
 
-export abstract class FormManagerElement extends HTMLElement {
-  abstract readonly internals: ElementInternals;
-  abstract readonly props: Record<string, string>;
-  abstract readonly root: ShadowRoot;
-
+export abstract class FormManagerElement extends BakeryBase {
   readonly #elements: Array<FormElement> = [];
-  readonly #provider: Provider;
 
   constructor() {
     super();
@@ -61,8 +56,6 @@ export abstract class FormManagerElement extends HTMLElement {
       this.#elements.push(target);
       event.Manager = this;
     });
-
-    this.#provider = new Provider(this, "form_state");
   }
 
   async #ajax_submit(data: FormData | FormValue) {
@@ -110,7 +103,7 @@ export abstract class FormManagerElement extends HTMLElement {
       // deno-lint-ignore no-empty
     } catch {}
 
-    this.#provider.data = { response, json };
+    this.provide_context("form_state", { response, json });
     if (!response.ok) return;
 
     const go_to = this.props["success-url"];
@@ -203,9 +196,7 @@ export abstract class FormManagerElement extends HTMLElement {
   }
 }
 
-export default abstract class FormElement extends HTMLElement {
-  abstract readonly internals: ElementInternals;
-  abstract readonly props: Record<string, string>;
+export default abstract class FormElement extends BakeryBase {
   #value: FormElementValue = undefined;
   #touched = false;
   #focused = false;
@@ -303,11 +294,4 @@ export default abstract class FormElement extends HTMLElement {
       ["error", this.should_show_validation]
     );
   }
-}
-
-export function FindForm(submit: HTMLElement): FormManagerElement | undefined {
-  const parent = submit.parentElement;
-  if (!parent) return undefined;
-  if (parent.tagName === "F-FORM") return parent as FormManagerElement;
-  return FindForm(parent);
 }

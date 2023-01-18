@@ -15,6 +15,7 @@
       The current accordion
     </key>
   </event>
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

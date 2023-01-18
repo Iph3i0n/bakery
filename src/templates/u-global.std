@@ -2,17 +2,14 @@
   Accesses data from the `window` object and adds it to the context.
   <attr name="var">The key used on the `window` object</attr>
   <attr name="name">The name given to the result in the context.</attr>
-  <import use="Provider" from="../data.ts" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>
-  const provider = new Provider(self, self.props.name);
-  provider.data = window[self.props.var];
+  self.provide_context(self.props.name, window[self.props.var]);
 
   self.addEventListener(PropsEvent.Key, (e) => {
-    if (e.Key === "key")
-      console.warn("Changing keys for providers is current not supported.");
-    provider.data = window[self.props.var];
+    self.provide_context(self.props.name, window[self.props.var]);
   });
 </script>
 

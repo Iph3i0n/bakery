@@ -14,7 +14,8 @@
     the slides will not be displayed.
   </attr>
 
-  <import use="c" from="../classes.ts" default />
+  <import use="c" from="../html/classes.ts" default />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
   <aria role="figure" />
 </meta>
 

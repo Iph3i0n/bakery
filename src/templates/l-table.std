@@ -11,7 +11,7 @@
     `u-` namespace.
   </attr>
   <prop name="data">Data to use instead of items from the use attribute.</prop>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
 </meta>
 
 <script>
@@ -128,23 +128,21 @@
     </s:for>
   </thead>
   <tbody>
-    <s:if check=":self.data">
-      <s:for subject=":self.data" key="row_data">
-        <s:for subject=":body_schema" key="row">
-          <tr>
-            <s:for subject=":row.content" key="cell">
-              <td
-                width=":cell.width"
-                height=":cell.height"
-                colspan=":cell.colspan"
-                rowspan=":cell.rowspan"
-              >
-                <s:text use=":cell.use(row_data)"></s:text>
-              </td>
-            </s:for>
-          </tr>
-        </s:for>
+    <s:for subject=":self.use_string_context('use' ?? [])" key="row_data">
+      <s:for subject=":body_schema" key="row">
+        <tr>
+          <s:for subject=":row.content" key="cell">
+            <td
+              width=":cell.width"
+              height=":cell.height"
+              colspan=":cell.colspan"
+              rowspan=":cell.rowspan"
+            >
+              <s:text use=":cell.use(row_data)"></s:text>
+            </td>
+          </s:for>
+        </tr>
       </s:for>
-    </s:if>
+    </s:for>
   </tbody>
 </table>

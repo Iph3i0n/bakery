@@ -8,6 +8,7 @@
   <attr name="colour" type="colour" default="primary">
     The text colour for anchor crumbs.
   </attr>
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

@@ -28,7 +28,7 @@
     </key>
   </event>
 
-  <base use="FormManagerElement" from="../form-element.ts" />
+  <base use="FormManagerElement" from="../base-classes/form.ts" />
 </meta>
 
 <slot />

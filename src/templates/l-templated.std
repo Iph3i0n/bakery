@@ -13,6 +13,7 @@
     If set then the use attribute will be treated as a URL.
     If not then it will be treated as a HTML ID.
   </attr>
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>

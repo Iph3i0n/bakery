@@ -7,8 +7,7 @@
     Use `:` at the start of a segment to use it as a parameter. The parameters
     will be available to any `u-fetch` tag that is a child.
   </attr>
-  <import use="Provider" from="../data.ts" />
-  <base use="Router" from="../router.ts" default />
+  <base use="Router" from="../base-classes/router.ts" default />
 </meta>
 
 <s:if check=":self.Matches">

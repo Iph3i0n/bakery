@@ -12,9 +12,9 @@
     <key name="Skip" type="number">Number of items in the list to skip.</key>
     <key name="Take" type="number">Number of items in the list to take.</key>
   </event>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
   <import use="PaginationEvent" from="../pagination.ts" default />
-  <import use="c" from="../classes.ts" default />
+  <import use="c" from="../html/classes.ts" default />
 </meta>
 
 <script>
@@ -25,7 +25,7 @@
   const take = () => parseInt(self.props.size);
 
   const page = () => skip / take();
-  const total_pages = () => Math.ceil(self.data / take());
+  const total_pages = () => Math.ceil(self.use_string_context("total") / take());
 
   const label = (page) => (page + 1).toString();
 

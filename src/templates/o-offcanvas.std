@@ -19,7 +19,7 @@
   <import use="On" from="../events.ts" />
   <import use="unsafe_import" from="../fetch-resources.ts" />
   <import use="on_key_handler" from="../events/keyboard.ts" />
-  <base use="Router" from="../router.ts" default />
+  <base use="Router" from="../base-classes/router.ts" default />
 </meta>
 
 <script>

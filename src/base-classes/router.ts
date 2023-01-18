@@ -1,6 +1,8 @@
-import { Provider, Receiver } from "./data.ts";
-import { ShouldRender } from "./deps.ts";
-import PaginationEvent from "./pagination.ts";
+import { ShouldRender } from "../deps.ts";
+import PaginationEvent from "../pagination.ts";
+import BakeryBase from "./main.ts";
+
+const DATA_KEY = "routing_data";
 
 class NavigateEvent extends Event {
   constructor() {
@@ -8,9 +10,7 @@ class NavigateEvent extends Event {
   }
 }
 
-export abstract class UrlBuilder extends Receiver {
-  override fetcher_override = "routing_data";
-
+export abstract class UrlBuilder extends BakeryBase {
   #skip = 0;
   #take = 50;
 
@@ -20,7 +20,7 @@ export abstract class UrlBuilder extends Receiver {
   }
 
   get #options() {
-    const existing = this.data;
+    const existing = this.use_context((ctx) => ctx[DATA_KEY]);
 
     // deno-lint-ignore no-explicit-any
     const params = existing ? (existing as any).params : {};
@@ -55,18 +55,9 @@ export abstract class UrlBuilder extends Receiver {
   }
 }
 
-export default abstract class Router extends Receiver {
-  abstract readonly props: Record<string, string>;
-
-  readonly #provider: Provider;
-
-  override fetcher_override = "routing_data";
-
+export default abstract class Router extends BakeryBase {
   constructor() {
     super();
-    // deno-lint-ignore no-explicit-any
-    this.#provider = new Provider(this as any, this.fetcher_override);
-
     document.addEventListener("navigation-event", () =>
       this.dispatchEvent(new ShouldRender())
     );
@@ -94,9 +85,9 @@ export default abstract class Router extends Receiver {
   }
 
   get Matches() {
-    const existing = this.data;
     // deno-lint-ignore no-explicit-any
-    const { used, params } = (existing as any) ?? { used: 0, params: {} };
+    const existing: any = this.use_context((ctx) => ctx[DATA_KEY]);
+    const { used, params } = existing ?? { used: 0, params: {} };
     const final_params = { ...params };
     const path_parts = window.location.pathname
       .split("/")
@@ -115,10 +106,10 @@ export default abstract class Router extends Receiver {
       else return false;
     }
 
-    this.#provider.data = {
+    this.provide_context(DATA_KEY, {
       used: used + check_parts.length,
       params: final_params,
-    };
+    });
 
     return true;
   }

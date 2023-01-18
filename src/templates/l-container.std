@@ -6,6 +6,7 @@
   </attr>
 
   <aria role="section" />
+  <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 <style>
   @js const spec = require("../spec.ts");

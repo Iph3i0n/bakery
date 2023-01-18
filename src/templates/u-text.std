@@ -8,7 +8,7 @@
     The number of lines for the placeholder.
   </attr>
   <prop name="data">Data to use instead of items from the use attribute.</prop>
-  <base use="Receiver" from="../data.ts" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
 </meta>
 
 <script>
@@ -54,11 +54,13 @@
   }
 </style>
 
-<s:if check=":self.data">
-  <s:text use=":self.data"></s:text>
-</s:if>
-<s:if check=":!self.data">
-  <s:for subject=":lines()">
-    <span class="placeholder"></span>
-  </s:for>
-</s:if>
+<s:use get=":self.use_string_context('use')" as="data">
+  <s:if check=":data">
+    <s:text use=":data"></s:text>
+  </s:if>
+  <s:if check=":!data">
+    <s:for subject=":lines()">
+      <span class="placeholder"></span>
+    </s:for>
+  </s:if>
+</s:use>
