@@ -7,6 +7,10 @@
     Use `:` at the start of a segment to use it as a parameter. The parameters
     will be available to any `u-fetch` tag that is a child.
   </attr>
+  <attr name="exact" type="boolean">
+    If set then only exact matches will be allowed. Useful for home pages and
+    landing pages.
+  </attr>
   <base use="Router" from="../base-classes/router.ts" default />
 </meta>
 

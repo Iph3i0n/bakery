@@ -96,6 +96,9 @@ export default abstract class Router extends BakeryBase {
     const check_parts = this.props.path.split("/").filter((p) => p);
     if (path_parts.length < check_parts.length) return false;
 
+    const exact = this.props.exact;
+    if (exact && path_parts.length !== check_parts.length) return false;
+
     for (let i = 0; i < check_parts.length; i++) {
       const check_part = check_parts[i];
       const path_part = path_parts[i];
