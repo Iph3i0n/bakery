@@ -42,6 +42,7 @@ export abstract class UrlBuilder extends BakeryBase {
 
   Render(url: string) {
     const opts = this.#options;
+    // deno-lint-ignore no-explicit-any
     return (Mustache as any).render(url, opts);
   }
 }
