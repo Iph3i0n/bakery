@@ -168,7 +168,10 @@ export abstract class FormManagerElement extends BakeryBase {
   }
 
   Submit() {
-    const validate_event = new CustomEvent(VALIDATION_KEY, { bubbles: false });
+    const validate_event = new CustomEvent(VALIDATION_KEY, {
+      bubbles: false,
+      cancelable: true,
+    });
     this.dispatchEvent(validate_event);
     if (validate_event.defaultPrevented) return;
 
@@ -235,7 +238,7 @@ export default abstract class FormElement extends BakeryBase {
       this.#form.addEventListener(VALIDATION_KEY, (e) => {
         this.#touched = true;
         if (!this.validity.valid) e.preventDefault();
-        self.dispatchEvent(new ShouldRender());
+        this.dispatchEvent(new ShouldRender());
       });
     });
   }

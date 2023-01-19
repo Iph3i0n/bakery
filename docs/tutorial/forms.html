@@ -125,6 +125,39 @@
               )
             )
           ),
+          validation: e(
+            "f-form",
+            { url: "/tutorial", method: "get", submit: "page-form-data" },
+            e(
+              "l-row",
+              {},
+              e(
+                "l-col",
+                { xs: "12" },
+                e(
+                  "f-input",
+                  { name: "test", required: true },
+                  "This is required",
+                  e("span", { slot: "empty" }, "Please enter a value")
+                )
+              ),
+              e(
+                "l-col",
+                { xs: "12" },
+                e(
+                  "f-input",
+                  { name: "testvalidated", validate: "^[a-z]+$" },
+                  "This is validated",
+                  e("span", { slot: "invalid" }, "May only be letters")
+                )
+              ),
+              e(
+                "l-col",
+                { xs: "12" },
+                e("f-button", { type: "submit" }, "Submit")
+              )
+            )
+          ),
         },
       };
     </script>
@@ -189,6 +222,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="manager.ajax"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="manager.validation"></div>
           </l-col>
         </l-row>
       </l-container>
