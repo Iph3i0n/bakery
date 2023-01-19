@@ -104,7 +104,7 @@
   </div>
   <div
     class=":c('content', ['sensitive', self.props.sensitive])"
-    contenteditable="true"
+    contenteditable="plaintext-only"
     s:ref="textarea"
     on:blur="update_value"
     s:vdom="ignore"

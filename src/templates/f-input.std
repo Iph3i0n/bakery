@@ -65,7 +65,10 @@
   });
 
   self.addEventListener("keydown", on_key_handler({
-    Enter: () => self.submit()
+    Enter: () => {
+      self.value = textarea.current.innerText.replace(/\n/gm, "");
+      self.submit();
+    }
   }));
 
   function update_value() {
@@ -82,7 +85,7 @@
   </span>
   <div
     class=":c('content', ['sensitive', self.props.sensitive])"
-    contenteditable="true"
+    contenteditable="plaintext-only"
     s:ref="textarea"
     on:blur="update_value"
     s:vdom="ignore"

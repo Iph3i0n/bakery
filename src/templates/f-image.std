@@ -10,6 +10,9 @@
     If set then the form will not be submittable until
     the element field a value.
   </attr>
+  <attr name="height" type="string" default="12rem">
+    Height of the input element on screen. Useful for when uploading large images.
+  </attr>
   <slot>The label text</slot>
   <slot name="help">
     The small help text at the bottom of the input.
@@ -95,7 +98,7 @@
 
   .droparea {
     position: relative;
-    min-height: 12rem;
+    min-height: ":self.props.height";
     display: flex;
     align-items: center;
     justify-content: center;
