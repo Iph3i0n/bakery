@@ -1,6 +1,7 @@
 import { ShouldRender } from "../deps.ts";
 import PaginationEvent from "../pagination.ts";
 import BakeryBase from "./main.ts";
+import Mustache from "https://cdn.jsdelivr.net/npm/mustache/mustache.js";
 
 const DATA_KEY = "routing_data";
 
@@ -20,18 +21,11 @@ export abstract class UrlBuilder extends BakeryBase {
   }
 
   get #options() {
-    const existing = this.use_context((ctx) => ctx[DATA_KEY]);
-
-    // deno-lint-ignore no-explicit-any
-    const params = existing ? (existing as any).params : {};
     return {
       locale: this.#language,
       skip: this.#skip.toString(),
       take: this.#take.toString(),
-      ...Object.keys(params).reduce(
-        (c, n) => ({ ...c, ["params." + n]: params[n] }),
-        {}
-      ),
+      ...(this.use_context((ctx) => ctx) ?? {}),
     };
   }
 
@@ -48,10 +42,7 @@ export abstract class UrlBuilder extends BakeryBase {
 
   Render(url: string) {
     const opts = this.#options;
-    for (const key in opts)
-      url = url.replaceAll(`{${key}}`, opts[key as keyof typeof opts]);
-
-    return url;
+    return (Mustache as any).render(url, opts);
   }
 }
 

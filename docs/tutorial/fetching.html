@@ -16,7 +16,7 @@
             locale: e(
               "u-fetch",
               {
-                url: "/examples/{locale}/locale-example.json",
+                url: "/examples/{{locale}}/locale-example.json",
                 name: "data",
                 fallback: "/examples/fetch-example.json",
               },
@@ -60,7 +60,7 @@
           pagination: {
             basic: e(
               "u-fetch",
-              { url: "/examples/pagination/{take}/{skip}.json", name: "pages" },
+              { url: "/examples/pagination/{{take}}/{{skip}}.json", name: "pages" },
               e("t-paragraph", {}, e("u-text", { use: "pages.content" })),
               e("u-paginator", { total: "pages.metadata.total" })
             ),

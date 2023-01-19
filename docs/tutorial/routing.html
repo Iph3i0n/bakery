@@ -45,7 +45,7 @@
             {},
             e(
               "t-link",
-              { href: "/tutorial/routing/{locale}", block: true, spa: true },
+              { href: "/tutorial/routing/{{locale}}", block: true, spa: true },
               "Check your URL after clicking. It should be your current locale."
             )
           ),
@@ -84,7 +84,10 @@
               { path: "/tutorial/routing/show-text/:find" },
               e(
                 "u-fetch",
-                { url: "/examples/{params.find}.json", name: "text" },
+                {
+                  url: "/examples/{{routing_data.params.find}}.json",
+                  name: "text",
+                },
                 e("t-richtext", { use: "text.data" })
               )
             ),
