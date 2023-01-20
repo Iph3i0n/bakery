@@ -6,6 +6,9 @@ import {
   RequestContextEvent,
 } from "../events/context.ts";
 
+// deno-lint-ignore no-explicit-any
+type Context = Record<string, any>;
+
 export default abstract class BakeryBase
   extends HTMLElement
   implements IComponent
@@ -18,7 +21,7 @@ export default abstract class BakeryBase
     super();
   }
 
-  #get_value(fetcher: (ctx: Record<string, unknown>) => unknown) {
+  #get_value(fetcher: (ctx: Context) => unknown) {
     const event = new RequestContextEvent();
     this.dispatchEvent(event);
 
@@ -31,7 +34,7 @@ export default abstract class BakeryBase
 
   #listener: ((e: Event) => void) | undefined;
 
-  use_context(fetcher: (ctx: Record<string, unknown>) => unknown) {
+  use_context(fetcher: (ctx: Context) => unknown) {
     const result = this.#get_value(fetcher);
 
     if (this.#listener) {

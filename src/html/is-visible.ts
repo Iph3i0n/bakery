@@ -4,7 +4,7 @@ export function is_visible(self: BakeryBase) {
   let current = self.parentElement;
   while (current && current.tagName !== "body") {
     if (current.tagName === "U-ROUTE")
-      return !!self.use_context((ctx) => ctx.routing_data);
+      return !!self.use_context((ctx) => !!ctx.routing_data);
     current = current.parentElement;
   }
 
