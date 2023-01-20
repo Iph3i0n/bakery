@@ -12,6 +12,9 @@
     if the route matches. In this case then the modal will replace the
     state when closed so make sure that it only routes modal specific things.
   </attr>
+  <attr name="open" type="boolean">
+    If set then overrides all other behaviour to open the modal.
+  </attr>
 
   <slot name="title">The top of the offcanvas.</slot>
   <slot name="footer">The bottom of the offcanvas, will be hidden if empty.</slot>
@@ -83,6 +86,7 @@
   });
 
   function is_open() {
+    if (self.props.open) return true;
     if (self.props.trigger) return open;
     else return self.Matches;
   }

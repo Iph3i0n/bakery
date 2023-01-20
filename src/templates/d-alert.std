@@ -7,16 +7,22 @@
   </attr>
   <attr name="closeable" type="boolean">
     If true, a close button is displayed and the element
-    will be removed when it is clicked. Be careful when
-    using with JS frameworks, consider a custom
-    implementation in that scenario.
+    will be removed when it is clicked. A close event Will
+    be fired which can be prevented.
   </attr>
+  <event name="close" type="CloseEvent">
+    When the user closes the modal. Prevent default to
+    stop the element from being destroyed.
+  </event>
   <aria role="alert" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>
   function close() {
+    const event = new CustomEvent("close", { cancelable: true });
+    self.dispatchEvent(event);
+    if (event.defaultPrevented) return;
     self.remove();
   }
 </script>

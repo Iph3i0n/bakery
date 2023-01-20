@@ -24,12 +24,19 @@
   <attr name="position" type="position" default="bottom right">
     Where on the screen shall it render?
   </attr>
+  <event name="close" type="CloseEvent">
+    When the user closes the modal. Prevent default to
+    stop the element from being destroyed.
+  </event>
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>
   function close() {
+    const event = new CustomEvent("close", { cancelable: true });
+    self.dispatchEvent(event);
+    if (event.defaultPrevented) return;
     self.remove();
   }
 
