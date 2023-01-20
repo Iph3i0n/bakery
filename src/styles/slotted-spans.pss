@@ -1,14 +1,17 @@
 @js const spec = require("../spec.ts");
 @js const theme = require("../theme.ts");
 
-::slotted(t-link), ::slotted(span) {
+::slotted(t-link), ::slotted(span), ::slotted(l-row) {
   theme.colour("surface");
-  display: block;
   border: none;
   border-radius: 0;
   box-shadow: none;
   theme.text("body", "no-margin");
   theme.padding("small_block");
+}
+
+::slotted(t-link), ::slotted(span) {
+  display: block;
 }
 
 ::slotted(t-link) {
@@ -24,7 +27,7 @@
 }
 
 @for const colour in spec.colours {
-  ":`::slotted(t-link.${colour}), ::slotted(span.${colour})`" {
+  ":`::slotted(t-link.${colour}), ::slotted(span.${colour}), ::slotted(l-row.${colour})`" {
     theme.colour(colour);
   }
 
