@@ -5,10 +5,6 @@
   <attr name="colour" type="colour" default="surface">
     A colour to fill the card with.
   </attr>
-  <attr name="flush" type="boolean">
-    If set then the card will have no padding. Useful for when putting
-    a grid inside of a card.
-  </attr>
   <slot>The body of the card.</slot>
   <slot name="title">
     The title content of the card. Does not require text styling.
@@ -34,10 +30,8 @@
     theme.border("body");
   }
 
-  @if !self.props.flush {
-    .body {
-      theme.padding("block");
-    }
+  .body {
+    theme.padding("block");
   }
 
   .title {

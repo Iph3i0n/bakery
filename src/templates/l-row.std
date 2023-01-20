@@ -3,9 +3,11 @@
   <attr name="cols" type="number" default="12">
     The number of columns to have per row.
   </attr>
-  <attr name="flush" type="boolean">
-    If set then there will be no padding around the row and no gap between
-    the columns.
+  <attr name="no-padding" type="boolean">
+    If set then there will be no outer padding on the row.
+  </attr>
+  <attr name="no-gap" type="boolean">
+    If set then there will be no gap between the columns.
   </attr>
 
   <aria role="grid" />
@@ -20,9 +22,14 @@
     grid-template-columns: ":`repeat(${self.props.cols ?? '12'}, minmax(0, 1fr))`";
   }
 
-  @if !self.props.flush {
+  @if !self.props['no-padding'] {
     :host {
       theme.padding("block");
+    }
+  }
+
+  @if !self.props['no-gap'] {
+    :host {
       theme.gap("block");
     }
   }
