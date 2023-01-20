@@ -1,8 +1,5 @@
 <meta name="l-col">
   A column within a grid. They can wrap on to new lines without upsetting the flow.
-  <attr name="flush" type="boolean">
-    If true then the element will not have padding.
-  </attr>
   <attr name="xs">
     The size of the column on the smallest screen size.
   </attr>
@@ -29,12 +26,6 @@
 
   :host {
     display: block;
-  }
-
-  @if !self.props.flush {
-    :host {
-      theme.padding("block");
-    }
   }
 
   @for const size in spec.screen_sizes {

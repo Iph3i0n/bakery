@@ -106,6 +106,8 @@ export abstract class FormManagerElement extends BakeryBase {
     this.provide_context("form_state", { response, json });
     if (!response.ok) return;
 
+    document.dispatchEvent(new CustomEvent("data-invalidated"));
+
     const go_to = this.props["success-url"];
     if (!go_to) return;
 

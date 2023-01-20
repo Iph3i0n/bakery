@@ -74,6 +74,7 @@
   }
 
   document.addEventListener("navigation-event", handler);
+  document.addEventListener("data-invalidated", handler);
   self.addEventListener("popstate", handler);
 </script>
 

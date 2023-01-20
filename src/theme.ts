@@ -14,6 +14,12 @@ export function margin(variant: string, ...directions: Array<Instruction>) {
   return [["margin", pure_spacing(variant, ...directions), undefined]];
 }
 
+export function gap(variant: string) {
+  return [
+    ["gap", pure_spacing(variant).split(" ").slice(0, 2).join(" "), undefined],
+  ];
+}
+
 function get_colour(variant: string, shift = 1, alpha = 1) {
   const c = (r: number, g: number, b: number) => {
     return `rgba(${r * shift}, ${g * shift}, ${b * shift}, ${alpha})`;
