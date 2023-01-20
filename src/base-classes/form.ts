@@ -2,6 +2,7 @@ import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
 import c from "../html/classes.ts";
 import Router from "./router.ts";
 import BakeryBase from "./main.ts";
+import ContextFetcher from "./context-fetcher.ts";
 
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
 const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";
@@ -201,7 +202,7 @@ export abstract class FormManagerElement extends BakeryBase {
   }
 }
 
-export default abstract class FormElement extends BakeryBase {
+export default abstract class FormElement extends ContextFetcher {
   #value: FormElementValue = undefined;
   #touched = false;
   #focused = false;
@@ -227,7 +228,8 @@ export default abstract class FormElement extends BakeryBase {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      if (this.props.default) this.value = this.props.default;
+      if (this.props.default)
+        this.value = this.use_string_context("default")?.toString();
 
       const event = new RegisterFormElementEvent();
       this.dispatchEvent(event);
