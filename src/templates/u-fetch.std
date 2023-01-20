@@ -74,7 +74,10 @@
   }
 
   document.addEventListener("navigation-event", handler);
-  document.addEventListener("data-invalidated", handler);
+  document.addEventListener("data-invalidated", () => {
+    existing_route = "";
+    handler();
+  });
   self.addEventListener("popstate", handler);
 </script>
 
