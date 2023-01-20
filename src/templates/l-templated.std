@@ -19,8 +19,6 @@
 
 <script>
   async function get_data() {
-    if (!is_visible(self)) return;
-
     if (!self.props.remote) {
       return document.getElementById(self.props.use);
     }
@@ -34,6 +32,7 @@
   }
 
   self.addEventListener(RenderEvent.Key, async () => {
+    if (!is_visible(self)) return;
     const data = await get_data();
     self.root.replaceChildren(data.content.cloneNode(true));
   });
