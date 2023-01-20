@@ -13,11 +13,14 @@
     If set then the use attribute will be treated as a URL.
     If not then it will be treated as a HTML ID.
   </attr>
+  <import use="is_visible" from="../html/is-visible.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </meta>
 
 <script>
   async function get_data() {
+    if (!is_visible(self)) return;
+
     if (!self.props.remote) {
       return document.getElementById(self.props.use);
     }

@@ -91,6 +91,18 @@
               )
             ),
           },
+          templated: {
+            basic: e(
+              "div",
+              {},
+              e(
+                "template",
+                { id: "test-template" },
+                e("t-paragraph", {}, e("slot", {}))
+              ),
+              e("l-templated", { use: "test-template" }, "Hello world")
+            ),
+          },
         },
       };
     </script>
@@ -120,6 +132,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="layout.table.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.templated.basic"></div>
           </l-col>
         </l-row>
       </l-container>

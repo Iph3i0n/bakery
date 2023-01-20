@@ -15,6 +15,7 @@
     By default all data is cached on the users machine. If set then
     that cache is disabled. Only use if you have to.
   </attr>
+  <import use="is_visible" from="../html/is-visible.ts" />
   <import use="PaginationEvent" from="../pagination.ts" default />
   <base use="UrlBuilder" from="../base-classes/router.ts" />
 </meta>
@@ -31,20 +32,10 @@
     self.dispatchEvent(new ShouldRender())
   });
 
-  const is_visible = () => {
-    let current = self.parentElement;
-    while (current && current.tagName !== "body") {
-      if (current.tagName === "U-ROUTE") return !!self.use_context(ctx => ctx.routing_data);
-      current = current.parentElement;
-    }
-
-    return true;
-  }
-
   let existing_route = window.location.pathname;
 
   const rendered_url = () => {
-    if (!is_visible()) return undefined;
+    if (!is_visible(self)) return undefined;
 
     return this.Render(self.props.url);
   }
