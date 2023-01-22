@@ -1,4 +1,4 @@
-import "../selection-polyfill.js";
+import "./selection-polyfill.js";
 import { CreateRef, LoadedEvent, ShouldRender } from "../deps.ts";
 import FormElement from "./form.ts";
 import Slotted from "../toggleable-slot.ts";
@@ -83,23 +83,28 @@ export default abstract class RichText extends FormElement {
   #current_anchor: HTMLAnchorElement | undefined = undefined;
 
   get CurrentAnchor() {
-    // deno-lint-ignore no-explicit-any
-    const selection: Selection = (this.root as any).getSelection();
-    const range = selection.getRangeAt(0);
-    if (!range) return this.#current_anchor;
+    try {
+      // deno-lint-ignore no-explicit-any
+      const selection: Selection = (this.root as any).getSelection();
+      const range = selection.getRangeAt(0);
+      if (!range) return this.#current_anchor;
 
-    let start: Node | null = range.startContainer;
-    if (start instanceof Text) start = start.parentElement;
-    let end: Node | null = range.endContainer;
-    if (end instanceof Text) end = end.parentElement;
-    if (!(start instanceof HTMLElement)) {
+      let start: Node | null = range.startContainer;
+      if (start instanceof Text) start = start.parentElement;
+      let end: Node | null = range.endContainer;
+      if (end instanceof Text) end = end.parentElement;
+      if (!(start instanceof HTMLElement)) {
+        this.#current_anchor = undefined;
+        return undefined;
+      }
+
+      if (start instanceof HTMLAnchorElement && start === end) {
+        this.#current_anchor = start;
+        return start;
+      }
+    } catch {
       this.#current_anchor = undefined;
       return undefined;
-    }
-
-    if (start instanceof HTMLAnchorElement && start === end) {
-      this.#current_anchor = start;
-      return start;
     }
 
     this.#current_anchor = undefined;
