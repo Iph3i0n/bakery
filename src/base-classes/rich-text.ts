@@ -4,11 +4,6 @@ import FormElement from "./form.ts";
 import Slotted from "../toggleable-slot.ts";
 
 export default abstract class RichText extends FormElement {
-  abstract readonly internals: ElementInternals;
-  abstract readonly props: Record<string, string>;
-  // deno-lint-ignore no-explicit-any
-  abstract readonly root: any;
-
   readonly #editor_ref = CreateRef<HTMLDivElement>();
   readonly #selector_ref = CreateRef<HTMLSelectElement>();
   readonly #link_input_ref = CreateRef<HTMLInputElement>();
