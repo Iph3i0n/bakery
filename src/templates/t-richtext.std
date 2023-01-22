@@ -1,10 +1,14 @@
 <s:meta name="t-richtext">
-  Display rich text from a text editor. Will filter the
-  content to make sure that nothing harmful is displayed to the user.
-  <attr name="use" type="string | { html: string }">
+  Display rich text from a text editor. Will filter the content to make sure
+  that nothing harmful is displayed to the user.
+  <attr name="use" type="string | { html: string }" property>
     A JavaScript snippet to access the data from the `u-` namespace.
   </attr>
-  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
+  <base
+    use="ContextFetcher"
+    from="../base-classes/context-fetcher.ts"
+    default
+  />
 </s:meta>
 
 <script>

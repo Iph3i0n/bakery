@@ -1,20 +1,11 @@
 <s:meta name="l-col">
-  A column within a grid. They can wrap on to new lines without upsetting the flow.
-  <attr name="xs">
-    The size of the column on the smallest screen size.
-  </attr>
-  <attr name="sm" optional>
-    The size of the column on small screens.
-  </attr>
-  <attr name="md" optional>
-    The size of the column on medium screens.
-  </attr>
-  <attr name="lg" optional>
-    The size of the column on large screens.
-  </attr>
-  <attr name="xl" optional>
-    The size of the column on extra large screens.
-  </attr>
+  A column within a grid. They can wrap on to new lines without upsetting the
+  flow.
+  <attr name="xs">The size of the column on the smallest screen size.</attr>
+  <attr name="sm" optional>The size of the column on small screens.</attr>
+  <attr name="md" optional>The size of the column on medium screens.</attr>
+  <attr name="lg" optional>The size of the column on large screens.</attr>
+  <attr name="xl" optional>The size of the column on extra large screens.</attr>
 
   <aria role="gridcell" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />

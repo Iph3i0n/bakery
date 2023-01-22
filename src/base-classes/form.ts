@@ -241,7 +241,8 @@ export default abstract class FormElement extends ContextFetcher {
 
     this.addEventListener(LoadedEvent.Key, () => {
       if (this.default)
-        this.value = this.use_string_context("default")?.toString();
+        this.value =
+          this.use_string_context("default")?.toString() ?? this.default;
 
       const event = new RegisterFormElementEvent();
       this.dispatchEvent(event);

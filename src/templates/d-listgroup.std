@@ -1,9 +1,7 @@
 <s:meta name="d-listgroup">
-  Uses the children to display a list of items.
-  Each one a block with a standard border. Only
-  `span` and `a` tags as children are supported.
-  The children may have a theme colour as a class
-  name in order to style them.
+  Uses the children to display a list of items. Each one a block with a standard
+  border. Only `span` and `a` tags as children are supported. The children may
+  have a theme colour as a class name in order to style them.
 
   <aria role="list" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />

@@ -1,7 +1,6 @@
 <s:meta name="l-accordion">
-  An accordion item that is expanded with a click. If
-  another accordion within the parent is opened then
-  it will collapse automatically.
+  An accordion item that is expanded with a click. If another accordion within
+  the parent is opened then it will collapse automatically.
   <attr name="open" type="boolean">
     If set then the accordion item defaults to open on load.
   </attr>
@@ -11,9 +10,7 @@
 
   <event name="accordion-opened" type="AccordionOpenEvent">
     When the user clicks on the accordion and it opens.
-    <key name="Id" type="string">
-      The current accordion
-    </key>
+    <key name="Id" type="string">The current accordion</key>
   </event>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>

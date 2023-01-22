@@ -1,23 +1,25 @@
 <s:meta name="o-offcanvas">
   A offcanvas dialogue to be triggered by another element on the screen.
   <attr name="trigger">
-    A CSS selector to listen to for opening the dialogue.
-    Will listen for clicks of any elements matching the selector.
+    A CSS selector to listen to for opening the dialogue. Will listen for clicks
+    of any elements matching the selector.
   </attr>
   <attr name="size" type="size" default="medium">
     The size of the modal on the screen.
   </attr>
   <attr name="path" type="string" optional>
-    If set then the modal will be treated like a `u-router` and show
-    if the route matches. In this case then the modal will replace the
-    state when closed so make sure that it only routes modal specific things.
+    If set then the modal will be treated like a `u-router` and show if the
+    route matches. In this case then the modal will replace the state when
+    closed so make sure that it only routes modal specific things.
   </attr>
   <attr name="open" type="boolean">
     If set then overrides all other behaviour to open the modal.
   </attr>
 
   <slot name="title">The top of the offcanvas.</slot>
-  <slot name="footer">The bottom of the offcanvas, will be hidden if empty.</slot>
+  <slot name="footer">
+    The bottom of the offcanvas, will be hidden if empty.
+  </slot>
   <aria role="dialog" />
   <import use="On" from="../events.ts" />
   <import use="unsafe_import" from="../fetch-resources.ts" />
@@ -65,24 +67,22 @@
   self.addEventListener(RenderEvent.Key, () => {
     self.inert = !is_open();
   });
-  
+
   function close() {
     if (self.trigger) {
       open = false;
     } else {
-      const target = window
-        .location
-        .pathname
+      const target = window.location.pathname
         .split("/")
-        .slice(0, self.use_context(c => c.routing_data?.used ?? 0) + 1)
-        .filter(p => p)
+        .slice(0, self.use_context((c) => c.routing_data?.used ?? 0) + 1)
+        .filter((p) => p)
         .join("/");
       self.Replace("/" + target);
     }
   }
 
   const on_close_enter = on_key_handler({
-    Enter: () => close()
+    Enter: () => close(),
   });
 
   function is_open() {
@@ -145,7 +145,12 @@
   <div class="modal">
     <div class="title">
       <slot name="title"></slot>
-      <div class="close-button" tabindex="0" on:click="close" on:keyup="on_close_enter">
+      <div
+        class="close-button"
+        tabindex="0"
+        on:click="close"
+        on:keyup="on_close_enter"
+      >
         <t-icon name="close" colour="body" size="body_large" text></t-icon>
       </div>
     </div>

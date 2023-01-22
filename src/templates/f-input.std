@@ -2,36 +2,31 @@
   A single line text input. Must be placed within a `form` tag.
   <attr name="type" type="keyboard" default="text">
     The keyboard to be used for the input when using a mobile device.
-    <ref url="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode">
+    <ref
+      url="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode"
+    >
       MDN Reference
     </ref>
   </attr>
-  <attr name="default" optional>
-    The default text for the textbox.
-  </attr>
-  <attr name="disabled" type="boolean">
-    If set then the field is readonly.
-  </attr>
+  <attr name="default" optional>The default text for the textbox.</attr>
+  <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
   <attr name="sensitive" type="boolean">
-    If set then the form element is hidden from the user.
-    Useful for password inputs.
+    If set then the form element is hidden from the user. Useful for password
+    inputs.
   </attr>
   <attr name="name">
     The name of the value field in the form data. Should be unique.
   </attr>
   <attr name="required" type="boolean">
-    If set then the form will not be submittable until
-    the element field has a value.
+    If set then the form will not be submittable until the element field has a
+    value.
   </attr>
   <attr name="validate" optional>
-    A RegExp string used to evaluate the input.
-    If there are no matches then the field will be considered
-    invalid and the form will not be submittable.
+    A RegExp string used to evaluate the input. If there are no matches then the
+    field will be considered invalid and the form will not be submittable.
   </attr>
   <slot>The label text</slot>
-  <slot name="help">
-    The small help text at the bottom of the input.
-  </slot>
+  <slot name="help">The small help text at the bottom of the input.</slot>
   <slot name="empty">
     The error text for if the slot is empty and required is true.
   </slot>
@@ -64,12 +59,15 @@
     textarea.current.innerHTML = self.value ?? "";
   });
 
-  self.addEventListener("keydown", on_key_handler({
-    Enter: () => {
-      self.value = textarea.current.innerText.replace(/\n/gm, "");
-      self.submit();
-    }
-  }));
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      Enter: () => {
+        self.value = textarea.current.innerText.replace(/\n/gm, "");
+        self.submit();
+      },
+    })
+  );
 
   function update_value() {
     self.value = textarea.current.innerText.replace(/\n/gm, "");

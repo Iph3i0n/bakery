@@ -1,8 +1,6 @@
 <s:meta name="t-paragraph">
   A paragraph element
-  <attr name="large" type="boolean">
-    If set then larger text is displayed
-  </attr>
+  <attr name="large" type="boolean">If set then larger text is displayed</attr>
   <aria role="paragraph" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>

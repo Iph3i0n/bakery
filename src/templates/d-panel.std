@@ -1,13 +1,12 @@
 <s:meta name="d-panel">
-  A simple panel to set the colour of a block.
-  Offers no padding and no borders by default.
+  A simple panel to set the colour of a block. Offers no padding and no borders
+  by default.
 
   <attr name="colour" type="colour" default="body">
     The colour for the block. Will update background and text colour.
   </attr>
   <attr name="bordered" type="boolean">
-    If set then the panel will have a border
-    and shadow but still no padding.
+    If set then the panel will have a border and shadow but still no padding.
   </attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>

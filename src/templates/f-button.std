@@ -1,38 +1,35 @@
 <s:meta name="f-button">
-  A simple button that the user can click for various actions.
-  If the `type` is included then the button can be a standard
-  or submit button. If the `href` is included the the button
-  is a link. Buttons that are placed next to other buttons
-  will automatically merge into a group.
+  A simple button that the user can click for various actions. If the `type` is
+  included then the button can be a standard or submit button. If the `href` is
+  included the the button is a link. Buttons that are placed next to other
+  buttons will automatically merge into a group.
 
   <attr name="colour" type="colour" default="primary">
     The colour for the button to render.
   </attr>
   <attr name="type" type="button_type" optional>
-    The button type when used as a standard button.
-    Should not be included with `href` for consistent behavior.
+    The button type when used as a standard button. Should not be included with
+    `href` for consistent behavior.
   </attr>
   <attr name="href" optional>
-    The URL to send the user to if the button is being used as
-    a link. Should not be included with `type`.
+    The URL to send the user to if the button is being used as a link. Should
+    not be included with `type`.
   </attr>
   <attr name="target" type="target" optional>
-    The standard target from an anchor element.
-    Should only be included if `href` is present.
+    The standard target from an anchor element. Should only be included if
+    `href` is present.
   </attr>
   <attr name="private" type="boolean">
-    If set then the link will be treated as external.
-    This means that `rel="noreferrer noopener"` will be applied.
+    If set then the link will be treated as external. This means that
+    `rel="noreferrer noopener"` will be applied.
   </attr>
   <attr name="spa" type="boolean">
-    If set then the link will use a SPA push to navigate rather
-    than loading the page. Will be ignored if `target` or
-    `private` are set.
+    If set then the link will use a SPA push to navigate rather than loading the
+    page. Will be ignored if `target` or `private` are set.
   </attr>
   <attr name="replace" type="boolean">
-    Only used if `spa` is set. Will make the link replace the state
-    rather than push. Useful if you don't want the back button to
-    keep people on the page.
+    Only used if `spa` is set. Will make the link replace the state rather than
+    push. Useful if you don't want the back button to keep people on the page.
   </attr>
   <aria role="button" />
   <import use="FindForm" from="../html/form.ts" />
@@ -53,11 +50,7 @@
     } else if (self.href) {
       const url = this.Render(self.href);
       if (self.target)
-        window.open(
-          url,
-          self.target,
-          self.private ? "noreferrer" : undefined
-        );
+        window.open(url, self.target, self.private ? "noreferrer" : undefined);
       else if (self.spa)
         if (self.replace) Router.Replace(url);
         else Router.Push(url);
@@ -67,12 +60,15 @@
 
   self.addEventListener("click", activate);
 
-  self.addEventListener("keyup", on_key_handler({
-    Enter: () => {
-      self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      activate();
-    }
-  }));
+  self.addEventListener(
+    "keyup",
+    on_key_handler({
+      Enter: () => {
+        self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        activate();
+      },
+    })
+  );
 
   const observer = new MutationObserver(() => {
     if (!self) {

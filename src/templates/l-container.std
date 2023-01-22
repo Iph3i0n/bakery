@@ -1,8 +1,8 @@
 <s:meta name="l-container">
   A container for the grid. Allows for predictable document widths.
   <attr name="flush" type="boolean">
-    If true then the element will always fill the screen. Consider
-    the need for this element in this scenario.
+    If true then the element will always fill the screen. Consider the need for
+    this element in this scenario.
   </attr>
 
   <aria role="section" />

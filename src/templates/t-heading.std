@@ -1,11 +1,9 @@
 <s:meta name="t-heading">
   A HTML heading tag.
-  <attr name="level" type="heading_level" default="h1">
-    The heading level.
-  </attr>
+  <attr name="level" type="heading_level" default="h1">The heading level.</attr>
   <attr name="display" type="boolean">
-    If true then larger but thinner fonts will
-    be used to make the text stand out.
+    If true then larger but thinner fonts will be used to make the text stand
+    out.
   </attr>
   <aria role="heading" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />

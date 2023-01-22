@@ -2,8 +2,7 @@
   A header for your site. A logo is a must if you are using this.
 
   <attr name="logo">
-    The URL for the company logo. Best if it is rather small
-    and mostly square.
+    The URL for the company logo. Best if it is rather small and mostly square.
   </attr>
   <attr name="logo-alt" optional>
     The alt text for if the company logo can not be loaded.
@@ -12,18 +11,17 @@
     The background colour for the header.
   </attr>
   <attr name="flush" type="boolean">
-    If true then the header will span the width of the screen.
-    Use if using a flush container or not using a container
-    for your page body.
+    If true then the header will span the width of the screen. Use if using a
+    flush container or not using a container for your page body.
   </attr>
 
   <slot>
-    The left hand content of the banner.
-    Should primerally have anchors as children.
+    The left hand content of the banner. Should primerally have anchors as
+    children.
   </slot>
   <slot name="right">
-    The right hand content of the banner.
-    Could have anchors or a form as the children.
+    The right hand content of the banner. Could have anchors or a form as the
+    children.
   </slot>
   <aria role="banner" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
@@ -149,7 +147,7 @@
     outline: none;
     box-shadow: none;
   }
-  
+
   .main-content ::slotted(t-link:hover),
   .main-content ::slotted(t-link:focus) {
     theme.colour("surface", 0.9);

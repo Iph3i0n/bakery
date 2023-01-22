@@ -1,6 +1,6 @@
 <s:meta name="t-badge">
-  A badge designed for a number to site at the top
-  right of the block it is within.
+  A badge designed for a number to site at the top right of the block it is
+  within.
   <attr name="colour" type="colour" default="warning">
     The colour of the badge.
   </attr>

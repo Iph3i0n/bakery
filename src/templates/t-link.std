@@ -7,23 +7,20 @@
     The standard target from an anchor element.
   </attr>
   <attr name="private" type="boolean">
-    If set then the link will be treated as external.
-    This means that `rel="noreferrer noopener"`
-    will be applied.
+    If set then the link will be treated as external. This means that
+    `rel="noreferrer noopener"` will be applied.
   </attr>
   <attr name="block" type="boolean">
-    If set then the link will be displayed as a block rather
-    than an inline block.
+    If set then the link will be displayed as a block rather than an inline
+    block.
   </attr>
   <attr name="spa" type="boolean">
-    If set then the link will use a SPA push to navigate rather
-    than loading the page. Will be ignored if `target` or
-    `private` are set.
+    If set then the link will use a SPA push to navigate rather than loading the
+    page. Will be ignored if `target` or `private` are set.
   </attr>
   <attr name="replace" type="boolean">
-    Only used if `spa` is set. Will make the link replace the state
-    rather than push. Useful if you don't want the back button to
-    keep people on the page.
+    Only used if `spa` is set. Will make the link replace the state rather than
+    push. Useful if you don't want the back button to keep people on the page.
   </attr>
   <aria role="button" />
   <base use="UrlBuilder" from="../base-classes/router.ts" />
@@ -37,11 +34,7 @@
   function activate() {
     const url = self.Render(self.href);
     if (self.target)
-      window.open(
-        url,
-        self.target,
-        self.private ? "noreferrer" : undefined
-      );
+      window.open(url, self.target, self.private ? "noreferrer" : undefined);
     else if (self.spa)
       if (self.replace) Router.Replace(url);
       else Router.Push(url);
@@ -50,12 +43,15 @@
 
   self.addEventListener("click", activate);
 
-  self.addEventListener("keyup", on_key_handler({
-    Enter: () => {
-      self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-      activate();
-    }
-  }));
+  self.addEventListener(
+    "keyup",
+    on_key_handler({
+      Enter: () => {
+        self.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        activate();
+      },
+    })
+  );
 </script>
 
 <style>

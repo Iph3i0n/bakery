@@ -1,19 +1,17 @@
 <s:meta name="u-fetch">
   Fetches data from a URL and adds them to the context.
   <attr name="url">
-    The main URL to use. May include parameters like `{locale}`
-    to customise the URL for the user.
+    The main URL to use. May include parameters like `{{ locale }}` to customise
+    the URL for the user.
   </attr>
-  <attr name="name">
-    The name given to the result in the context.
-  </attr>
+  <attr name="name">The name given to the result in the context.</attr>
   <attr name="fallback">
-    The fallback URL for if the fetch fails. Useful for when fetching
-    locale specific data from a CMS.
+    The fallback URL for if the fetch fails. Useful for when fetching locale
+    specific data from a CMS.
   </attr>
   <attr name="no-cache" type="boolean">
-    By default all data is cached on the users machine. If set then
-    that cache is disabled. Only use if you have to.
+    By default all data is cached on the users machine. If set then that cache
+    is disabled. Only use if you have to.
   </attr>
   <import use="is_visible" from="../html/is-visible.ts" />
   <import use="PaginationEvent" from="../pagination.ts" default />
@@ -29,7 +27,7 @@
   self.addEventListener(PaginationEvent.Key, (e) => {
     skip = e.Skip;
     take = e.Take;
-    self.dispatchEvent(new ShouldRender())
+    self.dispatchEvent(new ShouldRender());
   });
 
   let existing_route = window.location.pathname;
@@ -38,7 +36,7 @@
     if (!is_visible(self)) return undefined;
 
     return this.Render(self.url);
-  }
+  };
 
   self.addEventListener(RenderEvent.Key, async () => {
     const next = rendered_url();
@@ -71,7 +69,7 @@
 
   const handler = () => {
     self.dispatchEvent(new ShouldRender());
-  }
+  };
 
   document.addEventListener("navigation-event", handler);
   document.addEventListener("data-invalidated", () => {

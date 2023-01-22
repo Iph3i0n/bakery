@@ -1,10 +1,7 @@
 <s:meta name="d-loading">
-  A loading overlay that covers the whole page.
-  Should be used sparingly.
+  A loading overlay that covers the whole page. Should be used sparingly.
 
-  <attr name="open" type="boolean">
-    If true then the overlay will render.
-  </attr>
+  <attr name="open" type="boolean">If true then the overlay will render.</attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>
 

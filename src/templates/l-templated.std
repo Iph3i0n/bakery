@@ -1,17 +1,15 @@
 <s:meta name="l-templated">
-  Insert a generic template into the project.
-  Should only be used with trusted data.
+  Insert a generic template into the project. Should only be used with trusted
+  data.
   <attr name="use">
-    The HTML ID or URL of the template desired. If a
-    HTML ID then it should point to a `template`
-    tag. If a URL then it should point to a HTML file.
-    That file should contain no `html` or
-    `body` tags and should only container the
-    content as if it was in a `template` tag.
+    The HTML ID or URL of the template desired. If a HTML ID then it should
+    point to a `template` tag. If a URL then it should point to a HTML file.
+    That file should contain no `html` or `body` tags and should only container
+    the content as if it was in a `template` tag.
   </attr>
   <attr name="remote" type="boolean">
-    If set then the use attribute will be treated as a URL.
-    If not then it will be treated as a HTML ID.
+    If set then the use attribute will be treated as a URL. If not then it will
+    be treated as a HTML ID.
   </attr>
   <import use="is_visible" from="../html/is-visible.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />

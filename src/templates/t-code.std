@@ -10,13 +10,17 @@
     A JavaScript snippet to extract the data from the `u-` namespace.
   </attr>
   <attr name="file">
-    A file name to provide the user with a bit of context. Display
-    only and does not change functionality.
+    A file name to provide the user with a bit of context. Display only and does
+    not change functionality.
   </attr>
   <attr name="flush" type="boolean">
     If true then no padding or borders will be applied.
   </attr>
-  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
+  <base
+    use="ContextFetcher"
+    from="../base-classes/context-fetcher.ts"
+    default
+  />
   <import use="unsafe_import" from="../fetch-resources.ts" />
 </s:meta>
 

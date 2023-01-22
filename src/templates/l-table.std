@@ -1,16 +1,18 @@
 <s:meta name="l-table">
-  A data table to display tabular data to the user.
-  Intentionally limited. Only intended to be used for
-  actual data. If you require interaction then consider
-  using a solution with list groups or cards.
-  Should only contain `l-table-row` and `l-table-cell` tags.
+  A data table to display tabular data to the user. Intentionally limited. Only
+  intended to be used for actual data. If you require interaction then consider
+  using a solution with list groups or cards. Should only contain `l-table-row`
+  and `l-table-cell` tags.
   <slot>The body of the schema</slot>
   <slot name="head">The head of the schema</slot>
-  <attr name="use" type="string | Array<Record<string, unknown>>">
-    A JavaScript snippet to get the data from the
-    `u-` namespace.
+  <attr name="use" type="string | Array<Record<string, unknown>>" property>
+    A JavaScript snippet to get the data from the `u-` namespace.
   </attr>
-  <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
+  <base
+    use="ContextFetcher"
+    from="../base-classes/context-fetcher.ts"
+    default
+  />
 </s:meta>
 
 <script>

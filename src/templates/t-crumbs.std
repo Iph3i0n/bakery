@@ -1,7 +1,6 @@
 <s:meta name="t-crumbs">
-  Breadcrumbs designed to inform the user of the path to the
-  current page. Only `span` and `a`
-  tags are accepted as children.
+  Breadcrumbs designed to inform the user of the path to the current page. Only
+  `span` and `a` tags are accepted as children.
   <attr name="divider" default="/">
     The character that should be used to separate the crumbs.
   </attr>

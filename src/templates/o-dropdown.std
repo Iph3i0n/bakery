@@ -1,22 +1,19 @@
 <s:meta name="o-dropdown">
-  A simple dropdown that can be triggered by a
-  separate element on the page. It is automatically
-  position below its target.
+  A simple dropdown that can be triggered by a separate element on the page. It
+  is automatically position below its target.
   <attr name="target">
-    A CSS selector for the desired target. It will listen
-    for click events from any element matching that selector
-    and will position below the one that is clicked.
+    A CSS selector for the desired target. It will listen for click events from
+    any element matching that selector and will position below the one that is
+    clicked.
   </attr>
   <attr name="width">
-    The width of the dropdown menu. If unset then the width
-    of the target will be used. Should be a CSS width.
+    The width of the dropdown menu. If unset then the width of the target will
+    be used. Should be a CSS width.
   </attr>
-  <attr name="height" default="12rem">
-    The max height of the drop down.
-  </attr>
+  <attr name="height" default="12rem">The max height of the drop down.</attr>
   <attr name="scrollable" type="boolean">
-    If true then the dropdown will have a scroll bar when
-    there are too many elements within.
+    If true then the dropdown will have a scroll bar when there are too many
+    elements within.
   </attr>
   <import use="c" from="../html/classes.ts" default />
   <import use="unsafe_import" from="../fetch-resources.ts" />
@@ -71,12 +68,15 @@
     target.style.left = left();
   });
 
-  self.addEventListener("keyup", on_key_handler({
-    Escape: () => {
-      open = false;
-      self.dispatchEvent(new ShouldRender());
-    }
-  }));
+  self.addEventListener(
+    "keyup",
+    on_key_handler({
+      Escape: () => {
+        open = false;
+        self.dispatchEvent(new ShouldRender());
+      },
+    })
+  );
 </script>
 <style>
   @js const spec = require("../spec.ts");
