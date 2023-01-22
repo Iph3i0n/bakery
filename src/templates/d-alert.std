@@ -8,7 +8,7 @@
     If true, a close button is displayed and the element will be removed when it
     is clicked. A close event Will be fired which can be prevented.
   </attr>
-  <event name="close" type="CloseEvent">
+  <event name="close" type="AlertCloseEvent">
     When the user closes the modal. Prevent default to stop the element from
     being destroyed.
   </event>

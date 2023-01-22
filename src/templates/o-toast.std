@@ -25,7 +25,7 @@
   <attr name="position" type="position" default="bottom right">
     Where on the screen shall it render?
   </attr>
-  <event name="close" type="CloseEvent">
+  <event name="close" type="ToastCloseEvent">
     When the user closes the modal. Prevent default to stop the element from
     being destroyed.
   </event>
