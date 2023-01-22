@@ -1,4 +1,4 @@
-<meta name="f-textarea">
+<s:meta name="f-textarea">
   A multi line plain text input. Must be placed within a `form` tag.
   <attr name="type" type="keyboard" default="text">
     The keyboard to be used for the input when using a mobile device.
@@ -40,7 +40,7 @@
   <import use="link_css" from="../fetch-resources.ts" />
   <aria role="input" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   link_css(
@@ -103,12 +103,12 @@
     <slot></slot>
   </div>
   <div
-    class=":c('content', ['sensitive', self.props.sensitive])"
+    class=":c('content', ['sensitive', self.sensitive])"
     contenteditable="plaintext-only"
     s:ref="textarea"
     on:blur="update_value"
     s:vdom="ignore"
-    inputmode=":self.props.type ?? 'text'"
+    inputmode=":self.type ?? 'text'"
   >
     <s:text use=":self.value ?? ''"></s:text>
   </div>

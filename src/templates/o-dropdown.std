@@ -1,4 +1,4 @@
-<meta name="o-dropdown">
+<s:meta name="o-dropdown">
   A simple dropdown that can be triggered by a
   separate element on the page. It is automatically
   position below its target.
@@ -23,7 +23,7 @@
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <import use="On" from="../events.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   const modal = CreateRef();
@@ -33,7 +33,7 @@
 
   let open = false;
   let target = undefined;
-  On("click", self.props.target, (_, a) => {
+  On("click", self.target, (_, a) => {
     target = a;
     open = true;
     self.dispatchEvent(new ShouldRender());
@@ -57,7 +57,7 @@
     const screen_left = world_left - window.scrollX;
     return `${screen_left}px`;
   };
-  const width = () => self.props.width ?? `${target?.clientWidth ?? 0}px`;
+  const width = () => self.width ?? `${target?.clientWidth ?? 0}px`;
   const height = () => (body.current?.clientHeight ?? 0) + "px";
 
   self.addEventListener(RenderEvent.Key, () => {
@@ -104,7 +104,7 @@
     theme.border("body", "contrast");
     border-radius: ":spec.borders.body.radius";
     z-index: ":spec.z_indexes.popup";
-    max-height: ":self.props.height";
+    max-height: ":self.height";
   }
 
   .dropdown-container.open {
@@ -129,7 +129,7 @@
 <div class="overlay" on:click="close"></div>
 <div class=":c('dropdown-container', ['open', open])" s:ref="modal">
   <div
-    class=":c('dropdown-body', ['scrollable', self.props.scrollable])"
+    class=":c('dropdown-body', ['scrollable', self.scrollable])"
     s:ref="body"
   >
     <slot></slot>

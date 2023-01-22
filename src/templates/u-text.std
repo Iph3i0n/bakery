@@ -1,18 +1,17 @@
-<meta name="u-text">
+<s:meta name="u-text">
   Get a string from the context and place it into the dom. Will display a
   placeholder if no data is present.
-  <attr name="use" optional>
+  <attr name="use" type="string | { text: string }">
     The JavaScript snippet to get the data from the context.
   </attr>
   <attr name="lines" default="1">
     The number of lines for the placeholder.
   </attr>
-  <prop name="data">Data to use instead of items from the use attribute.</prop>
   <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
-</meta>
+</s:meta>
 
 <script>
-  const lines = () => Array.apply(null, Array(parseInt(self.props.lines)));
+  const lines = () => Array.apply(null, Array(parseInt(self.lines)));
 </script>
 
 <style>

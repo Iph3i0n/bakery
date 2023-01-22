@@ -18,8 +18,8 @@
 }
 
 .label-text.populated {
-  theme.text("small", "no-margin");
-  height: ":spec.text_styles.small.font_size";
+  theme.text("badge", "no-margin");
+  height: ":spec.text_styles.badge.font_size";
   margin-top: 5px;
 }
 

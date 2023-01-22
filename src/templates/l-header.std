@@ -1,4 +1,4 @@
-<meta name="l-header">
+<s:meta name="l-header">
   A header for your site. A logo is a must if you are using this.
 
   <attr name="logo">
@@ -27,7 +27,7 @@
   </slot>
   <aria role="banner" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   let has_right = false;
@@ -47,7 +47,7 @@
 
   @insert ../styles/custom-scrollbar.pss;
 
-  @js const bg = self.props.bg ?? 'primary';
+  @js const bg = self.bg ?? 'primary';
   :host {
     position: sticky;
     top: 0;
@@ -226,7 +226,7 @@
     }
   }
 
-  @if !self.props.flush {
+  @if !self.flush {
     @media ":spec.screen_sizes.lg.query" {
       .content {
         max-width: ":spec.screen_sizes.lg.width";
@@ -244,14 +244,14 @@
 <div class="content">
   <div class="logo-col">
     <div class="logo-container">
-      <img src=":self.props.logo" alt=":self.props['logo-alt']" />
+      <img src=":self.logo" alt=":self['logo-alt']" />
     </div>
 
     <div class="expand-button" on:click="on_toggle" tabindex="0">
       <t-icon
         name="menu-3"
         size="body_large"
-        colour=":self.props.bg ?? 'primary'"
+        colour=":self.bg ?? 'primary'"
         text
       ></t-icon>
     </div>

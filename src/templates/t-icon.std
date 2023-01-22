@@ -1,4 +1,4 @@
-<meta name="t-icon">
+<s:meta name="t-icon">
   A icon from RemixIcon to be used to provide richness to a document.
   <ref url="https://remixicon.com/">
     RemixIcon Website
@@ -33,7 +33,7 @@
   </attr>
   <import use="link_css" from="../fetch-resources.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   link_css(
@@ -53,13 +53,13 @@
   }
 
   span {
-    font-size: ":spec.text_styles[self.props.size ?? 'body'].font_size";
+    font-size: ":spec.text_styles[self.size ?? 'body'].font_size";
     background-color: transparent !important;
     vertical-align: middle;
     line-height: 1;
   }
 
-  @if self.props.spin {
+  @if self.spin {
     @keyframes spin {
       from {
         transform: rotate(0deg);
@@ -76,19 +76,19 @@
     }
   }
 
-  @if self.props.text {
+  @if self.text {
     span {
-      theme.colour(self.props.colour ?? "surface");
+      theme.colour(self.colour ?? "surface");
     }
   }
 
-  @if !self.props.text {
+  @if !self.text {
     span {
-      theme.textcolour(self.props.colour ?? "surface");
+      theme.textcolour(self.colour ?? "surface");
     }
   }
 </style>
 
 <span
-  class=":`ri-${self.props.name}${self.props.plain ? '' : self.props.fill ? '-fill' : '-line'}`"
+  class=":`ri-${self.name}${self.plain ? '' : self.fill ? '-fill' : '-line'}`"
 ></span>

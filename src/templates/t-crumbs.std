@@ -1,4 +1,4 @@
-<meta name="t-crumbs">
+<s:meta name="t-crumbs">
   Breadcrumbs designed to inform the user of the path to the
   current page. Only `span` and `a`
   tags are accepted as children.
@@ -9,7 +9,7 @@
     The text colour for anchor crumbs.
   </attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   let options = [];
@@ -41,7 +41,7 @@
   }
 
   a.option {
-    theme.textcolour(self.props.colour);
+    theme.textcolour(self.colour);
     text-decoration: none;
     transform: scale(1);
     theme.transition("fast", "transform");
@@ -73,7 +73,7 @@
   </s:if>
   <s:if check=":index !== options.length - 1">
     <span class="divider">
-      <s:text use=":self.props.divider"></s:text>
+      <s:text use=":self.divider"></s:text>
     </span>
   </s:if>
 </s:for>

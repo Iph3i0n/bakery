@@ -1,4 +1,4 @@
-<meta name="l-col">
+<s:meta name="l-col">
   A column within a grid. They can wrap on to new lines without upsetting the flow.
   <attr name="xs">
     The size of the column on the smallest screen size.
@@ -18,7 +18,7 @@
 
   <aria role="gridcell" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <style>
   @js const theme = require("../theme.ts");
@@ -29,10 +29,10 @@
   }
 
   @for const size in spec.screen_sizes {
-    @if self.props[size] {
+    @if self[size] {
       @media ":spec.screen_sizes[size].query" {
         :host {
-          grid-column: ":`auto / span ${self.props[size]}`";
+          grid-column: ":`auto / span ${self[size]}`";
         }
       }
     }

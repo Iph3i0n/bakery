@@ -1,4 +1,4 @@
-<meta name="t-code">
+<s:meta name="t-code">
   A code highlighter. It uses highlight.js to correctly colour code.
   <attr name="language">
     The name of a language as listed in highlight.js.
@@ -18,7 +18,7 @@
   </attr>
   <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
   <import use="unsafe_import" from="../fetch-resources.ts" />
-</meta>
+</s:meta>
 
 <script>
   const preceding_whitespace = (l) => {
@@ -59,7 +59,7 @@
   function build_code() {
     if (!window.hljs) return;
     const result = window.hljs.highlight(code(), {
-      language: self.props.language,
+      language: self.language,
     }).value;
 
     const cont = container();
@@ -86,7 +86,7 @@
     overflow: hidden;
   }
 
-  @if self.props.flush {
+  @if self.flush {
     :host {
       background-color: transparent !important;
     }
@@ -138,7 +138,7 @@
     theme.border("body", "contrast", "bottom");
   }
 
-  @if !self.props.file {
+  @if !self.file {
     .file-name {
       display: none;
     }
@@ -152,7 +152,7 @@
     overflow-x: auto;
   }
 
-  @if !self.props.flush {
+  @if !self.flush {
     :host {
       theme.border("body");
       theme.shadow("body");
@@ -160,9 +160,9 @@
   }
 </style>
 
-<s:if check=":self.props.file">
+<s:if check=":self.file">
   <div class="file-name">
-    <s:text use=":self.props.file"></s:text>
+    <s:text use=":self.file"></s:text>
   </div>
 </s:if>
 <div id="container" class="scrollable"></div>

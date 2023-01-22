@@ -1,4 +1,4 @@
-<meta name="f-input">
+<s:meta name="f-input">
   A single line text input. Must be placed within a `form` tag.
   <attr name="type" type="keyboard" default="text">
     The keyboard to be used for the input when using a mobile device.
@@ -45,7 +45,7 @@
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="input" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   link_css(
@@ -84,12 +84,12 @@
     <slot></slot>
   </span>
   <div
-    class=":c('content', ['sensitive', self.props.sensitive])"
+    class=":c('content', ['sensitive', self.sensitive])"
     contenteditable="plaintext-only"
     s:ref="textarea"
     on:blur="update_value"
     s:vdom="ignore"
-    inputmode=":self.props.type ?? 'text'"
+    inputmode=":self.type ?? 'text'"
   >
     <s:text use=":self.value ?? ''"></s:text>
   </div>

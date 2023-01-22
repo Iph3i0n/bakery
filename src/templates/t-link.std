@@ -1,4 +1,4 @@
-<meta name="t-link">
+<s:meta name="t-link">
   A styled link for usage around the site.
   <attr name="href">
     The URL to send the user to if the button is being used as a link.
@@ -29,21 +29,21 @@
   <base use="UrlBuilder" from="../base-classes/router.ts" />
   <import use="Router" from="../base-classes/router.ts" default />
   <import use="on_key_handler" from="../events/keyboard.ts" />
-</meta>
+</s:meta>
 
 <script>
   self.tabIndex = 0;
 
   function activate() {
-    const url = self.Render(self.props.href);
-    if (self.props.target)
+    const url = self.Render(self.href);
+    if (self.target)
       window.open(
         url,
-        self.props.target,
-        self.props.private ? "noreferrer" : undefined
+        self.target,
+        self.private ? "noreferrer" : undefined
       );
-    else if (self.props.spa)
-      if (self.props.replace) Router.Replace(url);
+    else if (self.spa)
+      if (self.replace) Router.Replace(url);
       else Router.Push(url);
     else window.location.href = url;
   }
@@ -62,8 +62,8 @@
   @js const theme = require("../theme.ts");
 
   :host {
-    display: ":self.props.block ? 'block' : 'inline-block'";
-    theme.text("body", self.props.block ? undefined : "no-margin");
+    display: ":self.block ? 'block' : 'inline-block'";
+    theme.text("body", self.block ? undefined : "no-margin");
     cursor: pointer;
     theme.border("small");
     theme.transition("fast", "color", "background-color", "box-shadow");
@@ -71,7 +71,7 @@
     text-decoration: underline;
   }
 
-  @if self.props.block {
+  @if self.block {
     :host {
       theme.padding("small_block");
       theme.border("body", "contrast", "bottom");
@@ -87,7 +87,7 @@
     text-decoration: none;
   }
 
-  @if !self.props.block {
+  @if !self.block {
     :host(:hover),
     :host(:focus) {
       theme.outline("primary", 1);

@@ -1,4 +1,4 @@
-<meta name="f-singleselect">
+<s:meta name="f-singleselect">
   A list of items, of which the user can select a single item.
   Must be placed within a `form` tag.
   <attr name="default" optional>
@@ -35,7 +35,7 @@
   <import use="options" from="../options.ts" default />
   <aria role="select" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   const items = options();

@@ -1,18 +1,18 @@
-<meta name="t-paragraph">
+<s:meta name="t-paragraph">
   A paragraph element
   <attr name="large" type="boolean">
     If set then larger text is displayed
   </attr>
   <aria role="paragraph" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <style>
   @js const theme = require("../theme.ts");
 
   :host {
     display: block;
-    theme.text(self.props.large ? "body_large" : "body");
+    theme.text(self.large ? "body_large" : "body");
   }
 </style>
 

@@ -1,4 +1,4 @@
-<meta name="l-row">
+<s:meta name="l-row">
   A row to contain `l-col` tags.
   <attr name="cols" type="number" default="12">
     The number of columns to have per row.
@@ -12,23 +12,23 @@
 
   <aria role="grid" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <style>
   @js const theme = require("../theme.ts");
 
   :host {
     display: grid;
-    grid-template-columns: ":`repeat(${self.props.cols ?? '12'}, minmax(0, 1fr))`";
+    grid-template-columns: ":`repeat(${self.cols ?? '12'}, minmax(0, 1fr))`";
   }
 
-  @if !self.props['no-padding'] {
+  @if !self['no-padding'] {
     :host {
       theme.padding("block");
     }
   }
 
-  @if !self.props['no-gap'] {
+  @if !self['no-gap'] {
     :host {
       theme.gap("block");
     }

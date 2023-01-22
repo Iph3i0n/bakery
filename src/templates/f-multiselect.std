@@ -1,4 +1,4 @@
-<meta name="f-multiselect">
+<s:meta name="f-multiselect">
 A list of items, of which the user can select any number.
   <attr name="default" optional>
     The default selected items. Should be comma separated
@@ -36,7 +36,7 @@ A list of items, of which the user can select any number.
   <import use="options" from="../options.ts" default />
   <aria role="select" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   const items = options();

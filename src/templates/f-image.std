@@ -1,4 +1,4 @@
-<meta name="f-image">
+<s:meta name="f-image">
   A upload box for images. Must be placed within a `form` tag.
   <attr name="disabled" type="boolean">
     If set then the field is readonly.
@@ -29,7 +29,7 @@
   <import use="link_css" from="../fetch-resources.ts" />
   <aria role="input" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   let preview = "";
@@ -98,7 +98,7 @@
 
   .droparea {
     position: relative;
-    min-height: ":self.props.height";
+    min-height: ":self.height";
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,4 @@
-<meta name="d-progress">
+<s:meta name="d-progress">
   A simple progress bar. Children can be used to set display text.
   <attr name="value" type="number">
     A percentage value of the progress. Should not include anything
@@ -11,7 +11,7 @@
 
   <aria role="progressbar" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <style>
   @js const theme = require("../theme.ts");
@@ -33,8 +33,8 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: ":self.props.value + '%'";
-    theme.colour(self.props.colour);
+    width: ":self.value + '%'";
+    theme.colour(self.colour);
 
     text-align: center;
     overflow: hidden;

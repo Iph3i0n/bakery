@@ -1,12 +1,11 @@
-<meta name="u-paginator">
+<s:meta name="u-paginator">
   Paginate using the context for data management. It will provide `{skip}` and
   `{take}` options to any `u-fetch` element containing it.
-  <attr name="total">
+  <attr name="total" type="string | number">
     The JavaScript snippet used to get the data from the context. Should result
     in a number showing the total items available.
   </attr>
   <attr name="size" default="50">The page size.</attr>
-  <prop name="data">Data to use instead of items from the use attribute.</prop>
   <event name="pagination" type="PaginationEvent">
     When the user performs a pagination interaction. `Skip` and `Take` are provided.
     <key name="Skip" type="number">Number of items in the list to skip.</key>
@@ -15,14 +14,14 @@
   <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
   <import use="PaginationEvent" from="../pagination.ts" default />
   <import use="c" from="../html/classes.ts" default />
-</meta>
+</s:meta>
 
 <script>
   self.accessor = "total";
 
   let skip = 0;
 
-  const take = () => parseInt(self.props.size);
+  const take = () => parseInt(self.size);
 
   const page = () => skip / take();
   const total_pages = () => Math.ceil(self.use_string_context("total") / take());

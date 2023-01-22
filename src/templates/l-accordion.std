@@ -1,4 +1,4 @@
-<meta name="l-accordion">
+<s:meta name="l-accordion">
   An accordion item that is expanded with a click. If
   another accordion within the parent is opened then
   it will collapse automatically.
@@ -16,7 +16,7 @@
     </key>
   </event>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   class AccordionOpenEvent extends Event {
@@ -35,12 +35,12 @@
   const id = crypto.randomUUID();
   const title = CreateRef();
   const body = CreateRef();
-  let open = self.props.open ?? false;
+  let open = self.open ?? false;
 
   if (open) self.dispatchEvent(new AccordionOpenEvent(id));
 
   self.parentElement.addEventListener("accordion-opened", (e) => {
-    if (!self.props.independent && e.Id !== id) open = false;
+    if (!self.independent && e.Id !== id) open = false;
     self.dispatchEvent(new ShouldRender());
   });
 

@@ -1,4 +1,4 @@
-<meta name="d-loading">
+<s:meta name="d-loading">
   A loading overlay that covers the whole page.
   Should be used sparingly.
 
@@ -6,7 +6,7 @@
     If true then the overlay will render.
   </attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <style>
   @js const theme = require("../theme.ts");
@@ -28,7 +28,7 @@
     z-index: ":spec.z_indexes.overlay";
   }
 
-  @if self.props.open {
+  @if self.open {
     :host {
       opacity: 1;
       pointer-events: all;

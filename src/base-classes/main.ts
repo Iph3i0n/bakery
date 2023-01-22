@@ -1,4 +1,4 @@
-import { IComponent, ShouldRender } from "../deps.ts";
+import { ComponentBase, ShouldRender } from "../deps.ts";
 import {
   ContextChangedEvent,
   ContextChangedKey,
@@ -9,14 +9,7 @@ import {
 // deno-lint-ignore no-explicit-any
 type Context = Record<string, any>;
 
-export default abstract class BakeryBase
-  extends HTMLElement
-  implements IComponent
-{
-  abstract readonly props: Record<string, string>;
-  abstract readonly internals: ElementInternals;
-  abstract readonly root: ShadowRoot;
-
+export default abstract class BakeryBase extends ComponentBase {
   constructor() {
     super();
   }

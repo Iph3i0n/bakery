@@ -1,4 +1,4 @@
-<meta name="u-fetch">
+<s:meta name="u-fetch">
   Fetches data from a URL and adds them to the context.
   <attr name="url">
     The main URL to use. May include parameters like `{locale}`
@@ -18,13 +18,13 @@
   <import use="is_visible" from="../html/is-visible.ts" />
   <import use="PaginationEvent" from="../pagination.ts" default />
   <base use="UrlBuilder" from="../base-classes/router.ts" />
-</meta>
+</s:meta>
 
 <script>
   let skip = 0;
   let take = 50;
 
-  const DATA_KEY = () => "__BAKERY_DATA__" + this.Render(self.props.url);
+  const DATA_KEY = () => "__BAKERY_DATA__" + this.Render(self.url);
 
   self.addEventListener(PaginationEvent.Key, (e) => {
     skip = e.Skip;
@@ -37,7 +37,7 @@
   const rendered_url = () => {
     if (!is_visible(self)) return undefined;
 
-    return this.Render(self.props.url);
+    return this.Render(self.url);
   }
 
   self.addEventListener(RenderEvent.Key, async () => {
@@ -45,18 +45,18 @@
     if (!next || next === existing_route) return;
     existing_route = next;
 
-    if (!self.props["no-cache"]) {
+    if (!self["no-cache"]) {
       const cached = window.localStorage.getItem(DATA_KEY());
-      if (cached) self.provide_context(self.props.name, JSON.parse(cached));
+      if (cached) self.provide_context(self.name, JSON.parse(cached));
     }
 
     const r = await fetch(next);
     let final;
 
     if (!r.ok)
-      if (self.props.fallback) {
+      if (self.fallback) {
         console.error(r);
-        const res = await fetch(this.Render(self.props.fallback));
+        const res = await fetch(this.Render(self.fallback));
 
         if (!res.ok) throw res;
 
@@ -64,8 +64,8 @@
       } else throw r;
     else final = await r.json();
 
-    self.provide_context(self.props.name, final);
-    if (!self.props["no-cache"])
+    self.provide_context(self.name, final);
+    if (!self["no-cache"])
       window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
   });
 

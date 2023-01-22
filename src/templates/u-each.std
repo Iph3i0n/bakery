@@ -1,15 +1,14 @@
-<meta name="u-each">
+<s:meta name="u-each">
   Repeats its children once for each item accessed from the context.
-  <attr name="subject">
+  <attr name="subject" type="string | Array<unknown>">
     A JavaScript snippet to extract the array from the context.
   </attr>
   <attr name="name">
     The name to use in sub items to extract the item from the context.
   </attr>
-  <prop name="data">Data to use instead of items from the use attribute.</prop>
   <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
   <import use="ContextEventKey, ContextChangedEvent" from="../events/context.ts" />
-</meta>
+</s:meta>
 
 <script>
   self.accessor = "subject";
@@ -62,7 +61,7 @@
       previous = input;
       input._foreach_data = data[i];
       input.addEventListener(ContextEventKey, e => {
-        e.AddData(self.props.name, input._foreach_data);
+        e.AddData(self.name, input._foreach_data);
       });
     }
 

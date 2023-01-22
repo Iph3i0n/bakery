@@ -40,6 +40,12 @@ class SubmittedEvent extends Event {
 }
 
 export abstract class FormManagerElement extends BakeryBase {
+  abstract method: string;
+  abstract url: string;
+  abstract credentials: RequestCredentials;
+  abstract "success-url": string;
+  abstract submit: string;
+
   readonly #elements: Array<FormElement> = [];
 
   constructor() {
@@ -60,8 +66,8 @@ export abstract class FormManagerElement extends BakeryBase {
   }
 
   async #ajax_submit(data: FormData | FormValue) {
-    let url = this.props.url;
-    if (this.props.method === "get") {
+    let url = this.url;
+    if (this.method === "get") {
       const query = new URLSearchParams();
       if (data instanceof FormData) {
         data.forEach((v, k) => {
@@ -83,14 +89,14 @@ export abstract class FormManagerElement extends BakeryBase {
     }
 
     const response = await fetch(url, {
-      method: this.props.method,
+      method: this.method,
       body:
-        this.props.method === "get"
+        this.method === "get"
           ? undefined
           : data instanceof FormData
           ? data
           : JSON.stringify(data),
-      credentials: this.props["no-credentials"] as RequestCredentials,
+      credentials: this.credentials,
       headers:
         data instanceof FormData
           ? undefined
@@ -109,7 +115,7 @@ export abstract class FormManagerElement extends BakeryBase {
 
     document.dispatchEvent(new CustomEvent("data-invalidated"));
 
-    const go_to = this.props["success-url"];
+    const go_to = this["success-url"];
     if (!go_to) return;
 
     Router.Push(go_to);
@@ -144,8 +150,8 @@ export abstract class FormManagerElement extends BakeryBase {
 
   #page_submit() {
     const form = document.createElement("form");
-    form.action = this.props.url;
-    form.method = this.props.method;
+    form.action = this.url;
+    form.method = this.method;
 
     const values = this.#values;
     for (const key in values) {
@@ -182,7 +188,7 @@ export abstract class FormManagerElement extends BakeryBase {
     this.dispatchEvent(submit_event);
     if (submit_event.defaultPrevented) return;
 
-    switch (this.props.submit ?? "ajax-json") {
+    switch (this.submit ?? "ajax-json") {
       case "ajax-json": {
         this.#ajax_submit(this.#values);
         break;
@@ -208,12 +214,18 @@ export default abstract class FormElement extends ContextFetcher {
   #focused = false;
   #form: FormManagerElement | undefined;
 
+  abstract default: string;
+  abstract disabled: boolean;
+  abstract tabindex: string;
+  abstract required: boolean;
+  abstract validate: string;
+
   constructor() {
     super();
 
     this.addEventListener(RenderEvent.Key, () => {
-      if (this.props.disabled) this.tabIndex = -1;
-      else this.tabIndex = parseInt(this.props.tabindex ?? "0");
+      if (this.disabled) this.tabIndex = -1;
+      else this.tabIndex = parseInt(this.tabindex ?? "0");
     });
 
     this.addEventListener("focus", () => {
@@ -228,7 +240,7 @@ export default abstract class FormElement extends ContextFetcher {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      if (this.props.default)
+      if (this.default)
         this.value = this.use_string_context("default")?.toString();
 
       const event = new RegisterFormElementEvent();
@@ -268,16 +280,16 @@ export default abstract class FormElement extends ContextFetcher {
   }
 
   get is_bad_empty() {
-    return this.props.required && !this.#value;
+    return this.required && !this.#value;
   }
 
   get is_invalid() {
-    if (!this.props.validate) return false;
+    if (!this.validate) return false;
 
     const test = this.#value;
     if (typeof test !== "string") return true;
 
-    return !test.match(new RegExp(this.props.validate, "gm"))?.length;
+    return !test.match(new RegExp(this.validate, "gm"))?.length;
   }
 
   get validity() {
@@ -297,7 +309,7 @@ export default abstract class FormElement extends ContextFetcher {
   get label_class() {
     return c(
       "label",
-      ["disabled", !!this.props.disabled],
+      ["disabled", !!this.disabled],
       ["error", this.should_show_validation]
     );
   }

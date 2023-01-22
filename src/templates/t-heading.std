@@ -1,4 +1,4 @@
-<meta name="t-heading">
+<s:meta name="t-heading">
   A HTML heading tag.
   <attr name="level" type="heading_level" default="h1">
     The heading level.
@@ -9,18 +9,18 @@
   </attr>
   <aria role="heading" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   self.addEventListener(LoadedEvent.Key, () => {
-    self.internals.ariaLevel = self.props.level;
+    self.internals.ariaLevel = self.level;
   });
 
   self.addEventListener(PropsEvent.Key, () => {
-    self.internals.ariaLevel = self.props.level;
+    self.internals.ariaLevel = self.level;
   });
 
-  const type = () => self.props.level + (self.props.display ? "_display" : "");
+  const type = () => self.level + (self.display ? "_display" : "");
 </script>
 
 <style>

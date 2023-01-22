@@ -1,4 +1,4 @@
-<meta name="f-form">
+<s:meta name="f-form">
   The form container to replace the existing `form` tag.
 
   <attr name="url" type="string">
@@ -29,6 +29,6 @@
   </event>
 
   <base use="FormManagerElement" from="../base-classes/form.ts" />
-</meta>
+</s:meta>
 
 <slot />

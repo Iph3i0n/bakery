@@ -1,4 +1,4 @@
-<meta name="d-panel">
+<s:meta name="d-panel">
   A simple panel to set the colour of a block.
   Offers no padding and no borders by default.
 
@@ -10,11 +10,11 @@
     and shadow but still no padding.
   </attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   function get_colour() {
-    return self.props.colour ?? "body";
+    return self.colour ?? "body";
   }
 </script>
 
@@ -26,7 +26,7 @@
     theme.colour(get_colour());
   }
 
-  @if self.props.bordered {
+  @if self.bordered {
     :host {
       theme.border("body");
       theme.shadow("body");

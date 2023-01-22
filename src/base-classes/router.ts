@@ -48,6 +48,9 @@ export abstract class UrlBuilder extends BakeryBase {
 }
 
 export default abstract class Router extends BakeryBase {
+  abstract path: string;
+  abstract exact: boolean;
+
   constructor() {
     super();
     document.addEventListener("navigation-event", () =>
@@ -85,10 +88,10 @@ export default abstract class Router extends BakeryBase {
       .split("/")
       .filter((p) => p)
       .slice(used);
-    const check_parts = this.props.path.split("/").filter((p) => p);
+    const check_parts = this.path.split("/").filter((p) => p);
     if (path_parts.length < check_parts.length) return false;
 
-    const exact = this.props.exact;
+    const exact = this.exact;
     if (exact && path_parts.length !== check_parts.length) return false;
 
     for (let i = 0; i < check_parts.length; i++) {

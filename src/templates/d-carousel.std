@@ -1,4 +1,4 @@
-<meta name="d-carousel">
+<s:meta name="d-carousel">
   A simple carousel to display slides to the user.
   Each child should be assigned to a slot with any
   name. The user will then be able to cycle between
@@ -17,7 +17,7 @@
   <import use="c" from="../html/classes.ts" default />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
   <aria role="figure" />
-</meta>
+</s:meta>
 
 <script>
   let slots = [];
@@ -57,7 +57,7 @@
     display: block;
     position: relative;
     width: 100%;
-    height: ":self.props.height";
+    height: ":self.height";
     theme.border("body");
     theme.shadow("body");
     overflow: hidden;
@@ -212,7 +212,7 @@
   <t-icon name="arrow-right-s" size="h1" colour=":colour()" text></t-icon>
 </div>
 
-<s:if check=":!self.props['no-tabs']">
+<s:if check=":!self['no-tabs']">
   <div class="tabs">
     <s:for subject=":slots.map((s, i) => [s, i])" key="[_, index]">
       <div class="tab" on:click="set_current(index, 'left')"></div>

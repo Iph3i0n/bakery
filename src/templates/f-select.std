@@ -1,4 +1,4 @@
-<meta name="f-select">
+<s:meta name="f-select">
   A dropdown select. Must be placed within a `form` tag.
   <attr name="default" optional>
     The default selected item.
@@ -34,7 +34,7 @@
   <import use="options" from="../options.ts" default />
   <aria role="select" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   const items = options();

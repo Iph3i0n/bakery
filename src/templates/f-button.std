@@ -1,4 +1,4 @@
-<meta name="f-button">
+<s:meta name="f-button">
   A simple button that the user can click for various actions.
   If the `type` is included then the button can be a standard
   or submit button. If the `href` is included the the button
@@ -39,27 +39,27 @@
   <base use="UrlBuilder" from="../base-classes/router.ts" />
   <import use="Router" from="../base-classes/router.ts" default />
   <import use="on_key_handler" from="../events/keyboard.ts" />
-</meta>
+</s:meta>
 
 <script>
   self.tabIndex = 0;
 
   function activate() {
-    if (self.props.type === "button") return;
-    else if (self.props.type === "submit") {
+    if (self.type === "button") return;
+    else if (self.type === "submit") {
       const form = FindForm(self);
       if (!form) throw new Error("Cannot use a submit outside of a form");
       form.Submit();
-    } else if (self.props.href) {
-      const url = this.Render(self.props.href);
-      if (self.props.target)
+    } else if (self.href) {
+      const url = this.Render(self.href);
+      if (self.target)
         window.open(
           url,
-          self.props.target,
-          self.props.private ? "noreferrer" : undefined
+          self.target,
+          self.private ? "noreferrer" : undefined
         );
-      else if (self.props.spa)
-        if (self.props.replace) Router.Replace(url);
+      else if (self.spa)
+        if (self.replace) Router.Replace(url);
         else Router.Push(url);
       else window.location.href = url;
     }
@@ -106,7 +106,7 @@
 
 <style>
   @js const theme = require("../theme.ts");
-  @js const c = self.props.colour ?? 'primary';
+  @js const c = self.colour ?? 'primary';
   :host {
     position: relative;
     display: inline-flex;

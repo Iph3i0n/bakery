@@ -1,4 +1,4 @@
-<meta name="d-alert">
+<s:meta name="d-alert">
   A simple coloured alert to display update information
   to the user. Commonly used to display error or success
   messages after a submission or interaction.
@@ -16,7 +16,7 @@
   </event>
   <aria role="alert" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   function close() {
@@ -33,8 +33,8 @@
   :host {
     position: relative;
     display: flex;
-    theme.colour(self.props.colour ?? "warning", 1.6);
-    theme.border("body", self.props.colour);
+    theme.colour(self.colour ?? "warning", 1.6);
+    theme.border("body", self.colour);
     theme.padding("block");
     theme.text("body_large");
     align-items: center;
@@ -49,11 +49,11 @@
 </style>
 
 <slot></slot>
-<s:if check=":self.props.closeable">
+<s:if check=":self.closeable">
   <div class="close-button" on:click="close">
     <t-icon
       name="close"
-      colour=":self.props.colour ?? 'warning'"
+      colour=":self.colour ?? 'warning'"
       size="body_large"
       text
     ></t-icon>

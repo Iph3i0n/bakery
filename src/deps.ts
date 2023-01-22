@@ -1,1 +1,1 @@
-export * from "https://deno.land/x/wholemeal@0.1.0/mod.ts";
+export * from "../../deno-starter-dough/mod.ts";

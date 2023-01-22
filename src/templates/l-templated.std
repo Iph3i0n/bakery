@@ -1,4 +1,4 @@
-<meta name="l-templated">
+<s:meta name="l-templated">
   Insert a generic template into the project.
   Should only be used with trusted data.
   <attr name="use">
@@ -15,15 +15,15 @@
   </attr>
   <import use="is_visible" from="../html/is-visible.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   async function get_data() {
-    if (!self.props.remote) {
-      return document.getElementById(self.props.use);
+    if (!self.remote) {
+      return document.getElementById(self.use);
     }
 
-    const response = await fetch(self.props.use);
+    const response = await fetch(self.use);
     if (!response.ok) throw response;
     const content = await response.text();
     const template = document.createElement("template");

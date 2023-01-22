@@ -1,4 +1,4 @@
-<meta name="o-toast">
+<s:meta name="o-toast">
   A small window to display notification information to the user.
   <slot name="title">The top of the toast</slot>
   <attr name="icon" optional>
@@ -30,7 +30,7 @@
   </event>
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   function close() {
@@ -48,10 +48,10 @@
   const metric_text = () => {
     const formatter = new Intl.NumberFormat(undefined, {
       style: "unit",
-      unit: self.props.unit,
-      unitDisplay: self.props["unit-display"],
+      unit: self.unit,
+      unitDisplay: self["unit-display"],
     });
-    return formatter.format(parseFloat(self.props.metric));
+    return formatter.format(parseFloat(self.metric));
   };
 </script>
 <style>
@@ -68,25 +68,25 @@
     width: 20rem;
   }
 
-  @if self.props.position.includes("top") {
+  @if self.position.includes("top") {
     :host {
       top: 0;
     }
   }
 
-  @if self.props.position.includes("bottom") {
+  @if self.position.includes("bottom") {
     :host {
       bottom: 0;
     }
   }
 
-  @if self.props.position.includes("left") {
+  @if self.position.includes("left") {
     :host {
       left: 0;
     }
   }
 
-  @if self.props.position.includes("right") {
+  @if self.position.includes("right") {
     :host {
       right: 0;
     }
@@ -140,12 +140,12 @@
 </style>
 
 <div class="title">
-  <s:if check=":self.props.icon">
-    <img src=":self.props.icon" alt="" />
+  <s:if check=":self.icon">
+    <img src=":self.icon" alt="" />
   </s:if>
   <slot name="title"></slot>
   <div class="spacer"></div>
-  <s:if check=":self.props.metric">
+  <s:if check=":self.metric">
     <div class="metric">
       <s:text use=":metric_text()"></s:text>
     </div>

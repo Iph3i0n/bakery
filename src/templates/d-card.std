@@ -1,4 +1,4 @@
-<meta name="d-card">
+<s:meta name="d-card">
   A card to segment content in the document flow.
   Useful for grouped information so as to easily
   display those divisions to the user.
@@ -11,11 +11,11 @@
   </slot>
   <aria role="landmark" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
   function get_colour() {
-    return self.props.colour ?? "surface";
+    return self.colour ?? "surface";
   }
 </script>
 

@@ -1,4 +1,4 @@
-<meta name="f-date">
+<s:meta name="f-date">
   A form data picker. Must be placed within a `form` tag.
   <attr name="default" optional>
     The initial date to display to the user. Defaults to
@@ -36,7 +36,7 @@
   <import use="DateFunctions" from="../date-functions.ts" default />
   <aria role="select" />
   <form />
-</meta>
+</s:meta>
 
 <script>
   const current = () => {

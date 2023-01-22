@@ -1,11 +1,10 @@
-<meta name="u-if">
+<s:meta name="u-if">
   Will only render its children if data retrieved from the context is truthy.
-  <attr name="check">
+  <attr name="check" type="string | boolean">
     The JavaScript snippet used to get the data from the context.
   </attr>
-  <prop name="data">Data to use instead of items from the use attribute.</prop>
   <base use="ContextFetcher" from="../base-classes/context-fetcher.ts" default />
-</meta>
+</s:meta>
 
 <s:if check=":self.use_string_context('check')">
   <slot></slot>

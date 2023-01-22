@@ -1,15 +1,15 @@
-<meta name="u-global">
+<s:meta name="u-global">
   Accesses data from the `window` object and adds it to the context.
   <attr name="var">The key used on the `window` object</attr>
   <attr name="name">The name given to the result in the context.</attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-</meta>
+</s:meta>
 
 <script>
-  self.provide_context(self.props.name, window[self.props.var]);
+  self.provide_context(self.name, window[self.var]);
 
   self.addEventListener(PropsEvent.Key, (e) => {
-    self.provide_context(self.props.name, window[self.props.var]);
+    self.provide_context(self.name, window[self.var]);
   });
 </script>
 
