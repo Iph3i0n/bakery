@@ -240,9 +240,11 @@ export default abstract class FormElement extends ContextFetcher {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      if (this.default)
-        this.value =
-          this.use_string_context("default")?.toString() ?? this.default;
+      let current_default = this.default
+        ? this.use_string_context("default")?.toString() ?? this.default
+        : undefined;
+
+      this.value = current_default;
 
       const event = new RegisterFormElementEvent();
       this.dispatchEvent(event);
@@ -256,6 +258,17 @@ export default abstract class FormElement extends ContextFetcher {
         this.#touched = true;
         if (!this.validity.valid) e.preventDefault();
         this.dispatchEvent(new ShouldRender());
+      });
+
+      this.addEventListener(RenderEvent.Key, () => {
+        const next_default = this.default
+          ? this.use_string_context("default")?.toString() ?? this.default
+          : undefined;
+
+        if (next_default === current_default) return;
+
+        current_default = next_default;
+        this.value = current_default;
       });
     });
   }
