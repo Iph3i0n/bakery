@@ -83,7 +83,8 @@ export default abstract class RichText extends FormElement {
   #current_anchor: HTMLAnchorElement | undefined = undefined;
 
   get CurrentAnchor() {
-    const selection: Selection = this.root.getSelection();
+    // deno-lint-ignore no-explicit-any
+    const selection: Selection = (this.root as any).getSelection();
     const range = selection.getRangeAt(0);
     if (!range) return this.#current_anchor;
 
