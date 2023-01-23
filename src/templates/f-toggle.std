@@ -19,6 +19,8 @@
     </key>
   </event>
   <slot>The label text</slot>
+  <slot name="on">The text for the active state</slot>
+  <slot name="off">The text for the inactive state</slot>
   <slot name="help">The small help text at the bottom of the input.</slot>
   <slot name="empty">
     The error text for if the slot is empty and required is true.
