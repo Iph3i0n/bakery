@@ -25,7 +25,7 @@
   <attr name="position" type="position" default="bottom right">
     Where on the screen shall it render?
   </attr>
-  <event name="close" type="ToastCloseEvent">
+  <event name="Close" type="ToastCloseEvent">
     When the user closes the modal. Prevent default to stop the element from
     being destroyed.
   </event>
@@ -35,7 +35,7 @@
 
 <script>
   function close() {
-    const event = new CustomEvent("close", { cancelable: true });
+    const event = new CustomEvent("Close", { cancelable: true });
     self.dispatchEvent(event);
     if (event.defaultPrevented) return;
     self.remove();

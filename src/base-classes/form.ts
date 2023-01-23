@@ -30,7 +30,7 @@ class SubmittedEvent extends Event {
   readonly #data: FormValue;
 
   constructor(data: FormValue) {
-    super("submitted", { bubbles: true });
+    super("Submitted", { bubbles: true });
     this.#data = data;
   }
 

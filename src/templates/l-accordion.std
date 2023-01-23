@@ -8,7 +8,7 @@
     If set then the accordion item will not close when another one opens.
   </attr>
 
-  <event name="accordion-opened" type="AccordionOpenEvent">
+  <event name="AccordionOpened" type="AccordionOpenEvent">
     When the user clicks on the accordion and it opens.
     <key name="Id" type="string">The current accordion</key>
   </event>
@@ -20,7 +20,7 @@
     #id;
 
     constructor(id) {
-      super("accordion-opened", { bubbles: true });
+      super("AccordionOpened", { bubbles: true });
       this.#id = id;
     }
 
@@ -36,7 +36,7 @@
 
   if (open) self.dispatchEvent(new AccordionOpenEvent(id));
 
-  self.parentElement.addEventListener("accordion-opened", (e) => {
+  self.parentElement.addEventListener("AccordionOpened", (e) => {
     if (!self.independent && e.Id !== id) open = false;
     self.dispatchEvent(new ShouldRender());
   });

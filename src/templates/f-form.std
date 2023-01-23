@@ -20,7 +20,7 @@
     Only used for AJAX submission types. Set how crednetials are
     sent to the client.
   </attr>
-  <event name="submitted" type="SubmissionEvent">
+  <event name="Submitted" type="SubmissionEvent">
     Fired when the form is submitted and the validation event is
     not prevented.
     <key name="FormData" type="Record<string, string | File | boolean | undefined>">

@@ -6,7 +6,7 @@
     in a number showing the total items available.
   </attr>
   <attr name="size" default="50">The page size.</attr>
-  <event name="pagination" type="PaginationEvent">
+  <event name="Pagination" type="PaginationEvent">
     When the user performs a pagination interaction. `Skip` and `Take` are
     provided.
     <key name="Skip" type="number">Number of items in the list to skip.</key>

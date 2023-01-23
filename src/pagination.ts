@@ -5,7 +5,7 @@ export default class PaginationEvent extends Event {
   readonly #take: number;
 
   static get Key() {
-    return "pagination";
+    return "Pagination";
   }
 
   constructor(skip: number, take: number) {
