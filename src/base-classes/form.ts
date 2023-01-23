@@ -208,6 +208,19 @@ export abstract class FormManagerElement extends BakeryBase {
   }
 }
 
+class ValueChangedEvent extends Event {
+  readonly #value: FormElementValue;
+
+  constructor(value: FormElementValue) {
+    super("ValueChanged", { bubbles: false, cancelable: false });
+    this.#value = value;
+  }
+
+  get Value() {
+    return this.#value;
+  }
+}
+
 export default abstract class FormElement extends ContextFetcher {
   #value: FormElementValue = undefined;
   #touched = false;
@@ -244,7 +257,7 @@ export default abstract class FormElement extends ContextFetcher {
         ? this.use_string_context("prefill")?.toString() ?? this.prefill
         : undefined;
 
-      this.value = current_default;
+      this.#value = current_default;
 
       const event = new RegisterFormElementEvent();
       this.dispatchEvent(event);
@@ -268,7 +281,7 @@ export default abstract class FormElement extends ContextFetcher {
         if (next_default === current_default) return;
 
         current_default = next_default;
-        this.value = current_default;
+        this.#value = current_default;
       });
     });
   }
@@ -280,6 +293,7 @@ export default abstract class FormElement extends ContextFetcher {
   set value(v: string | boolean | undefined | File) {
     this.#value = v;
     this.dispatchEvent(new ShouldRender());
+    this.dispatchEvent(new ValueChangedEvent(v));
   }
 
   get name() {
@@ -294,13 +308,13 @@ export default abstract class FormElement extends ContextFetcher {
   }
 
   get is_bad_empty() {
-    return this.required && !this.#value;
+    return this.required && !this.value;
   }
 
   get is_invalid() {
     if (!this.validate) return false;
 
-    const test = this.#value;
+    const test = this.value;
     if (typeof test !== "string") return true;
 
     return !test.match(new RegExp(this.validate, "gm"))?.length;

@@ -13,6 +13,13 @@
     A RegExp string used to evaluate the input. If there are no matches then the
     field will be considered invalid and the form will not be submittable.
   </attr>
+  <event name="ValueChanged" type="SelectValueChangedEvent">
+    Fired when the input value is changed. Does not fire if the value changes
+    because the `prefill` value changes.
+    <key name="Value" type="string | boolean | File | undefined">
+      The current value of the form element.
+    </key>
+  </event>
   <slot>The label text</slot>
   <slot name="help">The small help text at the bottom of the input.</slot>
   <slot name="empty">
