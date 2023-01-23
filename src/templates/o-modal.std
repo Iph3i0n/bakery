@@ -68,7 +68,8 @@
   function is_open() {
     if (self.open) return true;
     if (self.trigger) return open;
-    else return self.Matches;
+    if (self.path) return self.Matches;
+    return false;
   }
 
   function on_footer(e) {
