@@ -1,7 +1,8 @@
 <s:meta name="t-link">
   A styled link for usage around the site.
-  <attr name="href">
-    The URL to send the user to if the button is being used as a link.
+  <attr name="href" optional>
+    The URL to send the user to if the button is being used as a link. If not
+    provided then the link will simply function as a button.
   </attr>
   <attr name="target" type="target" optional>
     The standard target from an anchor element.
@@ -32,6 +33,7 @@
   self.tabIndex = 0;
 
   function activate() {
+    if (!self.href) return;
     const url = self.Render(self.href);
     if (self.target)
       window.open(url, self.target, self.private ? "noreferrer" : undefined);
