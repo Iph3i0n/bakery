@@ -16,6 +16,10 @@
     If set then overrides all other behaviour to open the modal.
   </attr>
 
+  <event name="close" type="OffcanvasCloseEvent">
+    When the user closes the offcanvas. Good for frameworks.
+  </event>
+
   <slot name="title">The top of the offcanvas.</slot>
   <slot name="footer">
     The bottom of the offcanvas, will be hidden if empty.
@@ -69,9 +73,10 @@
   });
 
   function close() {
+    self.dispatchEvent(new CustomEvent("close"));
     if (self.trigger) {
       open = false;
-    } else {
+    } else if (self.path) {
       const target = window.location.pathname
         .split("/")
         .slice(0, self.use_context((c) => c.routing_data?.used ?? 0) + 1)
