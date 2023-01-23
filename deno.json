@@ -3,7 +3,7 @@
     "lib": ["dom", "deno.ns", "deno.unstable"]
   },
   "tasks": {
-    "install": "deno install --allow-all https://deno.land/x/wholemeal@0.1.9/main.ts",
+    "install": "deno install --allow-all https://deno.land/x/wholemeal@0.1.10/main.ts",
     "test": "deno test --allow-all",
     "dev": "wholemeal dev --out=./docs/dist",
     "dev-dev": "wholemeal-dev dev --out=./docs/dist"
