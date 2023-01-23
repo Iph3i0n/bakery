@@ -6,8 +6,10 @@
       Highlight.js Language Demo
     </ref>
   </attr>
-  <attr name="use">
-    A JavaScript snippet to extract the data from the `u-` namespace.
+  <attr name="use" type="string | { code: string }" property>
+    A JavaScript snippet to extract the data from the `u-` namespace. If an
+    object, then the `code` property will be used to set the code rather than
+    using the `u-` context.
   </attr>
   <attr name="file">
     A file name to provide the user with a bit of context. Display only and does
@@ -31,7 +33,12 @@
     return l.length;
   };
 
-  const raw_code = () => self.use_string_context("use") ?? self.innerHTML;
+  const raw_code = () => {
+    const data = self.use_string_context("use");
+    if (!data) return self.innerHTML;
+    if (typeof data === "string") return data;
+    return data.code;
+  };
 
   const code = () => {
     const code =

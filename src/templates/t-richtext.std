@@ -2,7 +2,9 @@
   Display rich text from a text editor. Will filter the content to make sure
   that nothing harmful is displayed to the user.
   <attr name="use" type="string | { html: string }" property>
-    A JavaScript snippet to access the data from the `u-` namespace.
+    A JavaScript snippet to access the data from the `u-` namespace. If an
+    object, then the `html` property will be used to set the code rather than
+    using the `u-` context.
   </attr>
   <base
     use="ContextFetcher"
@@ -71,9 +73,15 @@
     };
   }
 
+  const get_html = () => {
+    const result = self.use_string_context("use");
+    if (typeof result === "string") return result;
+    return result?.html ?? "";
+  };
+
   const data = () => {
     const result = [];
-    const html = self.use_string_context("use");
+    const html = get_html();
     if (!html) return [];
 
     const template = document.createElement("template");
