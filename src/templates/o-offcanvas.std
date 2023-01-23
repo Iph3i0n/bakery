@@ -16,7 +16,7 @@
     If set then overrides all other behaviour to open the modal.
   </attr>
 
-  <event name="Close" type="OffcanvasCloseEvent">
+  <event name="CloseRequested" type="OffcanvasCloseEvent">
     When the user closes the offcanvas. Good for frameworks.
   </event>
 
@@ -73,7 +73,7 @@
   });
 
   function close() {
-    self.dispatchEvent(new CustomEvent("Close"));
+    self.dispatchEvent(new CustomEvent("CloseRequested"));
     if (self.trigger) {
       open = false;
     } else if (self.path) {
