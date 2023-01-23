@@ -1,7 +1,7 @@
 <s:meta name="f-singleselect">
   A list of items, of which the user can select a single item. Must be placed
   within a `form` tag.
-  <attr name="default" optional>The default selected item.</attr>
+  <attr name="prefill" optional>The default selected item.</attr>
   <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
   <attr name="name">
     The name of the value field in the form data. Should be unique.

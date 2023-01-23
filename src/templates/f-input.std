@@ -8,7 +8,7 @@
       MDN Reference
     </ref>
   </attr>
-  <attr name="default" optional>The default text for the textbox.</attr>
+  <attr name="prefill" optional>The default text for the textbox.</attr>
   <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
   <attr name="sensitive" type="boolean">
     If set then the form element is hidden from the user. Useful for password

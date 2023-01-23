@@ -214,7 +214,7 @@ export default abstract class FormElement extends ContextFetcher {
   #focused = false;
   #form: FormManagerElement | undefined;
 
-  abstract default: string;
+  abstract prefill: string;
   abstract disabled: boolean;
   abstract tabindex: string;
   abstract required: boolean;
@@ -240,8 +240,8 @@ export default abstract class FormElement extends ContextFetcher {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      let current_default = this.default
-        ? this.use_string_context("default")?.toString() ?? this.default
+      let current_default = this.prefill
+        ? this.use_string_context("prefill")?.toString() ?? this.prefill
         : undefined;
 
       this.value = current_default;
@@ -261,8 +261,8 @@ export default abstract class FormElement extends ContextFetcher {
       });
 
       this.addEventListener(RenderEvent.Key, () => {
-        const next_default = this.default
-          ? this.use_string_context("default")?.toString() ?? this.default
+        const next_default = this.prefill
+          ? this.use_string_context("prefill")?.toString() ?? this.prefill
           : undefined;
 
         if (next_default === current_default) return;

@@ -1,7 +1,7 @@
 <s:meta name="f-form">
   The form container to replace the existing `form` tag.
 
-  <attr name="url" type="string">
+  <attr name="url" type="string" optional>
     The URL to submit to. Can include parameters like the `u-fetch` tag.
   </attr>
   <attr name="method" type="request_method" default="post">

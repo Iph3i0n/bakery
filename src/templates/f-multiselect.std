@@ -1,6 +1,6 @@
 <s:meta name="f-multiselect">
   A list of items, of which the user can select any number.
-  <attr name="default" optional>
+  <attr name="prefill" optional>
     The default selected items. Should be comma separated with no whitespace
     between.
   </attr>

@@ -1,6 +1,6 @@
 <s:meta name="f-date">
   A form data picker. Must be placed within a `form` tag.
-  <attr name="default" optional>
+  <attr name="prefill" optional>
     The initial date to display to the user. Defaults to the current date.
     Should be in `yyyy-mm-dd` format.
   </attr>

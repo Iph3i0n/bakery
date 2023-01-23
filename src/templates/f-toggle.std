@@ -1,6 +1,6 @@
 <s:meta name="f-toggle">
   A box to toggle between two options. Must be placed within a `form` tag.
-  <attr name="default" optional>
+  <attr name="prefill" optional>
     Set to `on` if the item should be toggled on by default.
   </attr>
   <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
