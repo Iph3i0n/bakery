@@ -3,7 +3,7 @@
   <attr name="href">
     The URL to send the user to if the button is being used as a link.
   </attr>
-  <attr name="target" type="target">
+  <attr name="target" type="target" optional>
     The standard target from an anchor element.
   </attr>
   <attr name="private" type="boolean">
