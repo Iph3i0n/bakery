@@ -267,11 +267,18 @@ export default abstract class FormElement extends ContextFetcher {
 
       this.#form = form;
 
-      this.#form.addEventListener(VALIDATION_KEY, (e) => {
+      const on_validate = (e: Event) => {
+        if (!this || !this.isConnected) {
+          form.removeEventListener(VALIDATION_KEY, on_validate);
+          return;
+        }
+
         this.#touched = true;
         if (!this.validity.valid) e.preventDefault();
         this.dispatchEvent(new ShouldRender());
-      });
+      };
+
+      this.#form.addEventListener(VALIDATION_KEY, on_validate);
 
       this.addEventListener(RenderEvent.Key, () => {
         const next_default = this.prefill
