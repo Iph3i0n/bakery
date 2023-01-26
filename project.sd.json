@@ -19,6 +19,7 @@
     "./src/templates/f-richtext.std",
     "./src/templates/f-image.std",
     "./src/templates/f-form.std",
+    "./src/templates/f-time.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",

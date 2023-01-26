@@ -53,14 +53,6 @@
     };
   }
 
-  const breaks = self.use_breakpoints(
-    [
-      { name: "double", width: 42, unit: "rem" },
-      { name: "single", width: 0, unit: "rem" },
-    ],
-    self
-  );
-
   let open_month;
 
   self.addEventListener(LoadedEvent.Key, () => {

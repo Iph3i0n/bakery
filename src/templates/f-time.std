@@ -1,0 +1,266 @@
+<s:meta name="f-time">
+  A time picker. No time zone selection by default.
+
+  <attr name="prefill" optional>
+    The initial time to display. Should be in ISO format. E.G. `hh:mm:ss`.
+  </attr>
+  <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
+  <attr name="name">
+    The name of the value field in the form data. Should be unique.
+  </attr>
+  <attr name="required" type="boolean">
+    If set then the form will not be submittable until the element field has a
+    value.
+  </attr>
+  <attr name="validate" optional>
+    A RegExp string used to evaluate the input. Consider the format in the
+    `prefill` attribute as all values will be in that format.
+  </attr>
+  <attr name="no-seconds" type="boolean">
+    If set then only hours and minutes will be editable.
+  </attr>
+  <event name="ValueChanged" type="DateValueChangedEvent">
+    Fired when the input value is changed. Does not fire if the value changes
+    because the `prefill` value changes.
+    <key name="Value" type="string | boolean | File | undefined">
+      The current value of the form element.
+    </key>
+  </event>
+  <slot>The label text</slot>
+  <slot name="help">The small help text at the bottom of the input.</slot>
+  <slot name="empty">
+    The error text for if the slot is empty and required is true.
+  </slot>
+  <slot name="invalid">
+    The error text for if validate is set and the RegExp does not match
+  </slot>
+  <base use="FormElement" from="../base-classes/form.ts" default />
+  <import use="c" from="../html/classes.ts" default />
+  <import use="slotted" from="../toggleable-slot.ts" default />
+  <aria role="select" />
+  <form />
+</s:meta>
+
+<script>
+  const inputs = [
+    CreateRef(),
+    CreateRef(),
+    CreateRef(),
+    CreateRef(),
+    CreateRef(),
+    CreateRef(),
+  ];
+  const slot = slotted();
+
+  let index = 0;
+
+  function start(i) {
+    return () => {
+      index = i;
+    };
+  }
+
+  function display(index) {
+    let i = index;
+    if (i >= 4) i += 2;
+    else if (i >= 2) i += 1;
+    return self.value ? self.value[i] : self.focused ? "0" : "";
+  }
+
+  function separator() {
+    return self.value || self.focused ? ":" : "";
+  }
+
+  function move_to(target) {
+    if (target < 0) target = self["no-seconds"] ? 3 : 5;
+    if (target > (self["no-seconds"] ? 3 : 5)) target = 0;
+    inputs[target].current?.focus();
+  }
+
+  function accept(i, ...accept) {
+    return (e) => {
+      if (!accept.includes(e.key)) return;
+
+      e.preventDefault();
+
+      const input = [
+        display(0),
+        display(1),
+        display(2),
+        display(3),
+        display(4),
+        display(5),
+      ];
+
+      input[i] = e.key;
+
+      self.value = `${input[0]}${input[1]}:${input[2]}${input[3]}:${input[4]}${input[5]}`;
+
+      const target = i + 1;
+      if (target <= (self["no-seconds"] ? 3 : 5))
+        inputs[target].current?.focus();
+    };
+  }
+
+  function move(i) {
+    return (e) => {
+      if (e.key === "ArrowLeft") {
+        move_to(i - 1);
+      }
+
+      if (e.key === "ArrowRight") {
+        move_to(i + 1);
+      }
+    };
+  }
+
+  self.addEventListener("focus", () => inputs[0].current?.focus());
+</script>
+<style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+  @insert ../styles/single-line-input.pss;
+
+  @keyframes selected {
+    0% {
+      opacity: 1
+    }
+
+    24% {
+      opacity: 1;
+    }
+
+    25% {
+      opacity: 0;
+    }
+
+    49% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1
+    }
+
+    74% {
+      opacity: 1;
+    }
+
+    75% {
+      opacity: 0;
+    }
+
+    99% {
+      opacity: 0;
+    }
+  }
+
+  t-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    padding: 0 0.75rem 0 0.75rem;
+  }
+
+  .content {
+    display: flex;
+  }
+
+  .content .item:focus {
+    outline: none;
+    theme.animation("selected", "very_slow", "infinite");
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class=":c('label-text', ['populated', self.focused || self.value])">
+    <slot></slot>
+  </div>
+
+  <div class="content">
+    <div
+      class=":c('item', ['selected', index === 0])"
+      on:focus="start(0)"
+      tabindex="0"
+      s:ref="inputs[0]"
+      on:keypress="accept(0, '0', '1', '2')"
+      on:keyup="move(0)"
+    >
+      <s:text use=":display(0)" />
+    </div>
+    <div
+      class=":c('item', ['selected', index === 1])"
+      on:focus="start(1)"
+      tabindex="0"
+      s:ref="inputs[1]"
+      on:keypress="accept(1, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
+      on:keyup="move(1)"
+    >
+      <s:text use=":display(1)" />
+    </div>
+    <div class="divider"><s:text use=":separator()" /></div>
+    <div
+      class=":c('item', ['selected', index === 2])"
+      on:focus="start(2)"
+      tabindex="0"
+      s:ref="inputs[2]"
+      on:keypress="accept(2, '0', '1', '2', '3', '4', '5')"
+      on:keyup="move(2)"
+    >
+      <s:text use=":display(2)" />
+    </div>
+    <div
+      class=":c('item', ['selected', index === 3])"
+      on:focus="start(3)"
+      tabindex="0"
+      s:ref="inputs[3]"
+      on:keypress="accept(3, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
+      on:keyup="move(3)"
+    >
+      <s:text use=":display(3)" />
+    </div>
+    <s:if check="!self['no-seconds']">
+      <div class="divider"><s:text use=":separator()" /></div>
+      <div
+        class=":c('item', ['selected', index === 4])"
+        on:focus="start(4)"
+        tabindex="0"
+        s:ref="inputs[4]"
+        on:keypress="accept(4, '0', '1', '2', '3', '4', '5')"
+        on:keyup="move(4)"
+      >
+        <s:text use=":display(4)" />
+      </div>
+      <div
+        class=":c('item', ['selected', index === 5])"
+        on:focus="start(5)"
+        tabindex="0"
+        s:ref="inputs[5]"
+        on:keypress="accept(5, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
+        on:keyup="move(5)"
+      >
+        <s:text use=":display(5)" />
+      </div>
+    </s:if>
+  </div>
+
+  <t-icon name="time" size="body_large" text></t-icon>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>
