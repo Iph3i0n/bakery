@@ -79,9 +79,8 @@
 
   function accept(i, ...accept) {
     return (e) => {
-      if (!accept.includes(e.key)) return;
-
       e.preventDefault();
+      if (!accept.includes(e.key)) return;
 
       const input = [
         display(0),
@@ -186,6 +185,8 @@
       s:ref="inputs[0]"
       on:keypress="accept(0, '0', '1', '2')"
       on:keyup="move(0)"
+      contenteditable="plaintext-only"
+      inputmode="numeric"
     >
       <s:text use=":display(0)" />
     </div>
@@ -196,6 +197,8 @@
       s:ref="inputs[1]"
       on:keypress="accept(1, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
       on:keyup="move(1)"
+      contenteditable="plaintext-only"
+      inputmode="numeric"
     >
       <s:text use=":display(1)" />
     </div>
@@ -207,6 +210,8 @@
       s:ref="inputs[2]"
       on:keypress="accept(2, '0', '1', '2', '3', '4', '5')"
       on:keyup="move(2)"
+      contenteditable="plaintext-only"
+      inputmode="numeric"
     >
       <s:text use=":display(2)" />
     </div>
@@ -217,6 +222,8 @@
       s:ref="inputs[3]"
       on:keypress="accept(3, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
       on:keyup="move(3)"
+      contenteditable="plaintext-only"
+      inputmode="numeric"
     >
       <s:text use=":display(3)" />
     </div>
@@ -229,6 +236,8 @@
         s:ref="inputs[4]"
         on:keypress="accept(4, '0', '1', '2', '3', '4', '5')"
         on:keyup="move(4)"
+        contenteditable="plaintext-only"
+        inputmode="numeric"
       >
         <s:text use=":display(4)" />
       </div>
@@ -239,6 +248,8 @@
         s:ref="inputs[5]"
         on:keypress="accept(5, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')"
         on:keyup="move(5)"
+        contenteditable="plaintext-only"
+        inputmode="numeric"
       >
         <s:text use=":display(5)" />
       </div>

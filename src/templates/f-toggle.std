@@ -110,6 +110,25 @@
   .option.active {
     top: 0;
   }
+
+  @media (max-width: 500px) {
+    .label {
+      display: block;
+    }
+
+    .question {
+      theme.border("body", "contrast", "bottom");
+    }
+
+    .options {
+      height: 2.2em;
+      overflow: hidden;
+    }
+
+    .option {
+      border: none;
+    }
+  }
 </style>
 
 <div class=":self.label_class">

@@ -68,6 +68,12 @@
     border-top-right-radius: ":spec.borders.body.radius";
   }
 
+  .editor-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   .content {
     min-height: 6rem;
     theme.text("body", "no-margin");
@@ -162,6 +168,22 @@
       display: none;
     }
   }
+
+  @media (max-width: 600px) {
+    .textarea-label {
+      display: block;
+    }
+
+    .editor-buttons {
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .textarea-label select {
+      margin-bottom: 0.5rem;
+    }
+  }
 </style>
 
 <div class=":self.label_class">
@@ -188,90 +210,98 @@
     </div>
     <div class="spacer"></div>
 
-    <select
-      on:change="() => self.Stylify()"
-      s:ref="self.SelectorRef"
-      tabindex="0"
-    >
-      <s:for subject=":self.FormatOptions" key="format">
-        <s:if check=":self.Format === format.value">
-          <option value=":format.value" selected>
-            <slot name=":'format-' + format.value">
-              <s:text use=":format.title"></s:text>
-            </slot>
-          </option>
-        </s:if>
-        <s:if check=":self.Format !== format.value">
-          <option value=":format.value">
-            <slot name=":'format-' + format.value">
-              <s:text use=":format.title"></s:text>
-            </slot>
-          </option>
-        </s:if>
-      </s:for>
-    </select>
+    <div class="editor-buttons">
+      <select
+        on:change="() => self.Stylify()"
+        s:ref="self.SelectorRef"
+        tabindex="0"
+      >
+        <s:for subject=":self.FormatOptions" key="format">
+          <s:if check=":self.Format === format.value">
+            <option value=":format.value" selected>
+              <slot name=":'format-' + format.value">
+                <s:text use=":format.title"></s:text>
+              </slot>
+            </option>
+          </s:if>
+          <s:if check=":self.Format !== format.value">
+            <option value=":format.value">
+              <slot name=":'format-' + format.value">
+                <s:text use=":format.title"></s:text>
+              </slot>
+            </option>
+          </s:if>
+        </s:for>
+      </select>
 
-    <button
-      class=":c(['selected', self.IsBold])"
-      type="button"
-      on:click="() => self.Boldify()"
-    >
-      <t-icon name="bold" colour="surface" size="body" plain text></t-icon>
-    </button>
+      <button
+        class=":c(['selected', self.IsBold])"
+        type="button"
+        on:click="() => self.Boldify()"
+      >
+        <t-icon name="bold" colour="surface" size="body" plain text></t-icon>
+      </button>
 
-    <button
-      class=":c(['selected', self.IsItalic])"
-      type="button"
-      on:click="() => self.Italicify()"
-    >
-      <t-icon name="italic" colour="surface" size="body" plain text></t-icon>
-    </button>
+      <button
+        class=":c(['selected', self.IsItalic])"
+        type="button"
+        on:click="() => self.Italicify()"
+      >
+        <t-icon name="italic" colour="surface" size="body" plain text></t-icon>
+      </button>
 
-    <button
-      class=":c(['selected', self.IsUnderlined])"
-      type="button"
-      on:click="() => self.Underlinify()"
-    >
-      <t-icon name="underline" colour="surface" size="body" plain text></t-icon>
-    </button>
+      <button
+        class=":c(['selected', self.IsUnderlined])"
+        type="button"
+        on:click="() => self.Underlinify()"
+      >
+        <t-icon
+          name="underline"
+          colour="surface"
+          size="body"
+          plain
+          text
+        ></t-icon>
+      </button>
 
-    <button
-      class=":c(['selected', self.IsStrikethrough])"
-      type="button"
-      on:click="() => self.Strikethroughify()"
-    >
-      <t-icon
-        name="strikethrough"
-        colour="surface"
-        size="body"
-        plain
-        text
-      ></t-icon>
-    </button>
+      <button
+        class=":c(['selected', self.IsStrikethrough])"
+        type="button"
+        on:click="() => self.Strikethroughify()"
+      >
+        <t-icon
+          name="strikethrough"
+          colour="surface"
+          size="body"
+          plain
+          text
+        ></t-icon>
+      </button>
 
-    <button type="button" on:click="() => self.Ulify()">
-      <t-icon
-        name="list-unordered"
-        colour="surface"
-        size="body"
-        plain
-        text
-      ></t-icon>
-    </button>
+      <button type="button" on:click="() => self.Ulify()">
+        <t-icon
+          name="list-unordered"
+          colour="surface"
+          size="body"
+          plain
+          text
+        ></t-icon>
+      </button>
 
-    <button type="button" on:click="() => self.Olify()">
-      <t-icon
-        name="list-ordered"
-        colour="surface"
-        size="body"
-        plain
-        text
-      ></t-icon>
-    </button>
+      <button type="button" on:click="() => self.Olify()">
+        <t-icon
+          name="list-ordered"
+          colour="surface"
+          size="body"
+          plain
+          text
+        ></t-icon>
+      </button>
 
-    <button type="button" on:click="() => self.Linkify()">
-      <t-icon name="link" colour="surface" size="body" plain text></t-icon>
-    </button>
+      <button type="button" on:click="() => self.Linkify()">
+        <t-icon name="link" colour="surface" size="body" plain text></t-icon>
+      </button>
+    </div>
   </div>
   <div class="content" s:ref="self.EditorRef" contenteditable="true"></div>
 </div>
