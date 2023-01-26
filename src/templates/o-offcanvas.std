@@ -119,7 +119,7 @@
     left: 0;
     bottom: 0;
     overflow: hidden;
-    max-width: 100%;
+    max-width: ":width";
     theme.transition("slow", "max-width");
   }
 
