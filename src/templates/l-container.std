@@ -7,22 +7,33 @@
 
   <aria role="section" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <import use="screen_sizes" from="../spec.ts" />
 </s:meta>
-<style>
-  @js const spec = require("../spec.ts");
 
+<script>
+  const breaks = self.use_breakpoints(
+    [
+      { name: "xl", width: screen_sizes.xl.query, unit: "px" },
+      { name: "lg", width: screen_sizes.lg.query, unit: "px" },
+      { name: "md", width: screen_sizes.md.query, unit: "px" },
+      { name: "sm", width: screen_sizes.sm.query, unit: "px" },
+      { name: "xs", width: screen_sizes.xs.query, unit: "px" },
+    ],
+    self.parentElement ?? document.body
+  );
+
+  const current = () => screen_sizes[breaks.match]?.width;
+</script>
+
+<style>
   :host {
     display: block;
     margin: 0 auto;
   }
 
   @if !self.flush {
-    @for const size in spec.screen_sizes {
-      @media ":spec.screen_sizes[size].query" {
-        :host {
-          max-width: ":spec.screen_sizes[size].width";
-        }
-      }
+    :host {
+      max-width: ":current() + 'px'";
     }
   }
 </style>

@@ -43,11 +43,11 @@ export const spacings: Spacings = win.spacings ?? {
 type ScreenSize = { query: string; width: string };
 type ScreenSizes = Record<string, ScreenSize>;
 export const screen_sizes: ScreenSizes = win.screen_sizes ?? {
-  xs: { query: "(min-width: 0)", width: "320px" },
-  sm: { query: "(min-width: 420px)", width: "410px" },
-  md: { query: "(min-width: 600px)", width: "580px" },
-  lg: { query: "(min-width: 1100px)", width: "1050px" },
-  xl: { query: "(min-width: 1440px)", width: "1350px" },
+  xs: { query: 0, width: 320 },
+  sm: { query: 420, width: 410 },
+  md: { query: 600, width: 580 },
+  lg: { query: 1100, width: 1050 },
+  xl: { query: 1440, width: 1350 },
 };
 
 type Colour = Nightised<{

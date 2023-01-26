@@ -15,6 +15,12 @@
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>
 
+<style>
+  :host {
+    display: block;
+  }
+</style>
+
 <script>
   async function get_data() {
     if (!self.remote) {
@@ -33,6 +39,7 @@
     if (!is_visible(self)) return;
     const data = await get_data();
     self.root.replaceChildren(data.content.cloneNode(true));
+    self.style.display = "block";
   });
 </script>
 

@@ -53,6 +53,14 @@
     };
   }
 
+  const breaks = self.use_breakpoints(
+    [
+      { name: "double", width: 42, unit: "rem" },
+      { name: "single", width: 0, unit: "rem" },
+    ],
+    self
+  );
+
   let open_month;
 
   self.addEventListener(LoadedEvent.Key, () => {
@@ -69,12 +77,8 @@
   @insert ../styles/single-line-input.pss;
   @insert ../styles/dropdown.pss;
 
-  :host {
-    cursor: pointer;
-  }
-
-  .label {
-    cursor: pointer;
+  .dropdown-container {
+    display: flex;
   }
 
   .dropdown-container.open {
@@ -82,8 +86,11 @@
   }
 
   .dropdown-body {
-    width: 21rem;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    theme.padding("block");
+    width: 100%;
   }
 
   .content + t-icon {
@@ -116,7 +123,6 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
   }
-
   .day {
     display: flex;
     align-items: center;
@@ -150,58 +156,83 @@
   .dates .day.current:hover {
     theme.colour("primary");
   }
+
+  .dropdown-content {
+    width: 21rem;
+    overflow: hidden;
+    theme.border("small");
+    theme.shadow("small");
+  }
+
+  @media (max-width: 400px) {
+    .day {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .dropdown-content {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .dropdown-body {
+      padding: 0;
+    }
+  }
 </style>
 
 <s:if check=":current() && open_month">
   <div class=":self.label_class">
-    <div class=":c('label-text', ['populated', self.focused || self.value])">
-      <slot></slot>
-    </div>
+    <div class="input-content">
+      <div class=":c('label-text', ['populated', self.focused || self.value])">
+        <slot></slot>
+      </div>
 
-    <div class="content">
-      <s:text use=":current_formatted()"></s:text>
-    </div>
+      <div class="content">
+        <s:text use=":current_formatted()"></s:text>
+      </div>
 
-    <t-icon name="calendar-2" size="body_large" text></t-icon>
+      <t-icon name="calendar-2" size="body_large" text></t-icon>
+    </div>
 
     <div class=":c('dropdown-container', ['open', self.focused])">
       <div class="dropdown-body">
-        <div class="top-bar">
-          <div
-            class="month-nav"
-            on:click="() => (open_month = open_month.plus('month', -1))"
-          >
-            <t-icon name="arrow-left-s" size="body_large" text></t-icon>
-          </div>
-
-          <div class="month-name">
-            <s:text use=":open_month.month_string"></s:text>
-          </div>
-
-          <div
-            class="month-nav"
-            on:click="() => (open_month = open_month.plus('month', 1))"
-          >
-            <t-icon name="arrow-right-s" size="body_large" text></t-icon>
-          </div>
-        </div>
-        <div class="dates">
-          <s:for subject=":DateFunctions.DaysOfTheWeek" key="day">
+        <div class="dropdown-content">
+          <div class="top-bar">
             <div
-              class=":c('day', ['weekend', day.day_of_week === 0 || day.day_of_week === 6])"
+              class="month-nav"
+              on:click="() => (open_month = open_month.plus('month', -1))"
             >
-              <s:text use=":day.day_of_week_string.substring(0, 1)"></s:text>
+              <t-icon name="arrow-left-s" size="body_large" text></t-icon>
             </div>
-          </s:for>
 
-          <s:for subject=":open_month.month_model" key="day">
-            <div
-              class=": c( 'day', 'option', ['weekend', day.day_of_week === 0 || day.day_of_week === 6], ['wrong-month', day.month !== open_month.month], ['current', day.same_day(self.value)] )"
-              on:click="select(day.value_string)"
-            >
-              <s:text use=":day.day_of_month.toString()"></s:text>
+            <div class="month-name">
+              <s:text use=":open_month.month_string"></s:text>
             </div>
-          </s:for>
+
+            <div
+              class="month-nav"
+              on:click="() => (open_month = open_month.plus('month', 1))"
+            >
+              <t-icon name="arrow-right-s" size="body_large" text></t-icon>
+            </div>
+          </div>
+          <div class="dates">
+            <s:for subject=":DateFunctions.DaysOfTheWeek" key="day">
+              <div
+                class=":c('day', ['weekend', day.day_of_week === 0 || day.day_of_week === 6])"
+              >
+                <s:text use=":day.day_of_week_string.substring(0, 1)"></s:text>
+              </div>
+            </s:for>
+
+            <s:for subject=":open_month.month_model(self.value)" key="day">
+              <div class=":day.class" on:click="select(day.data.value_string)">
+                <s:text use=":day.data.day_of_month.toString()"></s:text>
+              </div>
+            </s:for>
+          </div>
         </div>
       </div>
     </div>

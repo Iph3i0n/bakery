@@ -1,3 +1,5 @@
+import c from "./html/classes.ts";
+
 type Increment = "millisecond" | "second" | "minute" | "hour" | "day" | "month";
 
 type Accepted = DateFunctions | Date | number | string;
@@ -53,7 +55,7 @@ export default class DateFunctions {
 
   get date_string() {
     return new Date(this.#time).toLocaleDateString(undefined, {
-      weekday: "long",
+      weekday: "short",
       year: "numeric",
       month: "long",
       day: "2-digit",
@@ -130,16 +132,26 @@ export default class DateFunctions {
     return new DateFunctions(new Date(result.setDate(diff)));
   }
 
-  get month_model() {
-    const result: Array<DateFunctions> = [];
+  month_model(selected: string) {
+    const result: Array<{ class: string; data: DateFunctions }> = [];
     const start_of_month = this.start_of_month;
-    let start = start_of_month.start_of_week;
-    do
+    const start = start_of_month.start_of_week;
+    let current = start;
+    for (let w = 0; w < 6; w++) {
       for (let i = 0; i < 7; i++) {
-        result.push(start);
-        start = start.plus("day", 1);
+        result.push({
+          class: c(
+            "day",
+            "option",
+            ["weekend", current.day_of_week === 0 || current.day_of_week === 6],
+            ["wrong-month", current.month !== this.month],
+            ["current", current.same_day(selected)]
+          ),
+          data: current,
+        });
+        current = current.plus("day", 1);
       }
-    while (start.month === this.month);
+    }
 
     return result;
   }

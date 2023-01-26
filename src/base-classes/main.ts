@@ -9,6 +9,12 @@ import {
 // deno-lint-ignore no-explicit-any
 type Context = Record<string, any>;
 
+type BreakpointSpec = Array<{
+  name: string;
+  width: number;
+  unit: "px" | "rem";
+}>;
+
 export default abstract class BakeryBase extends ComponentBase {
   constructor() {
     super();
@@ -61,5 +67,51 @@ export default abstract class BakeryBase extends ComponentBase {
     }
 
     this.dispatchEvent(new ContextChangedEvent());
+  }
+
+  #rem_to_pixels(rem: number) {
+    return (
+      rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
+    );
+  }
+
+  #active(spec: BreakpointSpec, watch: HTMLElement) {
+    for (const item of spec) {
+      if (!item) continue;
+
+      const target =
+        item.unit === "px" ? item.width : this.#rem_to_pixels(item.width);
+
+      if (watch.offsetWidth > target) return item.name;
+    }
+
+    return "";
+  }
+
+  use_breakpoints(spec: BreakpointSpec, watch: HTMLElement = this) {
+    let match = this.#active(spec, watch);
+
+    const handler = () => {
+      if (!this || !this.isConnected) {
+        // deno-lint-ignore no-window-prefix
+        window.removeEventListener("resize", handler);
+        observer.unobserve(watch);
+      }
+      const old_active = match;
+      match = this.#active(spec, watch);
+      if (old_active !== match) this.dispatchEvent(new ShouldRender());
+    };
+
+    const observer = new ResizeObserver(handler);
+    observer.observe(watch);
+
+    // deno-lint-ignore no-window-prefix
+    window.addEventListener("resize", handler);
+
+    return {
+      get match() {
+        return match;
+      },
+    };
   }
 }

@@ -58,14 +58,6 @@
   @insert ../styles/single-line-input.pss;
   @insert ../styles/dropdown.pss;
 
-  :host {
-    cursor: pointer;
-  }
-
-  .label {
-    cursor: pointer;
-  }
-
   .item {
     position: relative;
     theme.colour("surface");
@@ -85,10 +77,6 @@
     theme.padding("input", "left", "right");
   }
 
-  .dropdown-container {
-    width: ":`calc(100% + (${spec.borders.body.width} * 2))`";
-  }
-
   .dropdown-container.open {
     max-height: 12rem;
   }
@@ -104,15 +92,17 @@
 </div>
 
 <div class=":self.label_class">
-  <div class=":c('label-text', ['populated', self.focused || self.value])">
-    <slot name="label"></slot>
-  </div>
+  <div class="input-content">
+    <div class=":c('label-text', ['populated', self.focused || self.value])">
+      <slot name="label"></slot>
+    </div>
 
-  <div class="content">
-    <s:text use=":current()"></s:text>
-  </div>
+    <div class="content">
+      <s:text use=":current()"></s:text>
+    </div>
 
-  <t-icon name="arrow-down-s" size="body_large" text></t-icon>
+    <t-icon name="arrow-down-s" size="body_large" text></t-icon>
+  </div>
 
   <div class=":c('dropdown-container', ['open', self.focused])">
     <div class="dropdown-body scrollable">

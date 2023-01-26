@@ -29,6 +29,7 @@
   <import use="unsafe_import" from="../fetch-resources.ts" />
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <base use="Router" from="../base-classes/router.ts" default />
+  <import use="screen_sizes" from="../spec.ts" />
 </s:meta>
 
 <script>
@@ -96,6 +97,11 @@
     if (self.path) return self.Matches;
     return false;
   }
+
+  const breaks = self.use_breakpoints(
+    [{ name: "lg", width: screen_sizes.lg.query, unit: "px" }],
+    self.parentElement ?? document.body
+  );
 </script>
 <style>
   @js const theme = require("../theme.ts");
@@ -130,7 +136,7 @@
     box-sizing: border-box;
   }
 
-  @media ":spec.screen_sizes.md.query" {
+  @media ":breaks.match === 'md'" {
     .container {
       theme.border("body", undefined, "right");
       max-width: ":width";

@@ -1,10 +1,18 @@
 @js const spec = require("../spec.ts");
 @js const theme = require("../theme.ts");
 
+:host {
+  cursor: pointer;
+}
+
+.label {
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+}
+
+
 .dropdown-container {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: ":`-${spec.borders.body.width}`";
   max-height: 0;
   overflow: hidden;
   theme.transition("fast", "max-height");
@@ -12,15 +20,23 @@
 }
 
 .dropdown-container.open {
-  theme.shadow("small");
-  border-radius: ":spec.borders.body.radius";
+  theme.border("body", "contrast", "top");
 }
 
 .dropdown-body {
   theme.text("body", "no-margin");
-  theme.colour("surface");
   box-sizing: border-box;
-  theme.border("body", "contrast");
+}
+
+.input-content {
+  position: relative;
+  theme.padding("input");
+  theme.colour("surface");
+  theme.transition("fast", "color", "background-color");
+}
+
+:host(:focus) .input-content {
+  theme.colour("body");
 }
 
 @insert ./custom-scrollbar.pss;
