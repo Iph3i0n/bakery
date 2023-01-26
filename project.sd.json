@@ -20,6 +20,7 @@
     "./src/templates/f-image.std",
     "./src/templates/f-form.std",
     "./src/templates/f-time.std",
+    "./src/templates/f-numeric.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",

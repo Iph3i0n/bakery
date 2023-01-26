@@ -379,5 +379,5 @@ export const animation_speeds: Record<string, string> =
   win.animation_speeds ?? {
     fast: "100ms",
     slow: "300ms",
-    very_slow: "2000ms",
+    very_slow: "1500ms",
   };

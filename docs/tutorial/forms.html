@@ -58,6 +58,14 @@
         time: {
           basic: e("f-time", { name: "test-time" }, "Hello World"),
         },
+        numeric: {
+          basic: e(
+            "f-numeric",
+            { name: "test-number" },
+            "Hello World",
+            e("span", { slot: "prefix" }, "£")
+          ),
+        },
         toggle: {
           basic: e(
             "f-toggle",
@@ -195,6 +203,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="time.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="numeric.basic"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="textarea.basic"></div>

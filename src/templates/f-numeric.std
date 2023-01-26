@@ -1,0 +1,225 @@
+<s:meta name="f-numeric">
+  A number input. Has the option for prefix and suffix for currency and
+  mathmatical information.
+  <attr name="decimal-places" type="string" default="2">
+    The number of decimal places that the user is allowed to enter until.
+  </attr>
+  <attr name="prefill" optional>The default text for the textbox.</attr>
+  <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
+  <attr name="sensitive" type="boolean">
+    If set then the form element is hidden from the user. Useful for password
+    inputs.
+  </attr>
+  <attr name="name">
+    The name of the value field in the form data. Should be unique.
+  </attr>
+  <attr name="required" type="boolean">
+    If set then the form will not be submittable until the element field has a
+    value.
+  </attr>
+  <attr name="validate" optional>
+    A RegExp string used to evaluate the input. If there are no matches then the
+    field will be considered invalid and the form will not be submittable.
+  </attr>
+  <event name="ValueChanged" type="InputValueChangedEvent">
+    Fired when the input value is changed. Does not fire if the value changes
+    because the `prefill` value changes.
+    <key name="Value" type="string | boolean | File | undefined">
+      The current value of the form element.
+    </key>
+  </event>
+  <slot>The label text</slot>
+  <slot name="prefix">Just before the number</slot>
+  <slot name="suffix">Just after the number</slot>
+  <slot name="help">The small help text at the bottom of the input.</slot>
+  <slot name="empty">
+    The error text for if the slot is empty and required is true.
+  </slot>
+  <slot name="invalid">
+    The error text for if validate is set and the RegExp does not match
+  </slot>
+  <base use="FormElement" from="../base-classes/form.ts" default />
+  <import use="c" from="../html/classes.ts" default />
+  <import use="slotted" from="../toggleable-slot.ts" default />
+  <import use="link_css" from="../fetch-resources.ts" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
+  <aria role="input" />
+  <form />
+</s:meta>
+
+<script>
+  const slot = slotted();
+  const textarea = CreateRef();
+
+  let current = 0;
+
+  const current_text = () => current.toFixed(parseInt(self["decimal-places"]));
+
+  self.addEventListener("focus", () => {
+    textarea.current.focus();
+  });
+
+  const multiplier = () => Math.pow(10, parseInt(self["decimal-places"]));
+
+  function add() {
+    current++;
+    self.value = current_text();
+  }
+
+  function minus() {
+    current--;
+    self.value = current_text();
+  }
+
+  self.addEventListener("keypress", (e) => {
+    e.preventDefault();
+    if (e.key === "-") {
+      current -= current * 2;
+      self.value = current_text();
+    }
+
+    const subject = parseInt(e.key);
+    if (isNaN(subject)) return;
+
+    let is_negative = current < 0;
+
+    if (is_negative) current = Math.abs(current);
+    current *= multiplier();
+    current *= 10;
+    current += subject;
+    current = Math.floor(current);
+    current /= multiplier();
+
+    if (is_negative) current -= current * 2;
+    self.value = current_text();
+    self.dispatchEvent(new ShouldRender());
+  });
+
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      Enter: () => {
+        self.submit();
+      },
+      Backspace: () => {
+        let is_negative = current < 0;
+
+        if (is_negative) current = Math.abs(current);
+        current *= multiplier();
+        current /= 10;
+        current = Math.floor(current);
+        current /= multiplier();
+        if (is_negative) current -= current * 2;
+        self.value = current_text();
+        self.dispatchEvent(new ShouldRender());
+      },
+    })
+  );
+</script>
+
+<style>
+  @insert ../styles/input.pss;
+  @js const theme = require("../theme.ts");
+
+  .label {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .label-text {
+    theme.text("body", "no-margin");
+    theme.padding("small_block");
+    theme.border("body", "contrast", "right");
+    theme.colour("surface");
+  }
+
+  .editor-box {
+    theme.text("body", "no-margin");
+    theme.padding("small_block");
+    theme.colour("body");
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .number {
+    caret-color: transparent;
+  }
+
+  .number:focus {
+    outline: none;
+  }
+
+  .modifier {
+    theme.padding("badge");
+    theme.colour("surface");
+    theme.border("small");
+    theme.margin("small_block", "left", "right");
+    cursor: pointer;
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .modifier:hover {
+    theme.colour("surface", 0.9);
+  }
+
+  @media (max-width: 500px) {
+    .label {
+      display: block;
+      text-align: center;
+    }
+
+    .label-text {
+      border-right: none;
+      theme.border("body", "contrast", "bottom");
+    }
+
+    .editor-box {
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class="label-text">
+    <slot></slot>
+  </div>
+  <div class="editor-box">
+    <div class="modifier" on:click="add">
+      <t-icon name="add" size="body" colour="body" text></t-icon>
+    </div>
+
+    <slot name="prefix"></slot>
+    <div
+      class="number"
+      contenteditable="plaintext-only"
+      s:ref="textarea"
+      inputmode="numeric"
+    >
+      <s:text use=":current_text() ?? ''"></s:text>
+    </div>
+    <slot name="suffix"></slot>
+
+    <div class="modifier" on:click="minus">
+      <t-icon name="subtract" size="body" colour="body" text></t-icon>
+    </div>
+  </div>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

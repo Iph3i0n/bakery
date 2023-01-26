@@ -37,6 +37,7 @@
   <base use="FormElement" from="../base-classes/form.ts" default />
   <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="select" />
   <form />
 </s:meta>
@@ -114,6 +115,14 @@
   }
 
   self.addEventListener("focus", () => inputs[0].current?.focus());
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      Enter: () => {
+        self.submit();
+      },
+    })
+  );
 </script>
 <style>
   @js const theme = require("../theme.ts");
@@ -164,6 +173,10 @@
 
   .content {
     display: flex;
+  }
+
+  .content .item {
+    caret-color: transparent;
   }
 
   .content .item:focus {

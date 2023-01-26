@@ -180,7 +180,8 @@
       justify-content: flex-start;
     }
 
-    .textarea-label select {
+    .textarea-label select,
+    .textarea-label button {
       margin-bottom: 0.5rem;
     }
   }
