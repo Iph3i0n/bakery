@@ -128,40 +128,7 @@
   @js const theme = require("../theme.ts");
   @js const spec = require("../spec.ts");
   @insert ../styles/single-line-input.pss;
-
-  @keyframes selected {
-    0% {
-      opacity: 1
-    }
-
-    24% {
-      opacity: 1;
-    }
-
-    25% {
-      opacity: 0;
-    }
-
-    49% {
-      opacity: 0;
-    }
-
-    50% {
-      opacity: 1
-    }
-
-    74% {
-      opacity: 1;
-    }
-
-    75% {
-      opacity: 0;
-    }
-
-    99% {
-      opacity: 0;
-    }
-  }
+  @insert ../styles/flash.pss;
 
   t-icon {
     position: absolute;
@@ -181,7 +148,7 @@
 
   .content .item:focus {
     outline: none;
-    theme.animation("selected", "very_slow", "infinite");
+    theme.animation("flash", "very_slow", "infinite");
   }
 </style>
 

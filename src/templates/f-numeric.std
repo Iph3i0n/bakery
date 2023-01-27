@@ -55,6 +55,16 @@
 
   const current_text = () => current.toFixed(parseInt(self["decimal-places"]));
 
+  const start = () => {
+    const result = current_text();
+    return result.substring(0, result.length - 1);
+  };
+
+  const end = () => {
+    const result = current_text();
+    return result.substring(result.length - 1);
+  };
+
   self.addEventListener("focus", () => {
     textarea.current.focus();
   });
@@ -91,6 +101,7 @@
     current /= multiplier();
 
     if (is_negative) current -= current * 2;
+
     self.value = current_text();
     self.dispatchEvent(new ShouldRender());
   });
@@ -119,6 +130,7 @@
 
 <style>
   @insert ../styles/input.pss;
+  @insert ../styles/flash.pss;
   @js const theme = require("../theme.ts");
 
   .label {
@@ -151,17 +163,35 @@
     outline: none;
   }
 
+  :host(:focus) .last-letter {
+    theme.animation("flash", "very_slow", "infinite");
+  }
+
   .modifier {
-    theme.padding("badge");
+    theme.padding("small_block");
     theme.colour("surface");
-    theme.border("small");
-    theme.margin("small_block", "left", "right");
     cursor: pointer;
     theme.transition("fast", "color", "background-color");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modifier:first-of-type {
+    theme.border("body", "contrast", "right");
+  }
+
+  .modifier:last-of-type {
+    theme.border("body", "contrast", "left");
   }
 
   .modifier:hover {
     theme.colour("surface", 0.9);
+  }
+
+  .input-part {
+    flex: 1;
+    display: flex;
   }
 
   @if self.use_breakpoint(500, "px", self, true) {
@@ -185,21 +215,25 @@
   <div class="label-text">
     <slot></slot>
   </div>
-  <div class="editor-box">
+  <div class="input-part">
     <div class="modifier" on:click="add">
       <t-icon name="add" size="body" colour="body" text></t-icon>
     </div>
-
-    <slot name="prefix"></slot>
-    <div
-      class="number"
-      contenteditable="plaintext-only"
-      s:ref="textarea"
-      inputmode="numeric"
-    >
-      <s:text use=":current_text() ?? ''"></s:text>
+    <div class="editor-box">
+      <slot name="prefix"></slot>
+      <div
+        class="number"
+        contenteditable="plaintext-only"
+        s:ref="textarea"
+        inputmode="numeric"
+      >
+        <s:text use=":start() ?? ''"></s:text>
+        <span class="last-letter">
+          <s:text use=":end() ?? ''"></s:text>
+        </span>
+      </div>
+      <slot name="suffix"></slot>
     </div>
-    <slot name="suffix"></slot>
 
     <div class="modifier" on:click="minus">
       <t-icon name="subtract" size="body" colour="body" text></t-icon>

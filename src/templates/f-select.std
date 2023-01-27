@@ -75,6 +75,13 @@
     transform: translateY(-50%);
     right: 0;
     theme.padding("input", "left", "right");
+    theme.transition("fast", "transform");
+  }
+
+  @if self.focused {
+    t-icon {
+      transform: translateY(-50%) rotate(180deg);
+    }
   }
 
   .dropdown-container.open {
