@@ -111,7 +111,7 @@
     top: 0;
   }
 
-  @media (max-width: 500px) {
+  @if self.use_breakpoint(500, "px", self, true) {
     .label {
       display: block;
     }
@@ -121,7 +121,7 @@
     }
 
     .options {
-      height: 2.2em;
+      height: 2.1em;
       overflow: hidden;
     }
 

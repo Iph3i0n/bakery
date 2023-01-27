@@ -40,7 +40,7 @@ export const spacings: Spacings = win.spacings ?? {
   display_heading: ["2rem", "0", "2rem", "0"],
 };
 
-type ScreenSize = { query: string; width: string };
+type ScreenSize = { query: number; width: number };
 type ScreenSizes = Record<string, ScreenSize>;
 export const screen_sizes: ScreenSizes = win.screen_sizes ?? {
   xs: { query: 0, width: 320 },

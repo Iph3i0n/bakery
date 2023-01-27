@@ -169,7 +169,7 @@
     }
   }
 
-  @media (max-width: 600px) {
+  @if self.use_breakpoint(600, "px", self, true) {
     .textarea-label {
       display: block;
     }

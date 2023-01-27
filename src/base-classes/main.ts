@@ -5,15 +5,10 @@ import {
   ContextEventKey,
   RequestContextEvent,
 } from "../events/context.ts";
+import { screen_sizes } from "../spec.ts";
 
 // deno-lint-ignore no-explicit-any
 type Context = Record<string, any>;
-
-type BreakpointSpec = Array<{
-  name: string;
-  width: number;
-  unit: "px" | "rem";
-}>;
 
 export default abstract class BakeryBase extends ComponentBase {
   constructor() {
@@ -75,21 +70,16 @@ export default abstract class BakeryBase extends ComponentBase {
     );
   }
 
-  #active(spec: BreakpointSpec, watch: HTMLElement) {
-    for (const item of spec) {
-      if (!item) continue;
-
-      const target =
-        item.unit === "px" ? item.width : this.#rem_to_pixels(item.width);
-
-      if (watch.offsetWidth > target) return item.name;
-    }
-
-    return "";
-  }
-
-  use_breakpoints(spec: BreakpointSpec, watch: HTMLElement = this) {
-    let match = this.#active(spec, watch);
+  use_breakpoint(
+    width: number,
+    unit: "px" | "rem",
+    watch: HTMLElement = this,
+    inverse = false
+  ) {
+    const target = unit === "px" ? width : this.#rem_to_pixels(width);
+    const current = inverse
+      ? target > watch.offsetWidth
+      : watch.offsetWidth > target;
 
     const handler = () => {
       if (!this || !this.isConnected) {
@@ -97,21 +87,28 @@ export default abstract class BakeryBase extends ComponentBase {
         window.removeEventListener("resize", handler);
         observer.unobserve(watch);
       }
-      const old_active = match;
-      match = this.#active(spec, watch);
-      if (old_active !== match) this.dispatchEvent(new ShouldRender());
+      const next = inverse
+        ? target > watch.offsetWidth
+        : watch.offsetWidth > target;
+      if (next !== current) {
+        // deno-lint-ignore no-window-prefix
+        window.removeEventListener("resize", handler);
+        observer.unobserve(watch);
+        this.dispatchEvent(new ShouldRender());
+      }
     };
 
     const observer = new ResizeObserver(handler);
     observer.observe(watch);
 
-    // deno-lint-ignore no-window-prefix
-    window.addEventListener("resize", handler);
+    return current;
+  }
 
-    return {
-      get match() {
-        return match;
-      },
-    };
+  use_spec_query(item: string, watch: HTMLElement = this) {
+    return this.use_breakpoint(screen_sizes[item].query, "px", watch);
+  }
+
+  use_spec_width(item: string, watch: HTMLElement = this) {
+    return this.use_breakpoint(screen_sizes[item].width, "px", watch);
   }
 }

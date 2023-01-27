@@ -25,7 +25,6 @@
   </slot>
   <aria role="banner" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-  <import use="screen_sizes" from="../spec.ts" />
 </s:meta>
 
 <script>
@@ -38,15 +37,6 @@
   function on_toggle() {
     open = !open;
   }
-
-  const breaks = self.use_breakpoints(
-    [
-      { name: "xl", width: screen_sizes.xl.query, unit: "px" },
-      { name: "lg", width: screen_sizes.lg.query, unit: "px" },
-      { name: "xs", width: 0, unit: "px" },
-    ],
-    self.parentElement ?? document.body
-  );
 </script>
 
 <style>
@@ -187,7 +177,7 @@
     }
   }
 
-  @if breaks.match !== 'xs' {
+  @if self.use_spec_query("lg", self.parentElement ?? document.body) {
     .content {
       display: flex;
       align-items: center;
@@ -235,13 +225,13 @@
   }
 
   @if !self.flush {
-    @if breaks.match === 'lg' {
+    @if self.use_spec_query("lg", self.parentElement ?? document.body)  {
       .content {
         max-width: ":spec.screen_sizes.lg.width + 'px'";
       }
     }
 
-    @if breaks.match === 'xl' {
+    @if self.use_spec_query("xl", self.parentElement ?? document.body)  {
       .content {
         max-width: ":spec.screen_sizes.xl.width + 'px'";
       }

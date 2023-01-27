@@ -9,29 +9,7 @@
 
   <aria role="gridcell" />
   <base use="BakeryBase" from="../base-classes/main.ts" default />
-  <import use="screen_sizes" from="../spec.ts" />
 </s:meta>
-
-<script>
-  const breaks = self.use_breakpoints(
-    [
-      self.xl
-        ? { name: "xl", width: screen_sizes.xl.width, unit: "px" }
-        : undefined,
-      self.lg
-        ? { name: "lg", width: screen_sizes.lg.width, unit: "px" }
-        : undefined,
-      self.md
-        ? { name: "md", width: screen_sizes.md.width, unit: "px" }
-        : undefined,
-      self.sm
-        ? { name: "sm", width: screen_sizes.sm.width, unit: "px" }
-        : undefined,
-      self.xs ? { name: "xs", width: 0, unit: "px" } : undefined,
-    ],
-    self.parentElement
-  );
-</script>
 
 <style>
   @js const theme = require("../theme.ts");
@@ -42,7 +20,15 @@
   }
 
   :host {
-    grid-column: ":`auto / span ${self[breaks.match]}`";
+    grid-column: ":`auto / span ${self.xs}`";
+  }
+
+  @for const size in spec.screen_sizes {
+    @if self[size] && self.use_spec_width(size, self.parentElement) {
+      :host {
+        grid-column: ":`auto / span ${self[size]}`";
+      }
+    }
   }
 </style>
 

@@ -97,11 +97,6 @@
     if (self.path) return self.Matches;
     return false;
   }
-
-  const breaks = self.use_breakpoints(
-    [{ name: "lg", width: screen_sizes.lg.query, unit: "px" }],
-    self.parentElement ?? document.body
-  );
 </script>
 <style>
   @js const theme = require("../theme.ts");
@@ -119,8 +114,9 @@
     left: 0;
     bottom: 0;
     overflow: hidden;
-    max-width: ":width";
+    max-width: 100%;
     theme.transition("slow", "max-width");
+    width: 100%;
   }
 
   @if !is_open() {
@@ -131,15 +127,19 @@
   }
 
   .modal {
-    width: ":width";
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
   }
 
-  @media ":breaks.match === 'md'" {
+  @if self.use_spec_query("md", document.body) {
     .container {
       theme.border("body", undefined, "right");
       max-width: ":width";
+    }
+
+    .modal {
+      width: ":width";
     }
   }
 

@@ -164,7 +164,7 @@
     theme.colour("surface", 0.9);
   }
 
-  @media (max-width: 500px) {
+  @if self.use_breakpoint(500, "px", self, true) {
     .label {
       display: block;
       text-align: center;
