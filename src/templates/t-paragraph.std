@@ -10,6 +10,7 @@
 
   :host {
     display: block;
+    text-align: justify;
     theme.text(self.large ? "body_large" : "body");
   }
 </style>
