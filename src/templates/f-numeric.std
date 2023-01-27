@@ -4,6 +4,9 @@
   <attr name="decimal-places" type="string" default="2">
     The number of decimal places that the user is allowed to enter until.
   </attr>
+  <attr name="no-negative" type="boolean">
+    If set then negative values will not be available.
+  </attr>
   <attr name="prefill" optional>The default text for the textbox.</attr>
   <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
   <attr name="sensitive" type="boolean">
@@ -77,13 +80,15 @@
   }
 
   function minus() {
+    if (current - 1 < 0 && self["no-negative"]) return;
+
     current--;
     self.value = current_text();
   }
 
   self.addEventListener("keypress", (e) => {
     e.preventDefault();
-    if (e.key === "-") {
+    if (e.key === "-" && !self["no-negative"]) {
       current -= current * 2;
       self.value = current_text();
     }
