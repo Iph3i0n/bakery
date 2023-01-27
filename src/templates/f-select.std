@@ -79,7 +79,7 @@
   }
 
   @if self.focused {
-    t-icon {
+    .input-content t-icon {
       transform: translateY(-50%) rotate(180deg);
     }
   }
