@@ -36,6 +36,7 @@
   <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="DateFunctions" from="../date-functions.ts" default />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="select" />
   <form />
 </s:meta>
@@ -52,6 +53,36 @@
       self.blur();
     };
   }
+
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      ArrowDown: () => {
+        const input = current().plus("day", 7);
+        if (input.month !== current().month)
+          open_month = input.start_of_day.start_of_month;
+        self.value = input.date_string;
+      },
+      ArrowUp: () => {
+        const input = current().plus("day", -7);
+        if (input.month !== current().month)
+          open_month = input.start_of_day.start_of_month;
+        self.value = input.date_string;
+      },
+      ArrowLeft: () => {
+        const input = current().plus("day", -1);
+        if (input.month !== current().month)
+          open_month = input.start_of_day.start_of_month;
+        self.value = input.date_string;
+      },
+      ArrowRight: () => {
+        const input = current().plus("day", 1);
+        if (input.month !== current().month)
+          open_month = input.start_of_day.start_of_month;
+        self.value = input.date_string;
+      },
+    })
+  );
 
   let open_month;
 
