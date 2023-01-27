@@ -28,7 +28,7 @@
                   <u-text use="comp.description"></u-text>
                 </t-paragraph>
               </l-col>
-              <l-col xs="12" md="6" lg="4">
+              <l-col xs="12" md="6">
                 <t-heading level="h6">Attributes</t-heading>
                 <u-if check="comp.attributes.length">
                   <d-listgroup>
@@ -46,7 +46,7 @@
                   </d-listgroup>
                 </u-if>
               </l-col>
-              <l-col xs="12" md="6" lg="4">
+              <l-col xs="12" md="6">
                 <t-heading level="h6">Events</t-heading>
                 <u-if check="comp.events.length">
                   <d-listgroup>
@@ -59,24 +59,6 @@
                         <i><u-text use="event.type.text"></u-text></i>
                         ) -
                         <u-text use="event.description"></u-text>
-                      </span>
-                    </u-each>
-                  </d-listgroup>
-                </u-if>
-              </l-col>
-              <l-col xs="12" md="6" lg="4">
-                <t-heading level="h6">Properties</t-heading>
-                <u-if check="comp.members.length">
-                  <d-listgroup>
-                    <u-each subject="comp.members" name="member">
-                      <span>
-                        <b>
-                          <u-text use="member.name"></u-text>
-                        </b>
-                        (
-                        <i><u-text use="member.type.text"></u-text></i>
-                        ) -
-                        <u-text use="member.description"></u-text>
                       </span>
                     </u-each>
                   </d-listgroup>
