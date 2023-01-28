@@ -29,9 +29,7 @@
   }
 
   setTimeout(() => {
-    if (self.childElements.length !== 1)
-      throw new Error("u-each may only have one child");
-    subject = self.childElements[0].cloneNode(true);
+    subject = self.children[0].cloneNode(true);
     subject.setAttribute("data-each-id", id);
     self.dispatchEvent(new ShouldRender());
   });
