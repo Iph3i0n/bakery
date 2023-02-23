@@ -18,6 +18,7 @@
   position: relative;
   display: block;
   theme.colour("surface");
+  theme.shadow("small");
   theme.transition("fast", "border-color");
   cursor: text;
   theme.border("body");

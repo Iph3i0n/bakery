@@ -38,6 +38,7 @@
   <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="options" from="../options.ts" default />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="select" />
   <form />
 </s:meta>
@@ -63,6 +64,33 @@
   function active(option) {
     return self.value?.includes(option.value);
   }
+
+  let open = "";
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      Enter: () => {
+        toggle({ value: open })();
+      },
+      ArrowUp: () => {
+        const open_index = items.data.findIndex((i) => i.value === open);
+        const next_index = Math.max(0, open_index - 1);
+        open = items.data[next_index].value;
+        self.dispatchEvent(new ShouldRender());
+      },
+      ArrowDown: () => {
+        const open_index = items.data.findIndex((i) => i.value === open);
+        const next_index = Math.min(items.data.length - 1, open_index + 1);
+        open = items.data[next_index].value;
+        self.dispatchEvent(new ShouldRender());
+      },
+    })
+  );
+
+  self.addEventListener("blur", () => {
+    open = "";
+    self.dispatchEvent(new ShouldRender());
+  });
 </script>
 <style>
   @js const theme = require("../theme.ts");
@@ -83,11 +111,11 @@
     <s:for subject=":items.data" key="option">
       <s:if check=":!option.disabled">
         <div
-          class=":c('item', 'option', ['selected', active(option)])"
+          class=":c('item', 'option', ['selected', active(option)], ['hover', open === option.value])"
           on:click="toggle(option)"
         >
           <span class="toggle">
-            <t-icon name="check" colour="surface" text></t-icon>
+            <t-icon name="check" colour="body" text></t-icon>
           </span>
           <s:text use=":option.text"></s:text>
         </div>
@@ -95,7 +123,7 @@
       <s:if check=":option.disabled">
         <div class=":c('item', 'disabled', ['selected', active(option)])">
           <span class="toggle">
-            <t-icon name="check" colour="surface" text></t-icon>
+            <t-icon name="check" colour="body" text></t-icon>
           </span>
           <s:text use=":option.text"></s:text>
         </div>

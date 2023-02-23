@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakery Docs</title>
+    <script>
+      // Not changing away from the defaults but putting it here to show it exists
+      window.z_indexes = {
+        popup: 1,
+        header: 2,
+        overlay: 3,
+      };
+
+      window.borders = {
+        body: {
+          width: "0",
+          render: "solid",
+          radius: "1rem",
+        },
+        small: {
+          width: "0",
+          render: "solid",
+          radius: "0.5rem",
+        },
+      };
+
+      window.spacings = {
+        zero: ["0", "0", "0", "0"],
+        block: ["1rem", "1rem", "1rem", "1rem"],
+        small_block: ["0.75rem", "0.75rem", "0.75rem", "0.75rem"],
+        // Used in only a couple of places for inputs
+        super_small: ["0.1rem", "0.1rem", "0.1rem", "0.1rem"],
+        input: ["1rem", "1rem", "1rem", "1rem"],
+        badge: ["2px", "1px", "0px", "1px"],
+        paragraph: ["3px", "0px", "3px", "0px"],
+        heading: ["6px", "0px", "6px", "0px"],
+        display_heading: ["12px", "0px", "12px", "0px"],
+      };
+
+      // Not changing away from the defaults but putting it here to show it exists
+      window.screen_sizes = {
+        xs: { query: 0, width: 320 },
+        sm: { query: 420, width: 410 },
+        md: { query: 600, width: 580 },
+        lg: { query: 1100, width: 1050 },
+        xl: { query: 1440, width: 1350 },
+      };
+
+      window.colours = {
+        body: {
+          light: {
+            background: [255, 255, 255],
+            foreground: "#000",
+          },
+          dark: {
+            background: [255, 255, 255],
+            foreground: "#000",
+          },
+        },
+        headline: {
+          light: {
+            background: [245, 234, 234],
+            foreground: "#000",
+          },
+          dark: {
+            background: [245, 234, 234],
+            foreground: "#000",
+          },
+        },
+        surface: {
+          light: {
+            background: [245, 234, 234],
+            foreground: "#000",
+          },
+          dark: {
+            background: [245, 234, 234],
+            foreground: "#000",
+          },
+        },
+        primary: {
+          light: {
+            background: [164, 89, 209],
+            foreground: "#fff",
+          },
+          dark: {
+            background: [164, 89, 209],
+            foreground: "#fff",
+          },
+        },
+        contrast: {
+          light: {
+            background: [255, 184, 76],
+            foreground: "#000",
+          },
+          dark: {
+            background: [255, 184, 76],
+            foreground: "#000",
+          },
+        },
+        warning: {
+          light: {
+            background: [241, 103, 103],
+            foreground: "#fff",
+          },
+          dark: {
+            background: [241, 103, 103],
+            foreground: "#fff",
+          },
+        },
+        rainbow_0: {
+          light: {
+            background: [249, 65, 68],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [249, 65, 68],
+            foreground: "#fffffe",
+          },
+        },
+        rainbow_1: {
+          light: {
+            background: [243, 114, 44],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [243, 114, 44],
+            foreground: "#fffffe",
+          },
+        },
+        rainbow_2: {
+          light: {
+            background: [248, 150, 30],
+            foreground: "#001e1d",
+          },
+          dark: {
+            background: [248, 150, 30],
+            foreground: "#001e1d",
+          },
+        },
+        rainbow_3: {
+          light: {
+            background: [249, 132, 74],
+            foreground: "#001e1d",
+          },
+          dark: {
+            background: [249, 132, 74],
+            foreground: "#001e1d",
+          },
+        },
+        rainbow_4: {
+          light: {
+            background: [218, 154, 0],
+            foreground: "#001e1d",
+          },
+          dark: {
+            background: [218, 154, 0],
+            foreground: "#001e1d",
+          },
+        },
+        rainbow_5: {
+          light: {
+            background: [144, 190, 109],
+            foreground: "#001e1d",
+          },
+          dark: {
+            background: [144, 190, 109],
+            foreground: "#001e1d",
+          },
+        },
+        rainbow_6: {
+          light: {
+            background: [67, 170, 139],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [67, 170, 139],
+            foreground: "#fffffe",
+          },
+        },
+        rainbow_7: {
+          light: {
+            background: [77, 144, 142],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [77, 144, 142],
+            foreground: "#fffffe",
+          },
+        },
+        rainbow_8: {
+          light: {
+            background: [87, 117, 144],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [87, 117, 144],
+            foreground: "#fffffe",
+          },
+        },
+        rainbow_9: {
+          light: {
+            background: [39, 125, 161],
+            foreground: "#fffffe",
+          },
+          dark: {
+            background: [39, 125, 161],
+            foreground: "#fffffe",
+          },
+        },
+      };
+
+      window.shadows = {
+        body: {
+          light: {
+            x: "0px",
+            y: "0px",
+            radius: "5px",
+            spread: "0px",
+            colour: "rgba(0,0,0,0.1)",
+          },
+          dark: {
+            x: "0px",
+            y: "0px",
+            radius: "5px",
+            spread: "0px",
+            colour: "rgba(171,209,198,0.29)",
+          },
+        },
+        small: {
+          light: {
+            x: "0px",
+            y: "0px",
+            radius: "3px",
+            spread: "0px",
+            colour: "rgba(0,0,0,0.2)",
+          },
+          dark: {
+            x: "0px",
+            y: "0px",
+            radius: "3px",
+            spread: "0px",
+            colour: "rgba(171,209,198,0.29)",
+          },
+        },
+      };
+
+      window.font_url =
+        "https://fonts.googleapis.com/css2?family=Mynerve&display=swap";
+
+      window.line_height = "1.1";
+
+      window.text_styles = {
+        h1_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "5rem",
+          margin: "display_heading",
+        },
+        h1: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "3rem",
+          margin: "heading",
+        },
+        h2_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "4.5rem",
+          margin: "display_heading",
+        },
+        h2: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "2.5rem",
+          margin: "heading",
+        },
+        h3_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "4rem",
+          margin: "display_heading",
+        },
+        h3: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "2.25rem",
+          margin: "heading",
+        },
+        h4_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "3.5rem",
+          margin: "display_heading",
+        },
+        h4: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "2rem",
+          margin: "heading",
+        },
+        h5_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "3rem",
+          margin: "display_heading",
+        },
+        h5: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "1.75rem",
+          margin: "heading",
+        },
+        h6_display: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "100",
+          font_size: "2.5rem",
+          margin: "display_heading",
+        },
+        h6: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "500",
+          font_size: "1.5rem",
+          margin: "heading",
+        },
+        body_large: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "300",
+          font_size: "1.5rem",
+          margin: "paragraph",
+        },
+        body: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "300",
+          font_size: "1rem",
+          margin: "paragraph",
+        },
+        small: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "300",
+          font_size: "0.8rem",
+          margin: "paragraph",
+        },
+        badge: {
+          font_family: "'Mynerve', cursive",
+          font_weight: "300",
+          font_size: "0.6rem",
+          margin: "zero",
+        },
+        code: {
+          font_family: "monospace",
+          font_weight: "400",
+          font_size: "1rem",
+          margin: "zero",
+        },
+      };
+
+      window.animation_speeds = {
+        fast: "100ms",
+        slow: "300ms",
+        very_slow: "1500ms",
+      };
+    </script>
+    <script src="/dist/bundle.min.js"></script>
+  </head>
+  <body>
+    <l-templated use="/tutorial/layout.template.html" remote>
+      <l-container>
+        <l-row>
+          <l-col xs="12">
+            <t-heading id="text" level="h2">
+              <t-localised>Themeing</t-localised>
+            </t-heading>
+            <t-paragraph>
+              This page is themed live using the themeing capabilities of this
+              library. Simply include a script tag before the script tag
+              containing bakery and change the properties on the window to set
+              the theme. See some examples below and check out the page source
+              to see how it is done.
+            </t-paragraph>
+            <t-paragraph>
+              While all options are present on the source for this page, they do
+              not all need to be included. Any that are not included will be
+              taken from the default. This is true for sub properties as well.
+            </t-paragraph>
+          </l-col>
+          <l-col xs="12" md="6" lg="4">
+            <d-card>
+              <t-localised slot="title">This is a title</t-localised>
+              <t-paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                fermentum massa odio, ac molestie lacus rutrum a. Praesent
+                pellentesque eget metus sed ullamcorper. Lorem ipsum dolor sit
+                amet, consectetur adipiscing elit. Nam sit amet orci quis risus
+                gravida condimentum a a nulla. Morbi nec posuere elit. Nullam
+                nec ante euismod, dignissim magna non, iaculis risus. Nunc
+                fringilla lobortis lorem, nec tristique nunc venenatis at. Donec
+                volutpat interdum purus, ac gravida augue sodales non. Morbi
+                aliquam massa eu porta elementum. Vivamus id ligula felis.
+                Mauris luctus lacus pharetra purus eleifend, id ullamcorper urna
+                placerat. Donec volutpat quam sed rutrum tincidunt. Aliquam id
+                eleifend metus, a accumsan nibh. Vivamus viverra tincidunt felis
+                in fermentum.
+              </t-paragraph>
+            </d-card>
+          </l-col>
+          <l-col xs="12" md="6" lg="4">
+            <l-row no-padding>
+              <l-col xs="12">
+                <f-input>Hello world</f-input>
+              </l-col>
+              <l-col xs="12">
+                <f-numeric>Hello world</f-numeric>
+              </l-col>
+              <l-col xs="12">
+                <f-multiselect>
+                  <t-localised slot="label">Hello world</t-localised>
+                  <option value="opt1">First Option</option>
+                  <option value="opt2">Second Option</option>
+                  <option value="opt3">Third Option</option>
+                  <option value="opt4">Fourth Option</option>
+                </f-multiselect>
+              </l-col>
+              <l-col xs="12">
+                <f-button>Hello world</f-button>
+              </l-col>
+            </l-row>
+          </l-col>
+          <l-col xs="12" md="6" lg="4">
+            <d-listgroup>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                scelerisque in lectus quis ultricies. Suspendisse pretium rutrum
+                augue, nec tristique.
+              </span>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                scelerisque in lectus quis ultricies. Suspendisse pretium rutrum
+                augue, nec tristique.
+              </span>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                scelerisque in lectus quis ultricies. Suspendisse pretium rutrum
+                augue, nec tristique.
+              </span>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                scelerisque in lectus quis ultricies. Suspendisse pretium rutrum
+                augue, nec tristique.
+              </span>
+            </d-listgroup>
+          </l-col>
+        </l-row>
+      </l-container>
+    </l-templated>
+    <div style="position: fixed; bottom: 1rem; left: 1rem">
+      <f-button type="button" id="toc" colour="primary">
+        <t-icon name="menu-3" size="body_large" colour="primary" text></t-icon>
+      </f-button>
+    </div>
+  </body>
+</html>

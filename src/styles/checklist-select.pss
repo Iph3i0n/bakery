@@ -42,7 +42,8 @@
   cursor: default;
 }
 
-.option:hover {
+.option:hover,
+.option.hover {
   theme.colour("surface", 0.9);
 }
 
@@ -50,7 +51,8 @@
   theme.colour("surface", 0.7);
 }
 
-.option:hover .toggle {
+.option:hover .toggle,
+.option.hover .toggle {
   theme.border("body", "contrast");
 }
 
@@ -102,22 +104,19 @@
 }
 
 .item .toggle {
-  position: relative;
-  width: 1em;
-  height: 1em;
+  width: 1rem;
+  height: 1rem;
   theme.border("body");
   margin-right: 1rem;
-  theme.colour("surface");
+  theme.colour("body");
   transform: scale(1);
   theme.transition("fast", "border-color", "transform");
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .item .toggle t-icon {
-  position: absolute;
-  top: ":spec.borders.body.width";
-  left: ":spec.borders.body.width";
-  bottom: ":spec.borders.body.width";
-  right: ":spec.borders.body.width";
   opacity: 0;
   theme.transition("fast", "opacity");
   theme.animation("scale-out", "fast");

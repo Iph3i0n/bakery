@@ -1,6 +1,7 @@
 @js const theme = require("./src/theme.ts");
+@js const spec = require("./src/spec.ts");
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;500&family=Roboto+Mono&display=swap");
+@import ":`url('${spec.font_url}')`";
 
 body {
   margin: 0;
