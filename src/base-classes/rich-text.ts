@@ -193,6 +193,7 @@ export default abstract class RichText extends FormElement {
     const reader = new FileReader();
     reader.addEventListener("load", () => {
       this.#exec("insertImage", reader.result);
+      this.Format = "p";
     });
 
     const file = await get_file();
@@ -200,8 +201,10 @@ export default abstract class RichText extends FormElement {
 
     const event = new ImageEvent(file);
     this.dispatchEvent(event);
-    if (event.URL) this.#exec("insertImage", await event.URL);
-    else reader.readAsDataURL(file);
+    if (event.URL) {
+      this.#exec("insertImage", await event.URL);
+      this.Format = "p";
+    } else reader.readAsDataURL(file);
   }
 
   get FormatOptions() {
