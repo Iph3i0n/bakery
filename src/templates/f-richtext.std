@@ -1,5 +1,9 @@
 <s:meta name="f-richtext">
   A multi line rich text input form element. Must be placed within a `form` tag.
+  To properly support images, it is recommended to listen for `ImageAdded`
+  events. Setting the `URL` property on the event to the promise of a string or
+  a string itself will set the URL of the image to that. If this is not present
+  then a Data URL will be generated.
   <attr name="type" type="keyboard" default="text">
     The keyboard to be used for the input when using a mobile device.
     <ref
@@ -27,6 +31,16 @@
     <key name="Value" type="string | boolean | File | undefined">
       The current value of the form element.
     </key>
+  </event>
+  <event name="ImageAdded" type="ImageAddedEvent">
+    Fired when the user uploads an iamge. If the URL property is set to a
+    promise of a string then that will be used to set the URL. If not then a
+    data URL will be generated.
+    <key name="URL" type="Promise<string> | string } undefined">
+      The promise of the data URL of the image. A data URL will be generated if
+      this is not set.
+    </key>
+    <key name="File" type="File">The file that has been uploaded.</key>
   </event>
   <slot>The label text</slot>
   <slot name="help">The small help text at the bottom of the input.</slot>
@@ -301,6 +315,10 @@
 
       <button type="button" on:click="() => self.Linkify()">
         <t-icon name="link" colour="surface" size="body" plain text></t-icon>
+      </button>
+
+      <button type="button" on:click="() => self.Image()">
+        <t-icon name="image" colour="surface" size="body" text></t-icon>
       </button>
     </div>
   </div>

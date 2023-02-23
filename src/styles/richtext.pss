@@ -49,3 +49,8 @@
 .content a {
   theme.textcolour("primary");
 }
+
+.content img {
+  theme.border("body");
+  theme.shadow("body");
+}

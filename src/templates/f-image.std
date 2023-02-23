@@ -31,6 +31,8 @@
   <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
   <import use="link_css" from="../fetch-resources.ts" />
+  <import use="on_key_handler" from="../events/keyboard.ts" />
+  <import use="get_file" from="../html/file.ts" />
   <aria role="input" />
   <form />
 </s:meta>
@@ -75,12 +77,33 @@
     if (old !== dragging) self.dispatchEvent(new ShouldRender());
     clear();
   });
+
+  self.addEventListener("click", async (e) => {
+    const file = await get_file();
+    self.value = file;
+    if (file) reader.readAsDataURL(file);
+  });
+
+  self.addEventListener(
+    "keydown",
+    on_key_handler({
+      Enter: async () => {
+        const file = await get_file();
+        self.value = file;
+        if (file) reader.readAsDataURL(file);
+      },
+    })
+  );
 </script>
 
 <style>
   @js const theme = require("../theme.ts");
   @js const spec = require("../spec.ts");
   @insert ../styles/input.pss;
+
+  :host {
+    cursor: pointer;
+  }
 
   .label {
     overflow: hidden;

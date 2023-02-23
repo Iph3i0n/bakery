@@ -2,6 +2,18 @@ import "./selection-polyfill.js";
 import { CreateRef, LoadedEvent, ShouldRender } from "../deps.ts";
 import FormElement from "./form.ts";
 import Slotted from "../toggleable-slot.ts";
+import { get_file } from "../html/file.ts";
+
+class ImageEvent extends Event {
+  readonly #file: File;
+
+  constructor(file: File) {
+    super("ImageAdded", { bubbles: false, cancelable: false });
+    this.#file = file;
+  }
+
+  URL: Promise<string> | string | undefined = undefined;
+}
 
 export default abstract class RichText extends FormElement {
   readonly #editor_ref = CreateRef<HTMLDivElement>();
@@ -175,6 +187,21 @@ export default abstract class RichText extends FormElement {
       document.createTextNode(anchor.textContent ?? ""),
       anchor
     );
+  }
+
+  async Image() {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.#exec("insertImage", reader.result);
+    });
+
+    const file = await get_file();
+    if (!file) return;
+
+    const event = new ImageEvent(file);
+    this.dispatchEvent(event);
+    if (event.URL) this.#exec("insertImage", await event.URL);
+    else reader.readAsDataURL(file);
   }
 
   get FormatOptions() {
