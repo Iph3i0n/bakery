@@ -1,8 +1,8 @@
-export function get_file() {
+export function get_file(accept = "image/*") {
   return new Promise<File | undefined>((res) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = "image/*";
+    input.accept = accept;
 
     input.onchange = () => {
       if (!input.files) res(undefined);

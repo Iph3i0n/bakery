@@ -28,6 +28,7 @@
     "pre",
     "ul",
     "ol",
+    "img",
   ];
 
   const allowed_children = ["b", "i", "a", "u", "li", "s"];

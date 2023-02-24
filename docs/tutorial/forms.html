@@ -81,6 +81,13 @@
         image: {
           basic: e("f-image", { name: "test-image" }, "Hello World"),
         },
+        file: {
+          basic: e(
+            "f-file",
+            { name: "test-file", multiple: true },
+            "Hello World"
+          ),
+        },
         button: {
           basic: e("f-button", { type: "button" }, "Hello World"),
           group: e(
@@ -227,6 +234,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="image.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="file.basic"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="button.basic"></div>

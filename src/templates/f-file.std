@@ -1,5 +1,5 @@
-<s:meta name="f-image">
-  A upload box for images. Must be placed within a `form` tag.
+<s:meta name="f-file">
+  An upload box for one or more files. Must be placed within a `form` tag.
   <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
   <attr name="name">
     The name of the value field in the form data. Should be unique.
@@ -8,11 +8,14 @@
     If set then the form will not be submittable until the element field a
     value.
   </attr>
-  <attr name="height" type="string" default="12rem">
-    Height of the input element on screen. Useful for when uploading large
-    images.
+  <attr name="multiple" type="boolean">
+    If set then multiple files may be uploaded. If not then only one file may be
+    uploaded.
   </attr>
-  <event name="ValueChanged" type="ImageValueChangedEvent">
+  <attr name="accept" type="string" default="*">
+    The accepted mime types. Uses the same schema as the HTML input element.
+  </attr>
+  <event name="ValueChanged" type="FileValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.
     <key name="Value" type="string | boolean | File | File[] | undefined">
@@ -34,6 +37,7 @@
   <import use="link_css" from="../fetch-resources.ts" />
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <import use="get_file" from="../html/file.ts" />
+  <import use="ConvertSize" from="../deps.ts" />
   <aria role="input" />
   <form />
 </s:meta>
@@ -43,17 +47,24 @@
   let dragging = false;
   const slot = slotted();
 
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    preview = reader.result;
-    self.dispatchEvent(new ShouldRender());
-  });
+  /** @type {Array<File>} */
+  let files = [];
+
+  /** @param {Array<File>} input */
+  function update_value(input) {
+    if (self.multiple) {
+      files = [...files, ...input];
+      self.value = files;
+    } else {
+      files = [input[0]];
+      self.value = files[0];
+    }
+  }
 
   self.addEventListener("drop", (e) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    self.value = file;
-    if (file) reader.readAsDataURL(file);
+
+    update_value([...e.dataTransfer.files]);
   });
 
   function debounce(func, timeout = 300) {
@@ -80,21 +91,32 @@
   });
 
   self.addEventListener("click", async (e) => {
-    const file = await get_file();
-    self.value = file;
-    if (file) reader.readAsDataURL(file);
+    update_value([await get_file(self.accept)]);
   });
 
   self.addEventListener(
     "keydown",
     on_key_handler({
       Enter: async () => {
-        const file = await get_file();
-        self.value = file;
-        if (file) reader.readAsDataURL(file);
+        update_value([await get_file(self.accept)]);
       },
     })
   );
+
+  function remove(file) {
+    /** @param {Event} e */
+    return (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      files = files.filter((f) => f !== file);
+
+      if (self.multiple) {
+        self.value = files;
+      } else {
+        self.value = files[0];
+      }
+    };
+  }
 </script>
 
 <style>
@@ -126,12 +148,18 @@
 
   .droparea {
     position: relative;
-    min-height: ":self.height";
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     theme.colour("surface");
     theme.transition("slow", "background-color");
+  }
+
+  @if files.length === 0 {
+    .droparea {
+      min-height: 4rem;
+    }
   }
 
   @if dragging {
@@ -140,18 +168,52 @@
     }
   }
 
-  .droparea img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    max-height: 100%;
-  }
-
   .droparea t-icon {
     opacity: 0.7;
+  }
+
+  .droparea .file-display t-icon {
+    opacity: 1;
+  }
+
+  .file-display {
+    theme.border("body", undefined, "bottom");
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    theme.text("body", "no-margin");
+    flex: 1;
+    theme.padding("block");
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .file-display:last-child {
+    border-bottom: none;
+  }
+
+  .file-name {
+    theme.margin("block", "left", "right");
+    flex: 1;
+  }
+
+  .delete-button {
+    cursor: pointer;
+    theme.border("small");
+    theme.colour("body");
+    theme.padding("super_small");
+    theme.transition("fast", "color", "background-color");
+  }
+
+  .delete-button:hover,
+  .delete-button:focus {
+    theme.colour("body", 0.9);
+  }
+
+  .size {
+    theme.text("small", "no-margin");
+    opacity: 0.7;
+    theme.margin("small_block", "left", "right");
   }
 </style>
 
@@ -160,8 +222,23 @@
     <slot></slot>
   </div>
   <div class="droparea">
-    <img src=":preview" />
-    <t-icon name="upload-2" colour="body" size="h1_display" text></t-icon>
+    <s:for subject=":files" key="file">
+      <div class="file-display">
+        <t-icon name="file" colour="surface" size="body" text></t-icon>
+        <div class="file-name">
+          <s:text use=":file.name" />
+          <span class="size">
+            <s:text use=":ConvertSize(file.size, { accuracy: 2 })" />
+          </span>
+        </div>
+        <button type="button" class="delete-button" on:click="remove(file)">
+          <t-icon name="delete-bin" colour="surface" size="body" text></t-icon>
+        </button>
+      </div>
+    </s:for>
+    <s:if check=":files.length === 0">
+      <t-icon name="upload-2" colour="body" size="h1" text></t-icon>
+    </s:if>
   </div>
 </div>
 <s:if check=":self.should_show_validation">

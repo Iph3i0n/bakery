@@ -28,9 +28,10 @@
   <event name="ValueChanged" type="InputValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.
-    <key name="Value" type="string | boolean | File | undefined">
+    <key name="Value" type="string | boolean | File | File[] | undefined">
       The current value of the form element.
     </key>
+    <key name="Name" type="string">The name of the input.</key>
   </event>
   <slot>The label text</slot>
   <slot name="help">The small help text at the bottom of the input.</slot>

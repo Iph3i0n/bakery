@@ -7,7 +7,7 @@ import ContextFetcher from "./context-fetcher.ts";
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
 const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";
 
-type FormElementValue = string | File | boolean | undefined;
+type FormElementValue = string | File | File[] | boolean | undefined;
 type FormValue = Record<string, FormElementValue>;
 
 class RegisterFormElementEvent extends Event {
@@ -209,15 +209,21 @@ export abstract class FormManagerElement extends BakeryBase {
 }
 
 class ValueChangedEvent extends Event {
+  readonly #key: string;
   readonly #value: FormElementValue;
 
-  constructor(value: FormElementValue) {
-    super("ValueChanged", { bubbles: false, cancelable: false });
+  constructor(key: string, value: FormElementValue) {
+    super("ValueChanged", { bubbles: true, cancelable: false });
+    this.#key = key;
     this.#value = value;
   }
 
   get Value() {
     return this.#value;
+  }
+
+  get Name() {
+    return this.#key;
   }
 }
 
@@ -232,6 +238,7 @@ export default abstract class FormElement extends ContextFetcher {
   abstract tabindex: string;
   abstract required: boolean;
   abstract validate: string;
+  abstract name: string;
 
   constructor() {
     super();
@@ -297,17 +304,10 @@ export default abstract class FormElement extends ContextFetcher {
     return this.#value;
   }
 
-  set value(v: string | boolean | undefined | File) {
+  set value(v: FormElementValue) {
     this.#value = v;
     this.dispatchEvent(new ShouldRender());
-    this.dispatchEvent(new ValueChangedEvent(v));
-  }
-
-  get name() {
-    const result = this.getAttribute("name");
-
-    if (!result) throw new Error("Form elements must have a name");
-    return result;
+    this.dispatchEvent(new ValueChangedEvent(this.name, v));
   }
 
   submit() {
