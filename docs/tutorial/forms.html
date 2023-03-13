@@ -8,6 +8,11 @@
       window.CODE_EXAMPLES = {
         text: {
           basic: e("f-input", { name: "test" }, "Hello World"),
+          password: e(
+            "f-input",
+            { name: "test", sensitive: true },
+            "Hello World"
+          ),
         },
         select: {
           basic: e(
@@ -219,6 +224,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="text.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.password"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="toggle.basic"></div>

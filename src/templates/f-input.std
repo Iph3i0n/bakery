@@ -51,11 +51,6 @@
 </s:meta>
 
 <script>
-  link_css(
-    "https://cdn.rawgit.com/noppa/text-security/master/dist/text-security.css",
-    self
-  );
-
   const slot = slotted();
   const textarea = CreateRef();
 
@@ -64,21 +59,21 @@
   });
 
   self.addEventListener(RenderEvent.Key, () => {
-    textarea.current.innerHTML = self.value ?? "";
+    textarea.current.value = self.value ?? "";
   });
 
   self.addEventListener(
     "keydown",
     on_key_handler({
       Enter: () => {
-        self.value = textarea.current.innerText.replace(/\n/gm, "");
+        self.value = textarea.current.value;
         self.submit();
       },
     })
   );
 
   function update_value() {
-    self.value = textarea.current.innerText.replace(/\n/gm, "");
+    self.value = textarea.current.value;
   }
 </script>
 <style>
@@ -89,16 +84,13 @@
   <span class=":c('label-text', ['populated', self.focused || self.value])">
     <slot></slot>
   </span>
-  <div
-    class=":c('content', ['sensitive', self.sensitive])"
-    contenteditable="plaintext-only"
+  <input
+    class="content"
     s:ref="textarea"
     on:blur="update_value"
-    s:vdom="ignore"
+    type=":self.sensitive ? 'password' : (self.type ?? 'text')"
     inputmode=":self.type ?? 'text'"
-  >
-    <s:text use=":self.value ?? ''"></s:text>
-  </div>
+  />
 </div>
 <s:if check=":self.should_show_validation">
   <s:if check=":self.is_bad_empty">

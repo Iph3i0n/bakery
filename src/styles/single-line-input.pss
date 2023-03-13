@@ -29,11 +29,9 @@
   width: 100%;
   margin: 0;
   height: 1.2em;
-}
-
-.content.sensitive {
-  font-family: "text-security-disc";
-  -webkit-text-security: disc;
+  border: none;
+  background: transparent;
+  appearance: none;
 }
 
 .content br {
