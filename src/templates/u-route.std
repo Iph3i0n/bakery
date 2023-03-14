@@ -14,6 +14,12 @@
   <member name="params" type="Record<string, string>" readonly>
     Readonly property to get the current params from a match.
   </member>
+  <member name="Push" type="(url: string) => void" readonly>
+    Navigate to a URL.
+  </member>
+  <member name="Replace" type="(url: string) => void" readonly>
+    Navigate to a URL without adding to the history.
+  </member>
   <event name="MatchChanged" type="RouterMatchChangedEvent">
     Fired when the URL changes, causing the match state to change.
     <key name="Matches" type="boolean">Whether the current router matches</key>
