@@ -24,14 +24,15 @@
 }
 
 .content {
-  theme.text("body");
+  theme.text("body", "no-margin");
   display: block;
   width: 100%;
+  padding: 0;
   margin: 0;
-  height: 1.2em;
   border: none;
   background: transparent;
-  appearance: none;
+  overflow: visible;
+  line-height: 1;
 }
 
 .content br {
