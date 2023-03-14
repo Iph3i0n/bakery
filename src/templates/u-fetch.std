@@ -71,7 +71,7 @@
     self.dispatchEvent(new ShouldRender());
   };
 
-  document.addEventListener("navigation-event", handler);
+  document.addEventListener("NavigationEvent", handler);
   document.addEventListener("data-invalidated", () => {
     existing_route = "";
     handler();

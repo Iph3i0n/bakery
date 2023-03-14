@@ -11,9 +11,20 @@
     If set then only exact matches will be allowed. Useful for home pages and
     landing pages.
   </attr>
+  <member name="params" type="Record<string, string>" readonly>
+    Readonly property to get the current params from a match.
+  </member>
+  <event name="MatchChanged" type="RouterMatchChangedEvent">
+    Fired when the URL changes, causing the match state to change.
+    <key name="Matches" type="boolean">Whether the current router matches</key>
+    <key name="Params" type="Record<string, string>">
+      If there is a match and the router contains parameters then the parameters
+      are here. If not then an empty object.
+    </key>
+  </event>
   <base use="Router" from="../base-classes/router.ts" default />
 </s:meta>
 
-<s:if check=":self.Matches">
+<s:if check=":self.Matches.match">
   <slot></slot>
 </s:if>

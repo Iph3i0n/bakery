@@ -1,13 +1,35 @@
-import { ShouldRender } from "../deps.ts";
+import { ShouldRender, RenderEvent } from "../deps.ts";
 import PaginationEvent from "../pagination.ts";
 import BakeryBase from "./main.ts";
 import Mustache from "https://cdn.jsdelivr.net/npm/mustache/mustache.js";
 
 const DATA_KEY = "routing_data";
 
+const NavigationEventKey = "NavigationEvent";
+
 class NavigateEvent extends Event {
   constructor() {
-    super("navigation-event");
+    super(NavigationEventKey);
+  }
+}
+
+class MatchEvent extends Event {
+  readonly #matchs: boolean;
+  readonly #params: Record<string, string>;
+
+  constructor(matches: boolean, params: Record<string, string>) {
+    super("MatchChanged", { bubbles: true, composed: true });
+
+    this.#matchs = matches;
+    this.#params = params;
+  }
+
+  get Matches() {
+    return this.#matchs;
+  }
+
+  get Params() {
+    return this.#params;
   }
 }
 
@@ -51,14 +73,30 @@ export default abstract class Router extends BakeryBase {
   abstract path: string;
   abstract exact: boolean;
 
+  #previous = false;
+
   constructor() {
     super();
-    document.addEventListener("navigation-event", () =>
+    document.addEventListener(NavigationEventKey, () =>
       this.dispatchEvent(new ShouldRender())
     );
     self.addEventListener("popstate", () =>
       this.dispatchEvent(new ShouldRender())
     );
+
+    self.addEventListener(RenderEvent.Key, () => {
+      const current = this.Matches;
+      if (current.match)
+        this.provide_context(DATA_KEY, {
+          used: current.used,
+          params: current.params,
+        });
+
+      if (current.match === this.#previous) return;
+
+      this.#previous = current.match;
+      this.dispatchEvent(new MatchEvent(current.match, current.params));
+    });
   }
 
   static Push(url: string) {
@@ -79,6 +117,10 @@ export default abstract class Router extends BakeryBase {
     Router.Replace(url);
   }
 
+  get params() {
+    return this.Matches.params;
+  }
+
   get Matches() {
     // deno-lint-ignore no-explicit-any
     const existing: any = this.use_context((ctx) => ctx[DATA_KEY]);
@@ -89,10 +131,12 @@ export default abstract class Router extends BakeryBase {
       .filter((p) => p)
       .slice(used);
     const check_parts = this.path.split("/").filter((p) => p);
-    if (path_parts.length < check_parts.length) return false;
+    if (path_parts.length < check_parts.length)
+      return { match: false, params: {} };
 
     const exact = this.exact;
-    if (exact && path_parts.length !== check_parts.length) return false;
+    if (exact && path_parts.length !== check_parts.length)
+      return { match: false, params: {} };
 
     for (let i = 0; i < check_parts.length; i++) {
       const check_part = check_parts[i];
@@ -101,14 +145,13 @@ export default abstract class Router extends BakeryBase {
       if (check_part.startsWith(":"))
         final_params[check_part.replace(":", "")] = path_part;
       else if (path_part === check_part) continue;
-      else return false;
+      else return { match: false, params: {} };
     }
 
-    this.provide_context(DATA_KEY, {
-      used: used + check_parts.length,
+    return {
+      match: true,
       params: final_params,
-    });
-
-    return true;
+      used: used + check_parts.length,
+    };
   }
 }

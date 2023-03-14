@@ -129,7 +129,7 @@
     </s:for>
   </thead>
   <tbody>
-    <s:for subject=":self.use_string_context('use' ?? [])" key="row_data">
+    <s:for subject=":self.use_string_context('use') ?? []" key="row_data">
       <s:for subject=":body_schema" key="row">
         <tr>
           <s:for subject=":row.content" key="cell">
