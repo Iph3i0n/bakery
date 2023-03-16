@@ -49,12 +49,26 @@
     self.dispatchEvent(new ShouldRender());
   });
 
-  self.addEventListener("drop", (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
+  $on_drop: {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
     self.value = file;
     if (file) reader.readAsDataURL(file);
-  });
+  }
+
+  $on_dragover: {
+    event.preventDefault();
+    const old = dragging;
+    dragging = true;
+    if (old !== dragging) self.should_render();
+    clear();
+  }
+
+  $on_click: {
+    const file = await get_file();
+    self.value = file;
+    if (file) reader.readAsDataURL(file);
+  }
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -69,20 +83,6 @@
   const clear = debounce(() => {
     dragging = false;
     self.dispatchEvent(new ShouldRender());
-  });
-
-  self.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const old = dragging;
-    dragging = true;
-    if (old !== dragging) self.dispatchEvent(new ShouldRender());
-    clear();
-  });
-
-  self.addEventListener("click", async (e) => {
-    const file = await get_file();
-    self.value = file;
-    if (file) reader.readAsDataURL(file);
   });
 
   self.addEventListener(

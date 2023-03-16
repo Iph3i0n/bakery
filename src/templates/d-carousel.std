@@ -23,7 +23,7 @@
   let current = 0;
   let context = "";
 
-  self.addEventListener(LoadedEvent.Key, () => {
+  $load: {
     slots = [...self.children]
       .map((d) => ({
         slot: d.getAttribute("slot"),
@@ -35,8 +35,8 @@
         "A child of the carousel is without slot. This element will not be visible"
       );
 
-    self.dispatchEvent(new ShouldRender());
-  });
+    self.should_render();
+  }
 
   function set_current(slide, ctx) {
     return () => {

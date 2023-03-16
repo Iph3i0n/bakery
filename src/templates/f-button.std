@@ -41,25 +41,6 @@
 <script>
   self.tabIndex = 0;
 
-  function activate() {
-    if (self.type === "button") return;
-    else if (self.type === "submit") {
-      const form = FindForm(self);
-      if (!form) throw new Error("Cannot use a submit outside of a form");
-      form.Submit();
-    } else if (self.href) {
-      const url = this.Render(self.href);
-      if (self.target)
-        window.open(url, self.target, self.private ? "noreferrer" : undefined);
-      else if (self.spa)
-        if (self.replace) Router.Replace(url);
-        else Router.Push(url);
-      else window.location.href = url;
-    }
-  }
-
-  self.addEventListener("click", activate);
-
   self.addEventListener(
     "keyup",
     on_key_handler({
@@ -92,12 +73,29 @@
     return self.previousElementSibling?.tagName !== "F-BUTTON";
   };
 
-  self.addEventListener(RenderEvent.Key, () => {
+  $on_click: {
+    if (self.type === "button") return;
+    else if (self.type === "submit") {
+      const form = FindForm(self);
+      if (!form) throw new Error("Cannot use a submit outside of a form");
+      form.Submit();
+    } else if (self.href) {
+      const url = this.Render(self.href);
+      if (self.target)
+        window.open(url, self.target, self.private ? "noreferrer" : undefined);
+      else if (self.spa)
+        if (self.replace) Router.Replace(url);
+        else Router.Push(url);
+      else window.location.href = url;
+    }
+  }
+
+  $after: {
     if (is_last_button()) return;
     while (self.nextSibling instanceof Text) {
       self.nextSibling.remove();
     }
-  });
+  }
 </script>
 
 <style>

@@ -54,13 +54,13 @@
   const slot = slotted();
   const textarea = CreateRef();
 
-  self.addEventListener("focus", () => {
+  $on_focus: {
     textarea.current.focus();
-  });
+  }
 
-  self.addEventListener(RenderEvent.Key, () => {
+  $after: {
     textarea.current.value = self.value ?? "";
-  });
+  }
 
   self.addEventListener(
     "keydown",

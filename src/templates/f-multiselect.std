@@ -88,10 +88,10 @@
     })
   );
 
-  self.addEventListener("blur", () => {
+  $on_blur: {
     open = "";
-    self.dispatchEvent(new ShouldRender());
-  });
+    self.should_render();
+  }
 </script>
 <style>
   @js const theme = require("../theme.ts");

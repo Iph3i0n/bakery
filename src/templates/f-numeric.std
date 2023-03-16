@@ -69,9 +69,9 @@
     return result.substring(result.length - 1);
   };
 
-  self.addEventListener("focus", () => {
+  $on_focus: {
     textarea.current.focus();
-  });
+  }
 
   const multiplier = () => Math.pow(10, parseInt(self["decimal-places"]));
 
@@ -87,8 +87,8 @@
     self.value = current_text();
   }
 
-  self.addEventListener("keypress", (e) => {
-    e.preventDefault();
+  $on_keypress: {
+    event.preventDefault();
     if (e.key === "-" && !self["no-negative"]) {
       current -= current * 2;
       self.value = current_text();
@@ -110,7 +110,7 @@
 
     self.value = current_text();
     self.dispatchEvent(new ShouldRender());
-  });
+  }
 
   self.addEventListener(
     "keydown",

@@ -61,11 +61,22 @@
     }
   }
 
-  self.addEventListener("drop", (e) => {
-    e.preventDefault();
+  $on_drop: {
+    event.preventDefault();
+    update_value([...event.dataTransfer.files]);
+  }
 
-    update_value([...e.dataTransfer.files]);
-  });
+  $on_dragover: {
+    event.preventDefault();
+    const old = dragging;
+    dragging = true;
+    if (old !== dragging) self.should_render();
+    clear();
+  }
+
+  $on_click: {
+    update_value([await get_file(self.accept)]);
+  }
 
   function debounce(func, timeout = 300) {
     let timer;
@@ -80,18 +91,6 @@
   const clear = debounce(() => {
     dragging = false;
     self.dispatchEvent(new ShouldRender());
-  });
-
-  self.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const old = dragging;
-    dragging = true;
-    if (old !== dragging) self.dispatchEvent(new ShouldRender());
-    clear();
-  });
-
-  self.addEventListener("click", async (e) => {
-    update_value([await get_file(self.accept)]);
   });
 
   self.addEventListener(

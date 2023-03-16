@@ -87,11 +87,11 @@
 
   let open_month;
 
-  self.addEventListener(LoadedEvent.Key, () => {
+  $load: {
     if (!self.value) self.value = new DateFunctions(new Date()).value_string;
     open_month = current().start_of_day.start_of_month;
     self.dispatchEvent(new ShouldRender());
-  });
+  }
 
   const slot = slotted();
 </script>
