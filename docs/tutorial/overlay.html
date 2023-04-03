@@ -23,6 +23,30 @@
                 e("t-paragraph", {}, "Modal Content")
               )
             ),
+            footer: e(
+              "div",
+              {},
+              e(
+                "f-button",
+                { type: "button", id: "footer-modal-trigger" },
+                "Open the modal"
+              ),
+              e(
+                "o-modal",
+                { trigger: "#footer-modal-trigger", size: "medium" },
+                e("span", { slot: "title" }, "Modal Title"),
+                e("t-paragraph", {}, "Modal Content"),
+                e(
+                  "div",
+                  { slot: "footer" },
+                  e(
+                    "f-button",
+                    { colour: "primary", type: "button" },
+                    "Hello World"
+                  )
+                )
+              )
+            ),
           },
           offcanvas: {
             basic: e(
@@ -98,6 +122,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="overlay.modal.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="overlay.modal.footer"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="overlay.offcanvas.basic"></div>

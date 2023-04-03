@@ -97,9 +97,6 @@
         self.dispatchEvent(new ShouldRender());
       });
     }
-
-    const slot = self.root.querySelector("slot[name=footer]");
-    slot.addEventListener("slotchange", on_footer);
   });
 </script>
 <style>
@@ -168,7 +165,7 @@
       <slot></slot>
     </div>
     <div class="footer">
-      <slot name="footer"></slot>
+      <slot name="footer" on:slotchange="on_footer"></slot>
     </div>
   </div>
 </div>
