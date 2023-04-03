@@ -1,5 +1,5 @@
 import "./selection-polyfill.js";
-import { CreateRef, LoadedEvent, ShouldRender } from "../deps.ts";
+import { CreateRef, LoadedEvent, PropsEvent, ShouldRender } from "../deps.ts";
 import FormElement from "./form.ts";
 import Slotted from "../toggleable-slot.ts";
 import { get_file } from "../html/file.ts";
@@ -59,6 +59,7 @@ export default abstract class RichText extends FormElement {
     super();
 
     this.addEventListener(LoadedEvent.Key, () => {
+      if (this.prefill) this.#editor.innerHTML = this.prefill;
       this.#editor.addEventListener("input", (e) => {
         const target = e.target;
         if (!(target instanceof Node)) return;
@@ -75,6 +76,13 @@ export default abstract class RichText extends FormElement {
           setTimeout(() => (this.Format = "p"), 0);
         }
       });
+    });
+
+    this.addEventListener(PropsEvent.Key, (e) => {
+      if (!this.#editor_ref.current) return;
+      if (!(e instanceof PropsEvent)) return;
+      if (e.Key !== "prefill") return;
+      this.#editor.innerHTML = e.Value;
     });
 
     document.addEventListener("selectchange", () => this.#update_state());
