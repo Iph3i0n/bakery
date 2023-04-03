@@ -260,11 +260,9 @@ export default abstract class FormElement extends ContextFetcher {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      let current_default = this.prefill
+      this.value = this.prefill
         ? this.use_string_context("prefill")?.toString() ?? this.prefill
         : undefined;
-
-      this.#value = current_default;
 
       const event = new RegisterFormElementEvent();
       this.dispatchEvent(event);
@@ -286,17 +284,15 @@ export default abstract class FormElement extends ContextFetcher {
       };
 
       this.#form.addEventListener(VALIDATION_KEY, on_validate);
+    });
 
-      this.addEventListener(RenderEvent.Key, () => {
-        const next_default = this.prefill
-          ? this.use_string_context("prefill")?.toString() ?? this.prefill
-          : undefined;
+    this.addEventListener(RenderEvent.Key, () => {
+      const next_default = this.prefill
+        ? this.use_string_context("prefill")?.toString() ?? this.prefill
+        : undefined;
 
-        if (next_default === current_default) return;
-
-        current_default = next_default;
-        this.#value = current_default;
-      });
+      if (next_default === this.#value) return;
+      this.value = next_default;
     });
   }
 
@@ -306,7 +302,7 @@ export default abstract class FormElement extends ContextFetcher {
 
   set value(v: FormElementValue) {
     this.#value = v;
-    this.dispatchEvent(new ShouldRender());
+    this.should_render();
     this.dispatchEvent(new ValueChangedEvent(this.name, v));
   }
 
