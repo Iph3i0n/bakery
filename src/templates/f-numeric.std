@@ -55,7 +55,7 @@
   const slot = slotted();
   const textarea = CreateRef();
 
-  let current = 0;
+  let current = parseFloat(self.prefill || "0");
 
   const current_text = () => current.toFixed(parseInt(self["decimal-places"]));
 
@@ -87,14 +87,18 @@
     self.value = current_text();
   }
 
+  $props: {
+    if (event.Key === "prefill") current = parseFloat(self.prefill || "0");
+  }
+
   $on_keypress: {
     event.preventDefault();
-    if (event.key === "-" && !self["no-negative"]) {
+    if (e.key === "-" && !self["no-negative"]) {
       current -= current * 2;
       self.value = current_text();
     }
 
-    const subject = parseInt(event.key);
+    const subject = parseInt(e.key);
     if (isNaN(subject)) return;
 
     let is_negative = current < 0;
