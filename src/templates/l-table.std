@@ -66,6 +66,7 @@
 
 <style>
   @js const theme = require("../theme.ts");
+  @insert ../styles/custom-scrollbar.pss;
 
   :host {
     display: block;
@@ -73,6 +74,12 @@
     theme.colour("surface");
     theme.shadow("body");
     overflow: hidden;
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   table {
@@ -95,7 +102,7 @@
 
   th {
     text-align: left;
-    theme.text("body_large");
+    theme.text("body");
     theme.padding("small_block");
   }
 
@@ -111,39 +118,41 @@
   <slot name="head" on:slotchange="on_head"></slot>
 </div>
 
-<table>
-  <thead>
-    <s:for subject=":head_schema" key="row">
-      <tr>
-        <s:for subject=":row.content" key="cell">
-          <th
-            width=":cell.width"
-            height=":cell.height"
-            colspan=":cell.colspan"
-            rowspan=":cell.rowspan"
-          >
-            <s:text use=":cell.text"></s:text>
-          </th>
-        </s:for>
-      </tr>
-    </s:for>
-  </thead>
-  <tbody>
-    <s:for subject=":self.use_string_context('use') ?? []" key="row_data">
-      <s:for subject=":body_schema" key="row">
+<div class="table-container scrollable">
+  <table>
+    <thead>
+      <s:for subject=":head_schema" key="row">
         <tr>
           <s:for subject=":row.content" key="cell">
-            <td
+            <th
               width=":cell.width"
               height=":cell.height"
               colspan=":cell.colspan"
               rowspan=":cell.rowspan"
             >
-              <s:text use=":cell.use(row_data)"></s:text>
-            </td>
+              <s:text use=":cell.text"></s:text>
+            </th>
           </s:for>
         </tr>
       </s:for>
-    </s:for>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <s:for subject=":self.use_string_context('use') ?? []" key="row_data">
+        <s:for subject=":body_schema" key="row">
+          <tr>
+            <s:for subject=":row.content" key="cell">
+              <td
+                width=":cell.width"
+                height=":cell.height"
+                colspan=":cell.colspan"
+                rowspan=":cell.rowspan"
+              >
+                <s:text use=":cell.use(row_data)"></s:text>
+              </td>
+            </s:for>
+          </tr>
+        </s:for>
+      </s:for>
+    </tbody>
+  </table>
+</div>

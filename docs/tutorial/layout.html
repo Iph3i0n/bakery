@@ -75,18 +75,18 @@
                 "l-table",
                 { use: "table.content" },
                 e(
-                  "table-row",
+                  "l-table-row",
                   { slot: "head" },
-                  e("table-cell", {}, "Username"),
-                  e("table-cell", {}, "Email"),
-                  e("table-cell", {}, "Date of Birth")
+                  e("l-table-cell", {}, "Username"),
+                  e("l-table-cell", {}, "Email"),
+                  e("l-table-cell", {}, "Date of Birth")
                 ),
                 e(
-                  "table-row",
+                  "l-table-row",
                   {},
-                  e("table-cell", { use: "row.username" }),
-                  e("table-cell", { use: "row.email" }),
-                  e("table-cell", { use: "row.dob" })
+                  e("l-table-cell", { use: "row.username" }),
+                  e("l-table-cell", { use: "row.email" }),
+                  e("l-table-cell", { use: "row.dob" })
                 )
               )
             ),
