@@ -93,12 +93,12 @@
 
   $on_keypress: {
     event.preventDefault();
-    if (e.key === "-" && !self["no-negative"]) {
+    if (event.key === "-" && !self["no-negative"]) {
       current -= current * 2;
       self.value = current_text();
     }
 
-    const subject = parseInt(e.key);
+    const subject = parseInt(event.key);
     if (isNaN(subject)) return;
 
     let is_negative = current < 0;
