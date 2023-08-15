@@ -330,9 +330,9 @@
     ]
   },
   "package": {
-    "name": "@paulpopat/bakery",
+    "name": "@paulthomastaylor/bakery",
     "scripts": {},
-    "author": "Paul Popat",
+    "author": "Paul Taylor",
     "license": "ISC",
     "repository": {
       "type": "git",
@@ -342,7 +342,7 @@
     "bugs": {
       "url": "https://github.com/PaulPopat/bakery/issues"
     },
-    "homepage": "https://paulpopat.github.io/bakery/",
+    "homepage": "https://bakery.taylorhousehold.uk",
     "publishConfig": {
       "access": "public"
     },

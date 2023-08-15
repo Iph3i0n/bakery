@@ -37,7 +37,7 @@
     Fired when the user uploads an iamge. If the URL property is set to a
     promise of a string then that will be used to set the URL. If not then a
     data URL will be generated.
-    <key name="URL" type="Promise<string> | string } undefined">
+    <key name="URL" type="Promise<string> | string | undefined">
       The promise of the data URL of the image. A data URL will be generated if
       this is not set.
     </key>
