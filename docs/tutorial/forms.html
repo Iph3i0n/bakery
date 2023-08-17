@@ -43,6 +43,13 @@
             e("span", { slot: "label" }, "Hello world")
           ),
         },
+        code: {
+          basic: e(
+            "f-code",
+            { name: "test-code", language: "html", prefill: "<div>Hello world</div>" },
+            "Hello world"
+          ),
+        },
         singleselect: {
           basic: e(
             "f-singleselect",
@@ -276,6 +283,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="manager.validation"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="code.basic"></div>
           </l-col>
         </l-row>
       </l-container>

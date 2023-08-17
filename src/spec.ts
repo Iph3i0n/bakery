@@ -78,7 +78,7 @@ export const colours: Colours = Merge(
       },
       dark: {
         background: [22, 22, 26],
-        foreground: "#94a1b2",
+        foreground: "#fffffe",
       },
     },
     headline: {

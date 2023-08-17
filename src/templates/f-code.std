@@ -1,0 +1,178 @@
+<s:meta name="f-code">
+  A wrapper around monaco editor to make it work with bakery forms.
+  <attr name="prefill" optional>The default text for the code editor.</attr>
+  <attr name="disabled" type="boolean">If set then the field is readonly.</attr>
+  <attr name="language">The language that the editor should be set to</attr>
+  <attr name="height" default="10rem">The height of the editor</attr>
+  <attr name="name">
+    The name of the value field in the form data. Should be unique.
+  </attr>
+  <attr name="required" type="boolean">
+    If set then the form will not be submittable until the element field has a
+    value.
+  </attr>
+  <attr name="validate" optional>
+    A RegExp string used to evaluate the input. If there are no matches then the
+    field will be considered invalid and the form will not be submittable.
+  </attr>
+  <event name="MonacoLoaded" type="MonacoLoadedEvent">
+    Fired once monaco has been loaded to allow manipulation of the core monaco
+    object.
+    <key name="instance" type="any">
+      The monaco object. Not typed because types are not imported to this
+      project.
+    </key>
+  </event>
+  <event name="ValueChanged" type="CodeValueChangedEvent">
+    Fired when the input value is changed. Does not fire if the value changes
+    because the `prefill` value changes.
+    <key name="Value" type="string">The current value of the form element.</key>
+    <key name="Name" type="string">The name of the input.</key>
+  </event>
+  <slot>The label text</slot>
+  <slot name="help">The small help text at the bottom of the input.</slot>
+  <slot name="empty">
+    The error text for if the slot is empty and required is true.
+  </slot>
+  <slot name="invalid">
+    The error text for if validate is set and the RegExp does not match
+  </slot>
+  <base use="FormElement" from="../base-classes/form.ts" default />
+  <aria role="input" />
+  <form />
+</s:meta>
+
+<script>
+  import c from "../html/classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import { link_css, unsafe_import } from "../fetch-resources.ts";
+
+  const container = CreateRef();
+
+  link_css(
+    "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/editor/editor.main.css",
+    self
+  );
+
+  const slot = slotted();
+
+  class MonacoLoaded extends Event {
+    #instance;
+
+    constructor(instance) {
+      super("MonacoLoaded", { bubbles: true });
+      this.#instance = instance;
+    }
+
+    get instance() {
+      return this.#instance;
+    }
+  }
+
+  const target = document.createElement("div");
+  target.className = "main-content";
+
+  $load: {
+    if (!window.monaco || !window.require) {
+      await unsafe_import(
+        "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"
+      );
+      require.config({
+        paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs" },
+      });
+    }
+
+    container.current.appendChild(target);
+
+    require(["vs/editor/editor.main"], function () {
+      const editor = monaco.editor.create(target, {
+        value: self.prefill || "",
+        language: self.language,
+        minimap: { enabled: false },
+        theme: 'vs-dark'
+      });
+
+      editor.onDidChangeModelContent(() => {
+        self.value = editor.getValue();
+      });
+
+      self.dispatchEvent(new MonacoLoaded(editor));
+
+      self.addEventListener("ValueChanged", () => {
+        if (editor.getValue() !== self.value) editor.setValue(self.value);
+      });
+    });
+  }
+
+  $after: {
+    if (container.current.children.length === 0)
+      container.current.appendChild(target);
+  }
+</script>
+<style>
+  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec.ts");
+  @insert ../styles/input.pss;
+
+  .label {
+    overflow: hidden;
+  }
+
+  .textarea-label {
+    display: block;
+    theme.padding("small_block");
+    theme.colour("body");
+    theme.text("body", "no-margin");
+    theme.border("body", "contrast", "bottom");
+    border-top-left-radius: ":spec.borders.body.radius";
+    border-top-right-radius: ":spec.borders.body.radius";
+  }
+
+  .content {
+    height: ":self.height";
+    theme.text("body", "no-margin");
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .main-content {
+    height: ":self.height";
+  }
+
+  .content.sensitive {
+    font-family: "text-security-disc";
+    -webkit-text-security: disc;
+  }
+
+  .content:focus {
+    outline: none;
+  }
+
+  span:not(.caret) {
+    animation-play-state: paused;
+  }
+</style>
+
+<div class=":self.label_class">
+  <div class="textarea-label">
+    <slot></slot>
+  </div>
+  <div class="content" s:ref="container"></div>
+</div>
+<s:if check=":self.should_show_validation">
+  <s:if check=":self.is_bad_empty">
+    <div class="error-text">
+      <slot name="empty"></slot>
+    </div>
+  </s:if>
+  <s:if check=":!self.is_bad_empty && self.is_invalid">
+    <div class="error-text">
+      <slot name="invalid"></slot>
+    </div>
+  </s:if>
+</s:if>
+<s:if check=":!self.should_show_validation">
+  <div class=":c('help-text', ['empty', !slot.has_children])">
+    <slot name="help" on:slotchange="slot.on_change"></slot>
+  </div>
+</s:if>

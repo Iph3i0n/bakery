@@ -22,6 +22,7 @@
     "./src/templates/f-time.std",
     "./src/templates/f-numeric.std",
     "./src/templates/f-file.std",
+    "./src/templates/f-code.std",
 
     "./src/templates/l-container.std",
     "./src/templates/l-row.std",
