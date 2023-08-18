@@ -331,17 +331,17 @@
     ]
   },
   "package": {
-    "name": "@paulthomastaylor/bakery",
+    "name": "@ipheion/bakery",
     "scripts": {},
     "author": "Paul Taylor",
     "license": "ISC",
     "repository": {
       "type": "git",
-      "url": "https://github.com/PaulPopat/bakery.git"
+      "url": "https://github.com/Iph3i0n/bakery.git"
     },
-    "readme": "https://github.com/PaulPopat/bakery/blob/master/readme.md",
+    "readme": "https://github.com/Iph3i0n/bakery/blob/master/readme.md",
     "bugs": {
-      "url": "https://github.com/PaulPopat/bakery/issues"
+      "url": "https://github.com/Iph3i0n/bakery/issues"
     },
     "homepage": "https://bakery.taylorhousehold.uk",
     "publishConfig": {
