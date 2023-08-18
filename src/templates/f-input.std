@@ -90,6 +90,7 @@
     on:blur="update_value"
     type=":self.sensitive ? 'password' : (self.type ?? 'text')"
     inputmode=":self.type ?? 'text'"
+    readonly=":self.disabled || undefined"
   />
 </div>
 <s:if check=":self.should_show_validation">

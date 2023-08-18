@@ -1,6 +1,6 @@
 import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
 import c from "../html/classes.ts";
-import Router from "./router.ts";
+import Router, { UrlBuilder } from "./router.ts";
 import BakeryBase from "./main.ts";
 import ContextFetcher from "./context-fetcher.ts";
 
@@ -39,7 +39,7 @@ class SubmittedEvent extends Event {
   }
 }
 
-export abstract class FormManagerElement extends BakeryBase {
+export abstract class FormManagerElement extends UrlBuilder {
   abstract method: string;
   abstract url: string;
   abstract credentials: RequestCredentials;
@@ -66,7 +66,7 @@ export abstract class FormManagerElement extends BakeryBase {
   }
 
   async #ajax_submit(data: FormData | FormValue) {
-    let url = this.url;
+    let url = this.Render(this.url);
     if (this.method === "get") {
       const query = new URLSearchParams();
       if (data instanceof FormData) {

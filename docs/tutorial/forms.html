@@ -8,6 +8,11 @@
       window.CODE_EXAMPLES = {
         text: {
           basic: e("f-input", { name: "test" }, "Hello World"),
+          disabled: e(
+            "f-input",
+            { name: "test", disabled: true, prefill: "Test Text" },
+            "Hello World"
+          ),
           prefill: e(
             "f-input",
             { name: "test", prefill: "Test Text" },
@@ -46,7 +51,11 @@
         code: {
           basic: e(
             "f-code",
-            { name: "test-code", language: "html", prefill: "<div>Hello world</div>" },
+            {
+              name: "test-code",
+              language: "html",
+              prefill: "<div>Hello world</div>",
+            },
             "Hello world"
           ),
         },
@@ -241,6 +250,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="text.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="text.disabled"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="text.prefill"></div>

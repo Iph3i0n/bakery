@@ -25,7 +25,7 @@
 }
 
 .label.disabled {
-  theme.colour("surface", 0.9);
+  theme.colour("body");
   cursor: unset;
 }
 
