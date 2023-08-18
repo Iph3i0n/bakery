@@ -1,15 +1,32 @@
 <s:meta name="u-global">
   Accesses data from the `window` object and adds it to the context.
   <attr name="var">The key used on the `window` object</attr>
+  <attr name="default">The default value if it is empty</attr>
   <attr name="name">The name given to the result in the context.</attr>
   <base use="BakeryBase" from="../base-classes/main.ts" default />
 </s:meta>
 
 <script>
-  self.provide_context(self.name, window[self.var]);
+  const default_value = new Function("return " + self.default)();
+  let value = window[self.var] ?? default_value;
+
+  Object.defineProperty(window, self.var, {
+    get() {
+      return value;
+    },
+    set(v) {
+      value = v;
+      self.provide_context(self.name, value);
+      self.should_render();
+    },
+  });
+
+  self.provide_context(self.name, value);
 
   self.addEventListener(PropsEvent.Key, (e) => {
-    self.provide_context(self.name, window[self.var]);
+    const default_value = new Function("return " + self.default)();
+    value = window[self.var] ?? default_value;
+    self.provide_context(self.name, value);
   });
 </script>
 
