@@ -71,6 +71,7 @@
 
   const target = document.createElement("div");
   target.className = "main-content";
+  let editor;
 
   $load: {
     if (!window.monaco || !window.require) {
@@ -85,8 +86,8 @@
     container.current.appendChild(target);
 
     require(["vs/editor/editor.main"], function () {
-      const editor = monaco.editor.create(target, {
-        value: self.prefill || "",
+      editor = monaco.editor.create(target, {
+        value: self.value || "",
         language: self.language,
         minimap: { enabled: false },
         theme: 'vs-dark'
@@ -107,6 +108,10 @@
   $after: {
     if (container.current.children.length === 0)
       container.current.appendChild(target);
+
+    if (!editor) return;
+    if (editor.getValue() !== self.value)
+      editor.setValue(self.value);
   }
 </script>
 <style>
