@@ -73,7 +73,7 @@
   function is_open() {
     if (self.open) return true;
     if (self.trigger) return open;
-    if (self.path) return self.Matches;
+    if (self.path) return self.Matches.match;
     return false;
   }
 

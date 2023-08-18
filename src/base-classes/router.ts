@@ -81,11 +81,11 @@ export default abstract class Router extends BakeryBase {
     document.addEventListener(NavigationEventKey, () =>
       this.dispatchEvent(new ShouldRender())
     );
-    self.addEventListener("popstate", () =>
+    this.addEventListener("popstate", () =>
       this.dispatchEvent(new ShouldRender())
     );
 
-    self.addEventListener(RenderEvent.Key, () => {
+    this.addEventListener(RenderEvent.Key, () => {
       const current = this.Matches;
       if (current.match)
         this.provide_context(DATA_KEY, {
@@ -123,6 +123,7 @@ export default abstract class Router extends BakeryBase {
   }
 
   get Matches() {
+    if (!this.path) return { match: false, params: {} };
     // deno-lint-ignore no-explicit-any
     const existing: any = this.use_context((ctx) => ctx[DATA_KEY]);
     const { used, params } = existing ?? { used: 0, params: {} };
