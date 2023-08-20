@@ -5,11 +5,8 @@ export default abstract class ContextFetcher extends BakeryBase {
     // deno-lint-ignore no-explicit-any
     const checker = (this as any)[prop_name];
 
-    if (typeof checker !== "string") return checker;
-    return this.use_context((ctx) => {
-      const fetcher = new Function(...Object.keys(ctx), "return " + checker);
-
-      return fetcher(...Object.keys(ctx).map((k) => ctx[k]));
-    });
+    if (typeof checker !== "string" || !checker.startsWith(":")) return checker;
+    const fetcher = new Function("return " + checker.replace(":", ""));
+    return fetcher.call(this);
   }
 }

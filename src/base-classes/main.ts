@@ -4,6 +4,7 @@ import {
   ContextChangedKey,
   ContextEventKey,
   RequestContextEvent,
+  SetContextEvent,
 } from "../events/context.ts";
 import { screen_sizes } from "../spec.ts";
 
@@ -15,12 +16,12 @@ export default abstract class BakeryBase extends ComponentBase {
     super();
   }
 
-  #get_value(fetcher: (ctx: Context) => unknown) {
+  #get_value(key: string | symbol) {
     const event = new RequestContextEvent();
     this.dispatchEvent(event);
 
     try {
-      return fetcher(event.Data);
+      return event.Data[key];
     } catch {
       return undefined;
     }
@@ -28,20 +29,33 @@ export default abstract class BakeryBase extends ComponentBase {
 
   #listener: ((e: Event) => void) | undefined;
 
-  use_context(fetcher: (ctx: Context) => unknown) {
-    const result = this.#get_value(fetcher);
+  get state() {
+    // deno-lint-ignore no-explicit-any
+    return new Proxy<any>(
+      {},
+      {
+        get: (_, key) => {
+          const result = this.#get_value(key);
 
-    if (this.#listener) {
-      document.removeEventListener(ContextChangedKey, this.#listener);
-    }
+          if (this.#listener) {
+            document.removeEventListener(ContextChangedKey, this.#listener);
+          }
 
-    this.#listener = (e: Event) => {
-      if (e.target === this || this.#get_value(fetcher) === result) return;
-      this.dispatchEvent(new ShouldRender());
-    };
+          this.#listener = (e: Event) => {
+            if (e.target === this || this.#get_value(key) === result) return;
+            this.dispatchEvent(new ShouldRender());
+          };
 
-    document.addEventListener(ContextChangedKey, this.#listener);
-    return result;
+          document.addEventListener(ContextChangedKey, this.#listener);
+          return result;
+        },
+        set: (_, key, value) => {
+          const event = new SetContextEvent(key, value);
+          this.dispatchEvent(event);
+          return event.defaultPrevented;
+        },
+      }
+    );
   }
 
   #context_key: string | undefined;

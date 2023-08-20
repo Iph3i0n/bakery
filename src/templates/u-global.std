@@ -7,15 +7,23 @@
 </s:meta>
 
 <script>
-  const default_value = new Function("return " + self.default)();
-  let value = window[self.var] ?? default_value;
+  import { SetContextEventKey } from "../events/context.ts";
 
-  self.provide_context(self.name, value);
+  const default_value = new Function("return " + self.default)();
+
+  self.provide_context(self.name, window[self.var] ?? default_value);
 
   self.addEventListener(PropsEvent.Key, (e) => {
     const default_value = new Function("return " + self.default)();
-    value = window[self.var] ?? default_value;
-    self.provide_context(self.name, value);
+    self.provide_context(self.name, window[self.var] ?? default_value);
+  });
+
+  self.addEventListener(SetContextEventKey, (event) => {
+    if (event.Key !== self.name) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    self.provide_context(self.name, event.Data);
   });
 </script>
 

@@ -26,7 +26,6 @@ export default function options(self: ContextFetcher) {
   return {
     get data() {
       const items = self.use_string_context("options");
-      console.log(items);
       return [...(items ?? []), ...options];
     },
     on_change,

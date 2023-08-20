@@ -67,7 +67,7 @@
             basic: e(
               "u-fetch",
               { url: "/examples/rich-text.json", name: "text" },
-              e("t-richtext", { use: "text.data" })
+              e("t-richtext", { use: ":this.state.text.data" })
             ),
           },
         },

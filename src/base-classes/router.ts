@@ -48,7 +48,7 @@ export abstract class UrlBuilder extends BakeryBase {
       locale: this.#language,
       skip: this.#skip.toString(),
       take: this.#take.toString(),
-      ...(this.use_context((ctx) => ctx) ?? {}),
+      this: this,
     };
   }
 
@@ -81,7 +81,7 @@ export default abstract class Router extends BakeryBase {
     document.addEventListener(NavigationEventKey, () =>
       this.dispatchEvent(new ShouldRender())
     );
-    this.addEventListener("popstate", () =>
+    self.addEventListener("popstate", () =>
       this.dispatchEvent(new ShouldRender())
     );
 
@@ -125,7 +125,7 @@ export default abstract class Router extends BakeryBase {
   get Matches() {
     if (!this.path) return { match: false, params: {} };
     // deno-lint-ignore no-explicit-any
-    const existing: any = this.use_context((ctx) => ctx[DATA_KEY]);
+    const existing: any = this.state[DATA_KEY];
     const { used, params } = existing ?? { used: 0, params: {} };
     const final_params = { ...params };
     const path_parts = window.location.pathname

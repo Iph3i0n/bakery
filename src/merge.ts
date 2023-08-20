@@ -19,6 +19,5 @@ export default function Merge<T>(input: T, overrides: any): T {
     if (key in overrides) result[key] = Merge(input[key], overrides[key]);
     else result[key] = input[key];
 
-  console.log(result);
   return result;
 }

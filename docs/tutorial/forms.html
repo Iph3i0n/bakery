@@ -45,7 +45,7 @@
             },
             e(
               "f-select",
-              { name: "test-select", options: "test_data" },
+              { name: "test-select", options: ":this.state.test_data" },
               e("option", { value: "value-1" }, "First Value"),
               e("option", { value: "value-2" }, "Second Value"),
               e("span", { slot: "label" }, "Hello world")
@@ -185,7 +185,7 @@
                 e(
                   "t-paragraph",
                   {},
-                  e("u-text", { use: "form_state.json.example_text" })
+                  e("u-text", { use: ":this.state.form_state?.json.example_text" })
                 )
               )
             )

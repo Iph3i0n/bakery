@@ -1,7 +1,6 @@
 import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
 import c from "../html/classes.ts";
 import Router, { UrlBuilder } from "./router.ts";
-import BakeryBase from "./main.ts";
 import ContextFetcher from "./context-fetcher.ts";
 
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";

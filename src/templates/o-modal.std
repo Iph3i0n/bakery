@@ -59,7 +59,7 @@
     } else if (self.path) {
       const target = window.location.pathname
         .split("/")
-        .slice(0, self.use_context((c) => c.routing_data?.used ?? 0) + 1)
+        .slice(0, (self.state.routing_data?.used ?? 0) + 1)
         .filter((p) => p)
         .join("/");
       self.Replace("/" + target);

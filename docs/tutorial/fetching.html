@@ -14,7 +14,7 @@
               e(
                 "t-paragraph",
                 {},
-                e("u-text", { use: "data.example_text", lines: "3" })
+                e("u-text", { use: ":this.state.data.example_text", lines: "3" })
               )
             ),
             locale: e(
@@ -24,14 +24,14 @@
                 name: "data",
                 fallback: "/examples/fetch-example.json",
               },
-              e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+              e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
             ),
           },
           global: {
             basic: e(
               "u-global",
               { var: "TEST_TEXT", name: "text" },
-              e("t-paragraph", {}, e("u-text", { use: "text.title" }))
+              e("t-paragraph", {}, e("u-text", { use: ":this.state.text.title" }))
             ),
             updating: e(
               "u-global",
@@ -40,10 +40,9 @@
                 "f-button",
                 {
                   type: "button",
-                  onclick:
-                    "window.test_count = (Number(window.test_count) + 1).toString()",
+                  onclick: "this.state.count = (Number(this.state.count) + 1).toString()",
                 },
-                e("u-text", { use: "count" })
+                e("u-text", { use: ":this.state.count" })
               )
             ),
           },
@@ -53,8 +52,8 @@
               { url: "/examples/fetch-example.json", name: "data" },
               e(
                 "u-each",
-                { subject: "data.repeated", name: "text" },
-                e("t-paragraph", {}, e("u-text", { use: "text" }))
+                { subject: ":this.state.data.repeated", name: "text" },
+                e("t-paragraph", {}, e("u-text", { use: ":this.state.text" }))
               )
             ),
           },
@@ -64,13 +63,13 @@
               { url: "/examples/fetch-example.json", name: "data" },
               e(
                 "u-if",
-                { check: "data.should_show" },
-                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+                { check: ":this.state.data.should_show" },
+                e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
               ),
               e(
                 "u-if",
-                { check: "data.should_show_false" },
-                e("t-paragraph", {}, e("u-text", { use: "data.example_text" }))
+                { check: ":this.state.data.should_show_false" },
+                e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
               )
             ),
           },
@@ -81,8 +80,8 @@
                 url: "/examples/pagination/{{take}}/{{skip}}.json",
                 name: "pages",
               },
-              e("t-paragraph", {}, e("u-text", { use: "pages.content" })),
-              e("u-paginator", { total: "pages.metadata.total" })
+              e("t-paragraph", {}, e("u-text", { use: ":this.state.pages.content" })),
+              e("u-paginator", { total: ":this.state.pages.metadata.total" })
             ),
           },
         },

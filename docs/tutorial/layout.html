@@ -73,7 +73,7 @@
               { url: "/examples/table-data.json", name: "table" },
               e(
                 "l-table",
-                { use: "table.content" },
+                { use: ":this.state.table.content" },
                 e(
                   "l-table-row",
                   { slot: "head" },

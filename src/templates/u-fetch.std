@@ -19,6 +19,8 @@
 </s:meta>
 
 <script>
+  import { SetContextEventKey } from "../events/context.ts";
+
   let skip = 0;
   let take = 50;
 
@@ -77,6 +79,14 @@
     handler();
   });
   self.addEventListener("popstate", handler);
+
+  self.addEventListener(SetContextEventKey, (event) => {
+    if (event.Key !== self.name) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    self.provide_context(self.name, event.Data);
+  });
 </script>
 
 <slot></slot>
