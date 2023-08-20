@@ -8,6 +8,12 @@
   <attr name="name">
     The name of the value field in the form data. Should be unique.
   </attr>
+  <attr name="options" type="string" optional>
+    Pull the options from the context. Must be in the format of
+    ```
+    { text: string, value: string, disabled?: boolean }[]
+    ```
+  </attr>
   <attr name="required" type="boolean">
     If set then the form will not be submittable until the element field has a
     value.
@@ -45,7 +51,7 @@
 </s:meta>
 
 <script>
-  const items = options();
+  const items = options(self);
 
   const slot = slotted();
 

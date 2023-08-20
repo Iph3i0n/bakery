@@ -35,6 +35,22 @@
             e("option", { value: "value-5" }, "Fifth Value"),
             e("span", { slot: "label" }, "Hello world")
           ),
+          data: e(
+            "u-global",
+            {
+              var: "test",
+              default:
+                "[{ text: 'Hello world', value: 'hello_world' }, { text: 'Another item', value: 'another_item', disabled: true }]",
+              name: "test_data",
+            },
+            e(
+              "f-select",
+              { name: "test-select", options: "test_data" },
+              e("option", { value: "value-1" }, "First Value"),
+              e("option", { value: "value-2" }, "Second Value"),
+              e("span", { slot: "label" }, "Hello world")
+            )
+          ),
         },
         multiselect: {
           basic: e(
@@ -235,6 +251,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="select.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="select.data"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="date.basic"></div>

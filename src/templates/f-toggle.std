@@ -32,15 +32,12 @@
   <base use="FormElement" from="../base-classes/form.ts" default />
   <import use="c" from="../html/classes.ts" default />
   <import use="slotted" from="../toggleable-slot.ts" default />
-  <import use="options" from="../options.ts" default />
   <import use="on_key_handler" from="../events/keyboard.ts" />
   <aria role="select" />
   <form />
 </s:meta>
 
 <script>
-  const items = options();
-
   const slot = slotted();
 
   self.addEventListener("click", () => {

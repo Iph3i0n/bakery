@@ -10,17 +10,6 @@
   const default_value = new Function("return " + self.default)();
   let value = window[self.var] ?? default_value;
 
-  Object.defineProperty(window, self.var, {
-    get() {
-      return value;
-    },
-    set(v) {
-      value = v;
-      self.provide_context(self.name, value);
-      self.should_render();
-    },
-  });
-
   self.provide_context(self.name, value);
 
   self.addEventListener(PropsEvent.Key, (e) => {
