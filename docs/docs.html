@@ -18,29 +18,32 @@
               </t-paragraph>
             </l-col>
           </l-row>
-          <u-each subject="schema.modules[0].declarations" name="comp">
+          <u-each
+            subject=":this.state.schema.modules[0].declarations"
+            name="comp"
+          >
             <l-row>
               <l-col xs="12">
                 <t-heading level="h5">
-                  <u-text use="comp.tagName"></u-text>
+                  <u-text use=":this.state.comp.tagName"></u-text>
                 </t-heading>
                 <t-paragraph>
-                  <u-text use="comp.description"></u-text>
+                  <u-text use=":this.state.comp.description"></u-text>
                 </t-paragraph>
               </l-col>
               <l-col xs="12" md="6">
                 <t-heading level="h6">Attributes</t-heading>
-                <u-if check="comp.attributes.length">
+                <u-if check=":this.state.comp.attributes.length">
                   <d-listgroup>
-                    <u-each subject="comp.attributes" name="attr">
+                    <u-each subject=":this.state.comp.attributes" name="attr">
                       <span>
                         <b>
-                          <u-text use="attr.name"></u-text>
+                          <u-text use=":this.state.attr.name"></u-text>
                         </b>
                         (
-                        <i><u-text use="attr.type.text"></u-text></i>
+                        <i><u-text use=":this.state.attr.type.text"></u-text></i>
                         ) -
-                        <u-text use="attr.description"></u-text>
+                        <u-text use=":this.state.attr.description"></u-text>
                       </span>
                     </u-each>
                   </d-listgroup>
@@ -48,17 +51,19 @@
               </l-col>
               <l-col xs="12" md="6">
                 <t-heading level="h6">Events</t-heading>
-                <u-if check="comp.events.length">
+                <u-if check=":this.state.comp.events.length">
                   <d-listgroup>
-                    <u-each subject="comp.events" name="event">
+                    <u-each subject=":this.state.comp.events" name="event">
                       <span>
                         <b>
-                          <u-text use="event.name"></u-text>
+                          <u-text use=":this.state.event.name"></u-text>
                         </b>
                         (
-                        <i><u-text use="event.type.text"></u-text></i>
+                        <i>
+                          <u-text use=":this.state.event.type.text"></u-text>
+                        </i>
                         ) -
-                        <u-text use="event.description"></u-text>
+                        <u-text use=":this.state.event.description"></u-text>
                       </span>
                     </u-each>
                   </d-listgroup>
