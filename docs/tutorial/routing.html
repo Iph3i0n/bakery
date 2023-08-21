@@ -53,16 +53,21 @@
             "div",
             {},
             e(
-              "u-global",
-              { var: "test", name: "test", default: "{ text: 'name' }" },
+              "u-fetch",
+              { url: "/examples/route-text.json", name: "test" },
               e(
-                "t-link",
-                {
-                  href: "/tutorial/routing/{{this.state.test.text}}",
-                  block: true,
-                  spa: true,
-                },
-                "Check your URL after clicking. It should end with name."
+                "u-each",
+                { subject: ":this.state.test.links", name: "item" },
+                e(
+                  "t-link",
+                  {
+                    href: "/tutorial/routing/{{this.state.item.text}}",
+                    block: true,
+                    spa: true,
+                  },
+                  "Check your URL after clicking. It should end with",
+                  e("u-text", { use: ":this.state.item.text" })
+                )
               )
             )
           ),
