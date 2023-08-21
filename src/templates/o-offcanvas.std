@@ -167,7 +167,9 @@
       </div>
     </div>
     <div class="body scrollable">
-      <slot></slot>
+      <s:if check=":is_open()">
+        <slot></slot>
+      </s:if>
     </div>
     <div class="footer">
       <slot name="footer" on:slotchange="on_footer"></slot>
