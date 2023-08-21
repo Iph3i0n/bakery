@@ -49,6 +49,23 @@
               "Check your URL after clicking. It should be your current locale."
             )
           ),
+          state_params: e(
+            "div",
+            {},
+            e(
+              "u-global",
+              { var: "test", name: "test", default: "{ text: 'name' }" },
+              e(
+                "t-link",
+                {
+                  href: "/tutorial/routing/{{this.state.test.text}}",
+                  block: true,
+                  spa: true,
+                },
+                "Check your URL after clicking. It should end with name."
+              )
+            )
+          ),
         },
         modal: {
           basic: e(
@@ -128,6 +145,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="link.params"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="link.state_params"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="modal.basic"></div>
