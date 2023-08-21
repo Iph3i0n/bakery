@@ -43,13 +43,13 @@ export abstract class UrlBuilder extends BakeryBase {
     return navigator.language;
   }
 
-  get #options() {
-    return {
-      locale: this.#language,
-      skip: this.#skip.toString(),
-      take: this.#take.toString(),
-      this: this,
-    };
+  #statement(data: string) {
+    return new Function("locale", "skip", "take", "return " + data).call(
+      this,
+      this.#language,
+      this.#skip.toString(),
+      this.#take.toString()
+    );
   }
 
   constructor() {
@@ -64,9 +64,7 @@ export abstract class UrlBuilder extends BakeryBase {
   }
 
   Render(url: string) {
-    const opts = this.#options;
-    // deno-lint-ignore no-explicit-any
-    return (Mustache as any).render(url, opts);
+    return url.replace(/{{(.+)}}/gm, (_, match) => this.#statement(match));
   }
 }
 
