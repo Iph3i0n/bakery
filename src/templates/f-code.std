@@ -74,14 +74,12 @@
   let editor;
 
   $load: {
-    if (!window.monaco || !window.require) {
-      await unsafe_import(
-        "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"
-      );
-      require.config({
-        paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs" },
-      });
-    }
+    await unsafe_import(
+      "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"
+    );
+    require.config({
+      paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs" },
+    });
 
     container.current.appendChild(target);
 
@@ -90,7 +88,8 @@
         value: self.value || "",
         language: self.language,
         minimap: { enabled: false },
-        theme: 'vs-dark'
+        theme: "vs-dark",
+        automaticLayout: true,
       });
 
       editor.onDidChangeModelContent(() => {
@@ -110,8 +109,7 @@
       container.current.appendChild(target);
 
     if (!editor) return;
-    if (editor.getValue() !== self.value)
-      editor.setValue(self.value);
+    if (editor.getValue() !== self.value) editor.setValue(self.value);
   }
 </script>
 <style>
