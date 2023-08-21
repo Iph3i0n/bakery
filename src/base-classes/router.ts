@@ -1,7 +1,6 @@
 import { ShouldRender, RenderEvent } from "../deps.ts";
 import PaginationEvent from "../pagination.ts";
 import BakeryBase from "./main.ts";
-import Mustache from "https://cdn.jsdelivr.net/npm/mustache/mustache.js";
 import AddToGlobal from "../global.ts";
 
 const DATA_KEY = "routing_data";
