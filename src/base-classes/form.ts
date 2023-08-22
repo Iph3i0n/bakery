@@ -124,7 +124,7 @@ export abstract class FormManagerElement extends UrlBuilder {
     const values: FormValue = {};
     for (const ele of this.#elements)
       if (!ele) continue;
-      else values[ele.name] = ele.value;
+      else values[ele.submission_name] = ele.value;
 
     return values;
   }
@@ -344,5 +344,9 @@ export default abstract class FormElement extends ContextFetcher {
       ["disabled", !!this.disabled],
       ["error", this.should_show_validation]
     );
+  }
+
+  get submission_name() {
+    return this.use_string_context("name");
   }
 }
