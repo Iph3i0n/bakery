@@ -63,7 +63,7 @@ export abstract class UrlBuilder extends BakeryBase {
   }
 
   Render(url: string) {
-    return url.replace(/{{(.+)}}/gm, (_, match) => this.#statement(match));
+    return url.replace(/{{((?:(?!}}).)+)}}/gm, (_, match) => this.#statement(match));
   }
 }
 
