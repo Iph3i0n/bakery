@@ -13,7 +13,7 @@ class RegisterFormElementEvent extends Event {
   #form_manager: FormManagerElement | undefined;
 
   constructor() {
-    super(REGISTER_KEY, { bubbles: true });
+    super(REGISTER_KEY, { bubbles: true, composed: true, cancelable: true });
   }
 
   get Manager() {
