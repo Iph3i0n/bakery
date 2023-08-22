@@ -2,6 +2,7 @@ import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
 import c from "../html/classes.ts";
 import Router, { UrlBuilder } from "./router.ts";
 import ContextFetcher from "./context-fetcher.ts";
+import { is_visible } from "../html/is-visible.ts";
 
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
 const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";
@@ -54,7 +55,7 @@ export abstract class FormManagerElement extends UrlBuilder {
         throw new Error(
           "Only the register form element event class may be used to register an element."
         );
-      const target = event.target;
+      const target = event.composedPath()[0];
       if (!(target instanceof FormElement))
         throw new Error("Only FormElement components may register themselves.");
 
@@ -122,9 +123,10 @@ export abstract class FormManagerElement extends UrlBuilder {
 
   get #values() {
     const values: FormValue = {};
-    for (const ele of this.#elements)
-      if (!ele) continue;
+    for (const ele of this.#elements) {
+      if (!ele || !is_visible(ele)) continue;
       else values[ele.submission_name] = ele.value;
+    }
 
     return values;
   }
