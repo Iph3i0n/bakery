@@ -58,6 +58,7 @@ export default abstract class RichText extends FormElement {
   constructor() {
     super();
 
+    let loaded = false;
     this.addEventListener(LoadedEvent.Key, () => {
       if (this.prefill) this.#editor.innerHTML = this.prefill;
       this.#editor.addEventListener("input", (e) => {
@@ -76,6 +77,8 @@ export default abstract class RichText extends FormElement {
           setTimeout(() => (this.Format = "p"), 0);
         }
       });
+
+      loaded = true;
     });
 
     this.addEventListener(PropsEvent.Key, (e) => {
@@ -90,6 +93,12 @@ export default abstract class RichText extends FormElement {
     this.addEventListener("keyup", () => this.#update_state());
 
     this.addEventListener("focus", () => this.#editor.focus());
+
+    self.addEventListener("ValueChanged", () => {
+      if (!loaded) return;
+      if (this.#editor.innerHTML !== this.value)
+        this.#editor.innerHTML = this.value?.toString() ?? "";
+    });
   }
 
   get Format() {
