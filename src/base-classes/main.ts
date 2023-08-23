@@ -125,4 +125,13 @@ export default abstract class BakeryBase extends ComponentBase {
   use_spec_width(item: string, watch: HTMLElement = this) {
     return this.use_breakpoint(screen_sizes[item].width, "px", watch);
   }
+
+  dispatchEvent(event: Event): boolean {
+    const handler_text = this.getAttribute("on" + event.type);
+    if (handler_text) {
+      const handler = new Function("event", handler_text);
+      handler.call(this, event);
+    }
+    return super.dispatchEvent(event);
+  }
 }
