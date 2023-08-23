@@ -35,12 +35,11 @@
     return template;
   }
 
-  self.addEventListener(RenderEvent.Key, async () => {
-    if (!is_visible(self)) return;
+  $load: {
     const data = await get_data();
     self.root.replaceChildren(data.content.cloneNode(true));
     self.style.display = "block";
-  });
+  }
 </script>
 
 <d-loading open="true"></d-loading>

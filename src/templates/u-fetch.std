@@ -40,7 +40,7 @@
     return this.Render(self.url);
   };
 
-  self.addEventListener(RenderEvent.Key, async () => {
+  $after: {
     const next = rendered_url();
     if (!next || next === existing_route) return;
     existing_route = next;
@@ -67,7 +67,7 @@
     self.provide_context(self.name, final);
     if (!self["no-cache"])
       window.localStorage.setItem(DATA_KEY(), JSON.stringify(final));
-  });
+  }
 
   const handler = () => {
     self.dispatchEvent(new ShouldRender());
@@ -78,7 +78,7 @@
     existing_route = "";
     handler();
   });
-  self.addEventListener("popstate", handler);
+  window.addEventListener("popstate", handler);
 
   self.addEventListener(SetContextEventKey, (event) => {
     if (event.Key !== self.name) return;

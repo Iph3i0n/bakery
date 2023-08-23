@@ -261,9 +261,7 @@ export default abstract class FormElement extends ContextFetcher {
     });
 
     this.addEventListener(LoadedEvent.Key, () => {
-      let default_value = this.prefill
-        ? this.use_string_context("prefill")?.toString() ?? this.prefill
-        : undefined;
+      let default_value = this.use_string_context("prefill");
       this.value = default_value;
 
       const event = new RegisterFormElementEvent();
@@ -288,9 +286,7 @@ export default abstract class FormElement extends ContextFetcher {
       this.#form.addEventListener(VALIDATION_KEY, on_validate);
 
       this.addEventListener(RenderEvent.Key, () => {
-        const next_default = this.prefill
-          ? this.use_string_context("prefill")?.toString() ?? this.prefill
-          : undefined;
+        const next_default = this.use_string_context("prefill");
 
         if (next_default === default_value) return;
         default_value = next_default;

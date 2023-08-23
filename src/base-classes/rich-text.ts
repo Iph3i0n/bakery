@@ -60,7 +60,8 @@ export default abstract class RichText extends FormElement {
 
     let loaded = false;
     this.addEventListener(LoadedEvent.Key, () => {
-      if (this.prefill) this.#editor.innerHTML = this.prefill;
+      this.#editor.innerHTML = this.value?.toString() ?? "";
+
       this.#editor.addEventListener("input", (e) => {
         const target = e.target;
         if (!(target instanceof Node)) return;
@@ -79,13 +80,6 @@ export default abstract class RichText extends FormElement {
       });
 
       loaded = true;
-    });
-
-    this.addEventListener(PropsEvent.Key, (e) => {
-      if (!this.#editor_ref.current) return;
-      if (!(e instanceof PropsEvent)) return;
-      if (e.Key !== "prefill") return;
-      this.#editor.innerHTML = e.Value;
     });
 
     document.addEventListener("selectchange", () => this.#update_state());

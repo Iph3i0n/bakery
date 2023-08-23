@@ -63,7 +63,9 @@ export abstract class UrlBuilder extends BakeryBase {
   }
 
   Render(url: string) {
-    return url.replace(/{{((?:(?!}}).)+)}}/gm, (_, match) => this.#statement(match));
+    return url.replace(/{{((?:(?!}}).)+)}}/gm, (_, match) =>
+      this.#statement(match)
+    );
   }
 }
 
@@ -95,6 +97,10 @@ export default abstract class Router extends BakeryBase {
       this.#previous = current.match;
       this.dispatchEvent(new MatchEvent(current.match, current.params));
     });
+  }
+
+  get CurrentlyMatching() {
+    return this.Matches.match;
   }
 
   static Push(url: string) {
