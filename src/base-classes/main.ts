@@ -27,8 +27,6 @@ export default abstract class BakeryBase extends ComponentBase {
     }
   }
 
-  #listener: ((e: Event) => void) | undefined;
-
   get state() {
     // deno-lint-ignore no-explicit-any
     return new Proxy<any>(
@@ -37,16 +35,13 @@ export default abstract class BakeryBase extends ComponentBase {
         get: (_, key) => {
           const result = this.#get_value(key);
 
-          if (this.#listener) {
-            document.removeEventListener(ContextChangedKey, this.#listener);
-          }
-
-          this.#listener = (e: Event) => {
+          const listener = (e: Event) => {
             if (e.target === this || this.#get_value(key) === result) return;
-            this.dispatchEvent(new ShouldRender());
+            document.removeEventListener(ContextChangedKey, listener);
+            this.should_render();
           };
 
-          document.addEventListener(ContextChangedKey, this.#listener);
+          document.addEventListener(ContextChangedKey, listener);
           return result;
         },
         set: (_, key, value) => {
