@@ -278,6 +278,8 @@ export default abstract class FormElement extends ContextFetcher {
           return;
         }
 
+        if (!is_visible(this)) return;
+
         this.#touched = true;
         if (!this.validity.valid) e.preventDefault();
         this.dispatchEvent(new ShouldRender());
