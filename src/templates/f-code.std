@@ -99,7 +99,7 @@
       self.dispatchEvent(new MonacoLoaded(editor));
 
       self.addEventListener("ValueChanged", () => {
-        if (editor.getValue() !== self.value) editor.setValue(self.value);
+        if (editor.getValue() !== self.value && self.value) editor.setValue(self.value);
       });
     });
   }
@@ -109,7 +109,7 @@
       container.current.appendChild(target);
 
     if (!editor) return;
-    if (editor.getValue() !== self.value) editor.setValue(self.value);
+    if (editor.getValue() !== self.value && self.value) editor.setValue(self.value);
   }
 </script>
 <style>
