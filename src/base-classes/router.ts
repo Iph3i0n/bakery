@@ -3,7 +3,7 @@ import PaginationEvent from "../pagination.ts";
 import BakeryBase from "./main.ts";
 import AddToGlobal from "../global.ts";
 
-const DATA_KEY = "routing_data";
+const DATA_KEY = "route";
 
 const NavigationEventKey = "NavigationEvent";
 

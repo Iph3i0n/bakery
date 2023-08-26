@@ -14,12 +14,17 @@
   let options = [];
 
   function on_options(e) {
+    /** @type {HTMLElement[]} */
     const nodes = e.currentTarget.assignedElements();
     options = [];
     for (const node of nodes)
       if (node.tagName === "SPAN") options.push({ text: node.innerText });
       else if (node.tagName === "T-LINK")
-        options.push({ text: node.innerText, href: node.getAttribute("href") });
+        options.push({
+          text: node.innerText,
+          href: node.getAttribute("href"),
+          spa: node.hasAttribute("spa"),
+        });
       else
         throw new Error("Only spans or anchors can be children of breadcrumbs");
   }
@@ -63,7 +68,11 @@
 
 <s:for subject=":options.map((o, i) => [o, i])" key="[option, index]">
   <s:if check=":'href' in option">
-    <t-link class="option" href=":option.href">
+    <t-link
+      class="option"
+      href=":option.href"
+      spa=":option.spa ? true : undefined"
+    >
       <s:text use=":option.text"></s:text>
     </t-link>
   </s:if>

@@ -118,7 +118,7 @@ export abstract class FormManagerElement extends UrlBuilder {
     const go_to = this["success-url"];
     if (!go_to) return;
 
-    Router.Push(go_to);
+    Router.Push(this.Render(go_to));
   }
 
   get #values() {
