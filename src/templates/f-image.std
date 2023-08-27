@@ -20,6 +20,16 @@
     </key>
     <key name="Name" type="string">The name of the input.</key>
   </event>
+  <event name="FileAdded" type="FileAddedEvent">
+    Fired when the user uploads a file. If the URL property is set to a promise
+    of a string then that will be used to set the URL. If not then a data URL
+    will be generated.
+    <key name="URL" type="Promise<string> | string | undefined">
+      The promise of the data URL of the image. A data URL will be generated if
+      this is not set.
+    </key>
+    <key name="File" type="File">The file that has been uploaded.</key>
+  </event>
   <slot>The label text</slot>
   <slot name="help">The small help text at the bottom of the input.</slot>
   <slot name="empty">
@@ -29,31 +39,48 @@
     The error text for if validate is set and the RegExp does not match
   </slot>
   <base use="FormElement" from="../base-classes/form.ts" default />
-  <import use="c" from="../html/classes.ts" default />
-  <import use="slotted" from="../toggleable-slot.ts" default />
-  <import use="link_css" from="../fetch-resources.ts" />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
-  <import use="get_file" from="../html/file.ts" />
   <aria role="input" />
   <form />
 </s:meta>
 
 <script>
+  import c from "../html/classes.ts";
+  import slotted from "../toggleable-slot.ts";
+  import { link_css } from "../fetch-resources.ts";
+  import { on_key_handler } from "../events/keyboard.ts";
+  import { get_file } from "../html/file.ts";
+  import { ImageEvent } from "../events/form.ts";
+
   let preview = "";
   let dragging = false;
   const slot = slotted();
 
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    preview = reader.result;
-    self.dispatchEvent(new ShouldRender());
-  });
+  const to_data_url = (file) => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        res(reader.result);
+      });
+    });
+  };
+
+  const process_file = async (file) => {
+    const event = new ImageEvent(file);
+    self.dispatchEvent(event);
+    if (event.URL) {
+      const url = await event.URL;
+      preview = url;
+      self.value = url;
+    } else {
+      if (file) preview = await to_data_url(file);
+      self.value = file;
+    }
+  };
 
   $on_drop: {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
-    self.value = file;
-    if (file) reader.readAsDataURL(file);
+    process_file(file);
   }
 
   $on_dragover: {
@@ -66,8 +93,14 @@
 
   $on_click: {
     const file = await get_file();
-    self.value = file;
-    if (file) reader.readAsDataURL(file);
+    process_file(file);
+  }
+
+  $on_ValueChanged: {
+    if (typeof self.value === "string" && preview !== self.value) {
+      preview = self.value;
+      self.should_render();
+    }
   }
 
   function debounce(func, timeout = 300) {
