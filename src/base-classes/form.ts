@@ -289,6 +289,7 @@ export default abstract class FormElement extends ContextFetcher {
 
       this.addEventListener(RenderEvent.Key, () => {
         const next_default = this.use_string_context("prefill");
+        console.log(this.tagName, this.name, next_default);
 
         if (next_default === default_value) return;
         default_value = next_default;

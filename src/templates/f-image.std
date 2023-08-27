@@ -12,6 +12,10 @@
     Height of the input element on screen. Useful for when uploading large
     images.
   </attr>
+  <attr name="prefill" type="string | File" optional>
+    The default value for the image. May be a URL or a File object. May also be
+    computed.
+  </attr>
   <event name="ValueChanged" type="ImageValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.
@@ -51,7 +55,7 @@
   import { get_file } from "../html/file.ts";
   import { ImageEvent } from "../events/form.ts";
 
-  let preview = "";
+  let preview = self.value ?? "";
   let dragging = false;
   const slot = slotted();
 

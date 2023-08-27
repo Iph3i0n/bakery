@@ -53,4 +53,5 @@
 .content img {
   theme.border("body");
   theme.shadow("body");
+  max-width: 100%;
 }
