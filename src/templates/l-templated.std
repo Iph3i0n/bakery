@@ -121,10 +121,6 @@
       "https://cdn.jsdelivr.net/npm/mustache/mustache.min.js"
     );
     const use = self.use_string_context("use");
-    if (old_remote === self.remote && old_use === use) return;
-    old_remote = self.remote;
-    old_use = use;
-
     const data = await get_data(use);
     self.root.replaceChildren(data.content);
     self.style.display = "block";
