@@ -102,17 +102,17 @@
               ),
               e("l-templated", { use: "test-template" }, "Hello world")
             ),
-            mustache: e(
+            ejs: e(
               "div",
               {},
               e(
                 "template",
-                { id: "mustache-template" },
-                e("t-paragraph", {}, "{{props.prefix}}", e("slot", {}))
+                { id: "ejs-template" },
+                e("t-paragraph", {}, "<%= props.prefix %>", e("slot", {}))
               ),
               e(
                 "l-templated",
-                { use: "mustache-template", prefix: "Welcome, " },
+                { use: "ejs-template", prefix: "Welcome, " },
                 "Hello world"
               )
             ),
@@ -151,7 +151,7 @@
             <div data-example="layout.templated.basic"></div>
           </l-col>
           <l-col xs="12">
-            <div data-example="layout.templated.mustache"></div>
+            <div data-example="layout.templated.ejs"></div>
           </l-col>
         </l-row>
       </l-container>

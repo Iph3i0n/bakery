@@ -30,9 +30,15 @@
   import { unsafe_import } from "../fetch-resources.ts";
   const cache = {};
 
+  function DecodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
   async function process_data(template) {
-    const rendered = Mustache.render(template, {
-      props: new Proxy(
+    const rendered = ejs.render(DecodeHtml(template), {
+      props: new Proxy( 
         {},
         {
           get: (_, key) => {
@@ -118,7 +124,7 @@
 
   $after: {
     await unsafe_import(
-      "https://cdn.jsdelivr.net/npm/mustache/mustache.min.js"
+      "https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js"
     );
     const use = self.use_string_context("use");
     if (!use) return;
