@@ -287,6 +287,10 @@ export default abstract class FormElement extends ContextFetcher {
 
       this.#form.addEventListener(VALIDATION_KEY, on_validate);
 
+      this.#form.addEventListener("Submitted", () => {
+        this.value = this.use_string_context("prefill");
+      });
+
       this.addEventListener(RenderEvent.Key, () => {
         const next_default = this.use_string_context("prefill");
 

@@ -102,6 +102,20 @@
               ),
               e("l-templated", { use: "test-template" }, "Hello world")
             ),
+            mustache: e(
+              "div",
+              {},
+              e(
+                "template",
+                { id: "mustache-template" },
+                e("t-paragraph", {}, "{{props.prefix}}", e("slot", {}))
+              ),
+              e(
+                "l-templated",
+                { use: "mustache-template", prefix: "Welcome, " },
+                "Hello world"
+              )
+            ),
           },
         },
       };
@@ -135,6 +149,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="layout.templated.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="layout.templated.mustache"></div>
           </l-col>
         </l-row>
       </l-container>

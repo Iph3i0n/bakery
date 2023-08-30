@@ -1,0 +1,39 @@
+<s:meta name="u-use">
+  Take a computed property and add it to the state. Useful for drilling into
+  state and computing properties inline. Also takes a copy and acts as a
+  stopping point for state changes.
+  <attr name="var">The value to use. May be computed.</attr>
+  <attr name="name">The name given to the result in the context.</attr>
+  <base
+    use="ContextFetcher"
+    from="../base-classes/context-fetcher.ts"
+    default
+  />
+</s:meta>
+
+<script>
+  import { SetContextEventKey } from "../events/context.ts";
+
+  let value = self.use_string_context("var");
+  self.provide_context(self.name, value);
+
+  $after: {
+    value = self.use_string_context("var");
+    self.provide_context(self.name, value);
+  }
+
+  $props: {
+    value = self.use_string_context("var");
+    self.provide_context(self.name, value);
+  }
+
+  self.addEventListener(SetContextEventKey, (event) => {
+    if (event.Key !== self.name) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    self.provide_context(self.name, event.Data);
+  });
+</script>
+
+<slot />

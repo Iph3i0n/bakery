@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import "./selection-polyfill.js";
 import { CreateRef, LoadedEvent, ShouldRender } from "../deps.ts";
 import FormElement from "./form.ts";
@@ -5,10 +6,13 @@ import Slotted from "../toggleable-slot.ts";
 import { get_file } from "../html/file.ts";
 import { ImageEvent } from "../events/form.ts";
 
+const BasicLineBreak = ["pre", "blockquote"];
+
 export default abstract class RichText extends FormElement {
   readonly #editor_ref = CreateRef<HTMLDivElement>();
   readonly #selector_ref = CreateRef<HTMLSelectElement>();
   readonly #link_input_ref = CreateRef<HTMLInputElement>();
+  readonly #language_input_ref = CreateRef<HTMLInputElement>();
   readonly #slot = Slotted();
 
   get #editor() {
@@ -29,7 +33,12 @@ export default abstract class RichText extends FormElement {
     return result;
   }
 
-  // deno-lint-ignore no-explicit-any
+  get #language_input() {
+    const result = this.#language_input_ref.current;
+    if (!result) throw new Error("Attempting to get the before init");
+    return result;
+  }
+
   #exec(command: string, value: any = undefined) {
     document.execCommand(command, false, value);
   }
@@ -42,7 +51,17 @@ export default abstract class RichText extends FormElement {
     this.#selector.value = this.Format;
     this.#link_input.value =
       this.CurrentAnchor?.getAttribute("href")?.trim() ?? "";
+    this.#language_input.value =
+      this.CurrentCode?.getAttribute("language")?.trim() ?? "";
     this.dispatchEvent(new ShouldRender());
+  }
+
+  get #selection(): Selection {
+    return (this.root as any).getSelection();
+  }
+
+  InsertTextAtCaret(text: string) {
+    this.#exec("insertHTML", text);
   }
 
   constructor() {
@@ -63,9 +82,9 @@ export default abstract class RichText extends FormElement {
       });
 
       this.#editor.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && this.Format === "blockquote") {
+        if (e.key === "Enter" && BasicLineBreak.includes(this.Format)) {
           e.preventDefault();
-          setTimeout(() => (this.Format = "p"), 0);
+          this.InsertTextAtCaret("\n\n");
         }
       });
 
@@ -91,14 +110,18 @@ export default abstract class RichText extends FormElement {
 
   set Format(tag: string) {
     this.#exec("formatBlock", `<${tag}>`);
+    if (this.#editor.lastElementChild?.tagName !== "P") {
+      const input = document.createElement("p");
+      input.innerHTML = "&nbsp;";
+      this.#editor.appendChild(input);
+    }
   }
 
   #current_anchor: HTMLAnchorElement | undefined = undefined;
 
   get CurrentAnchor() {
     try {
-      // deno-lint-ignore no-explicit-any
-      const selection: Selection = (this.root as any).getSelection();
+      const selection = this.#selection;
       const range = selection.getRangeAt(0);
       if (!range) return this.#current_anchor;
 
@@ -121,6 +144,36 @@ export default abstract class RichText extends FormElement {
     }
 
     this.#current_anchor = undefined;
+    return undefined;
+  }
+
+  #current_code: HTMLPreElement | undefined = undefined;
+
+  get CurrentCode() {
+    try {
+      const selection = this.#selection;
+      const range = selection.getRangeAt(0);
+      if (!range) return this.#current_code;
+
+      let start: Node | null = range.startContainer;
+      if (start instanceof Text) start = start.parentElement;
+      let end: Node | null = range.endContainer;
+      if (end instanceof Text) end = end.parentElement;
+      if (!(start instanceof HTMLElement)) {
+        this.#current_code = undefined;
+        return undefined;
+      }
+
+      if (start instanceof HTMLPreElement && start === end) {
+        this.#current_code = start;
+        return start;
+      }
+    } catch {
+      this.#current_code = undefined;
+      return undefined;
+    }
+
+    this.#current_code = undefined;
     return undefined;
   }
 
@@ -148,6 +201,12 @@ export default abstract class RichText extends FormElement {
     const anchor = this.CurrentAnchor;
     if (!anchor) return;
     anchor.href = this.#link_input.value;
+  }
+
+  LanguageIfy() {
+    const code = this.CurrentCode;
+    if (!code) return;
+    code.setAttribute("language", this.#language_input.value);
   }
 
   Boldify() {
@@ -236,5 +295,9 @@ export default abstract class RichText extends FormElement {
 
   get LinkInputRef() {
     return this.#link_input_ref;
+  }
+
+  get LanguageInputRef() {
+    return this.#language_input_ref;
   }
 }

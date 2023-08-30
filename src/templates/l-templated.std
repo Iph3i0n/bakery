@@ -1,6 +1,7 @@
 <s:meta name="l-templated">
   Insert a generic template into the project. Should only be used with trusted
-  data.
+  data. Any attributes passed in may also be retrieved by the template using
+  Mustache, using `props`. These may be computed.
   <attr name="use">
     The HTML ID or URL of the template desired. If a HTML ID then it should
     point to a `template` tag. If a URL then it should point to a HTML file.
@@ -12,7 +13,11 @@
     be treated as a HTML ID.
   </attr>
   <import use="is_visible" from="../html/is-visible.ts" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base
+    use="ContextFetcher"
+    from="../base-classes/context-fetcher.ts"
+    default
+  />
 </s:meta>
 
 <style>
@@ -22,22 +27,106 @@
 </style>
 
 <script>
-  async function get_data() {
-    if (!self.remote) {
-      return document.getElementById(self.use);
-    }
+  import { unsafe_import } from "../fetch-resources.ts";
+  const cache = {};
 
-    const response = await fetch(self.use);
-    if (!response.ok) throw response;
-    const content = await response.text();
-    const template = document.createElement("template");
-    template.innerHTML = content;
-    return template;
+  async function process_data(template) {
+    const rendered = Mustache.render(template, {
+      props: new Proxy(
+        {},
+        {
+          get: (_, key) => {
+            try {
+              if (typeof key !== "string") return undefined;
+              const checker = self.getAttribute(key);
+
+              if (typeof checker !== "string" || !checker.startsWith(":"))
+                return checker;
+              const fetcher = new Function(
+                "return " + checker.replace(":", "")
+              );
+              return fetcher.call(self);
+            } catch {
+              return undefined;
+            }
+          },
+          set: () => {
+            throw new Error("Props are immutable");
+          },
+          defineProperty: () => {
+            throw new Error("Props are immutable");
+          },
+          deleteProperty: () => {
+            throw new Error("Props are immutable");
+          },
+          getOwnPropertyDescriptor(_, key) {
+            if (typeof key !== "string") return undefined;
+            if (!self.hasAttribute(key)) return undefined;
+            return {
+              writable: false,
+              get: this.get,
+              set: this.set,
+              configurable: false,
+              enumerable: false,
+            };
+          },
+          getPrototypeOf: () => {
+            return undefined;
+          },
+          has: (_, key) => {
+            if (typeof key !== "string") return false;
+            return !!self.hasAttribute(key);
+          },
+          isExtensible: () => false,
+          ownKeys: () => {
+            const result = [];
+            for (const attribute of self.attributes) {
+              result.push(attribute.name);
+            }
+
+            return result;
+          },
+          setPrototypeOf: () => {
+            throw new Error("Props are immutable");
+          },
+        }
+      ),
+      self,
+    });
+
+    const result = document.createElement("template");
+    result.innerHTML = rendered;
+    return result;
   }
 
-  $load: {
-    const data = await get_data();
-    self.root.replaceChildren(data.content.cloneNode(true));
+  async function get_data(use) {
+    if (!self.remote) {
+      return process_data(document.getElementById(use).innerHTML);
+    }
+
+    if (!cache[use]) {
+      const response = await fetch(use);
+      if (!response.ok) throw response;
+      cache[use] = await response.text();
+    }
+
+    return process_data(cache[self.use]);
+  }
+
+  let old_remote;
+  let old_use;
+
+  $after: {
+    await unsafe_import(
+      "https://cdn.jsdelivr.net/npm/mustache/mustache.min.js"
+    );
+    const use = self.use_string_context("use");
+    if (old_remote === self.remote && old_use === use) return;
+    old_remote = self.remote;
+    old_use = use;
+
+    const data = await get_data(use);
+    self.root.replaceChildren(data.content);
     self.style.display = "block";
   }
 </script>

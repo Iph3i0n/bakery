@@ -30,13 +30,19 @@
 }
 
 .content pre {
+  display: block;
   theme.text("code");
+  theme.colour("body");
+  theme.padding('small_block');
+  border-radius: ":spec.borders.small.radius";
+  white-space: pre-wrap;
 }
 
 .content blockquote {
   theme.padding("block");
   theme.text("body");
   theme.border("body", "contrast", "left");
+  white-space: pre-wrap;
 }
 
 .content ul,

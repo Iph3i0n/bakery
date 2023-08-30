@@ -34,9 +34,9 @@
     <key name="Name" type="string">The name of the input.</key>
   </event>
   <event name="FileAdded" type="FileAddedEvent">
-    Fired when the user uploads a file. If the URL property is set to a
-    promise of a string then that will be used to set the URL. If not then a
-    data URL will be generated.
+    Fired when the user uploads a file. If the URL property is set to a promise
+    of a string then that will be used to set the URL. If not then a data URL
+    will be generated.
     <key name="URL" type="Promise<string> | string | undefined">
       The promise of the data URL of the image. A data URL will be generated if
       this is not set.
@@ -151,13 +151,15 @@
     outline: none;
   }
 
-  .link-editor {
+  .link-editor,
+  .language-editor {
     display: flex;
     align-items: center;
     justify-content: flex-start;
   }
 
-  .link-editor input {
+  .link-editor input,
+  .language-editor input {
     flex: 1;
     theme.text("small", "no-margin");
     theme.padding("super_small");
@@ -167,12 +169,13 @@
   }
 
   .textarea-label select:focus,
-  .link-editor input:focus {
+  .link-editor input:focus,
+  .language-editor input:focus {
     outline: none;
     theme.colour("surface", 0.9);
   }
 
-  @if self.CurrentAnchor {
+  @if self.CurrentAnchor || self.CurrentCode {
     .input-name {
       display: none;
     }
@@ -180,6 +183,12 @@
 
   @if !self.CurrentAnchor {
     .link-editor {
+      display: none;
+    }
+  }
+
+  @if !self.CurrentCode {
+    .language-editor {
       display: none;
     }
   }
@@ -223,6 +232,13 @@
           text
         ></t-icon>
       </button>
+    </div>
+    <div class="language-editor">
+      <input
+        type="text"
+        s:ref="self.LanguageInputRef"
+        on:input="() => self.LanguageIfy()"
+      />
     </div>
     <div class="spacer"></div>
 

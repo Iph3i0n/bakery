@@ -14,7 +14,10 @@
               e(
                 "t-paragraph",
                 {},
-                e("u-text", { use: ":this.state.data.example_text", lines: "3" })
+                e("u-text", {
+                  use: ":this.state.data.example_text",
+                  lines: "3",
+                })
               )
             ),
             locale: e(
@@ -24,14 +27,22 @@
                 name: "data",
                 fallback: "/examples/fetch-example.json",
               },
-              e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
+              e(
+                "t-paragraph",
+                {},
+                e("u-text", { use: ":this.state.data.example_text" })
+              )
             ),
           },
           global: {
             basic: e(
               "u-global",
               { var: "TEST_TEXT", name: "text" },
-              e("t-paragraph", {}, e("u-text", { use: ":this.state.text.title" }))
+              e(
+                "t-paragraph",
+                {},
+                e("u-text", { use: ":this.state.text.title" })
+              )
             ),
             updating: e(
               "u-global",
@@ -40,7 +51,8 @@
                 "f-button",
                 {
                   type: "button",
-                  onclick: "this.state.count = (Number(this.state.count) + 1).toString()",
+                  onclick:
+                    "this.state.count = (Number(this.state.count) + 1).toString()",
                 },
                 e("u-text", { use: ":this.state.count" })
               )
@@ -57,6 +69,17 @@
               )
             ),
           },
+          use: {
+            basic: e(
+              "u-fetch",
+              { url: "/examples/fetch-example.json", name: "data" },
+              e(
+                "u-use",
+                { var: ":this.state.data.example_text", name: "text" },
+                e("t-paragraph", {}, e("u-text", { use: ":this.state.text" }))
+              )
+            ),
+          },
           if: {
             basic: e(
               "u-fetch",
@@ -64,12 +87,20 @@
               e(
                 "u-if",
                 { check: ":this.state.data.should_show" },
-                e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
+                e(
+                  "t-paragraph",
+                  {},
+                  e("u-text", { use: ":this.state.data.example_text" })
+                )
               ),
               e(
                 "u-if",
                 { check: ":this.state.data.should_show_false" },
-                e("t-paragraph", {}, e("u-text", { use: ":this.state.data.example_text" }))
+                e(
+                  "t-paragraph",
+                  {},
+                  e("u-text", { use: ":this.state.data.example_text" })
+                )
               )
             ),
           },
@@ -80,7 +111,11 @@
                 url: "/examples/pagination/{{take}}/{{skip}}.json",
                 name: "pages",
               },
-              e("t-paragraph", {}, e("u-text", { use: ":this.state.pages.content" })),
+              e(
+                "t-paragraph",
+                {},
+                e("u-text", { use: ":this.state.pages.content" })
+              ),
               e("u-paginator", { total: ":this.state.pages.metadata.total" })
             ),
           },
@@ -124,6 +159,9 @@
           </l-col>
           <l-col xs="12">
             <div data-example="fetch.each.basic"></div>
+          </l-col>
+          <l-col xs="12">
+            <div data-example="fetch.use.basic"></div>
           </l-col>
           <l-col xs="12">
             <div data-example="fetch.if.basic"></div>

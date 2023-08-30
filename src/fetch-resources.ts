@@ -1,8 +1,9 @@
-import { IComponent, RenderEvent, LoadedEvent } from "./deps.ts";
+import BakeryBase from "./base-classes/main.ts";
+import { RenderEvent, LoadedEvent } from "./deps.ts";
 
 const loaded_css: Record<string, boolean> = {};
 
-export function link_css(url: string, self: IComponent) {
+export function link_css(url: string, self: BakeryBase) {
   function make_sheet() {
     const ele = document.createElement("link");
     ele.href = url;
