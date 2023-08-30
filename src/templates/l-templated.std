@@ -116,7 +116,7 @@
       cache[use] = await response.text();
     }
 
-    return process_data(cache[self.use]);
+    return process_data(cache[use]);
   }
 
   let old_remote;
