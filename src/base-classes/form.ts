@@ -39,6 +39,19 @@ class SubmittedEvent extends Event {
   }
 }
 
+class AfterSubmitEvent extends Event {
+  readonly #data: FormValue;
+
+  constructor(data: FormValue) {
+    super("AfterSubmit", { bubbles: true });
+    this.#data = data;
+  }
+
+  get FormData() {
+    return this.#data;
+  }
+}
+
 export abstract class FormManagerElement extends UrlBuilder {
   abstract method: string;
   abstract url: string;
@@ -206,6 +219,8 @@ export abstract class FormManagerElement extends UrlBuilder {
         break;
       }
     }
+
+    this.dispatchEvent(new AfterSubmitEvent(this.#values));
   }
 }
 
@@ -287,8 +302,9 @@ export default abstract class FormElement extends ContextFetcher {
 
       this.#form.addEventListener(VALIDATION_KEY, on_validate);
 
-      this.#form.addEventListener("Submitted", () => {
+      this.#form.addEventListener("AfterSubmit", () => {
         this.value = this.use_string_context("prefill");
+        this.#touched = false;
       });
 
       this.addEventListener(RenderEvent.Key, () => {

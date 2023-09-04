@@ -11,19 +11,30 @@
     The form type. Should be AJAX if doing a SPA model.
   </attr>
   <attr name="success-url" type="string" optional>
-    Used if the submission type is an AJAX type. The current URL with
-    current URL will be used if nothing is set. The form will provide
-    the response JSON to the `u-` context if it is still rendered
-    after submission.
+    Used if the submission type is an AJAX type. The current URL with current
+    URL will be used if nothing is set. The form will provide the response JSON
+    to the `u-` context if it is still rendered after submission.
   </attr>
   <attr name="credentials" type="RequestCredentials" default="same-origin">
-    Only used for AJAX submission types. Set how crednetials are
-    sent to the client.
+    Only used for AJAX submission types. Set how crednetials are sent to the
+    client.
   </attr>
   <event name="Submitted" type="SubmissionEvent">
-    Fired when the form is submitted and the validation event is
-    not prevented.
-    <key name="FormData" type="Record<string, string | File | boolean | undefined>">
+    Fired when the form is submitted and the validation event is not prevented.
+    <key
+      name="FormData"
+      type="Record<string, string | File | boolean | undefined>"
+    >
+      The key value pairs of the form.
+    </key>
+  </event>
+  <event name="AfterSubmit" type="AfterSubmissionEvent">
+    Fired after the submission is complete. Cannot effect anything but useful
+    for handling.
+    <key
+      name="FormData"
+      type="Record<string, string | File | boolean | undefined>"
+    >
       The key value pairs of the form.
     </key>
   </event>
