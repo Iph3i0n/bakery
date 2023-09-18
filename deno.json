@@ -9,7 +9,7 @@
     ]
   },
   "tasks": {
-    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.8/main.ts",
+    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.9/main.ts",
     "test": "wholemeal build && deno test --allow-all",
     "dev": "wholemeal dev --out=./docs/dist",
     "dev-dev": "wholemeal-dev dev --out=./docs/dist",
@@ -19,8 +19,5 @@
     "rules": {
       "exclude": ["no-case-declarations"]
     }
-  },
-  "imports": {
-    "jsdom": "https://esm.sh/jsdom"
   }
 }
