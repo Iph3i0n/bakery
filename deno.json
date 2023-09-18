@@ -1,16 +1,26 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "deno.ns", "deno.unstable"]
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.unstable"
+    ]
   },
   "tasks": {
-    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.7/main.ts",
-    "test": "deno test --allow-all",
+    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.8/main.ts",
+    "test": "wholemeal build && deno test --allow-all",
     "dev": "wholemeal dev --out=./docs/dist",
-    "dev-dev": "wholemeal-dev dev --out=./docs/dist"
+    "dev-dev": "wholemeal-dev dev --out=./docs/dist",
+    "dev-build": "wholemeal-dev build --out=./docs/dist"
   },
   "lint": {
     "rules": {
       "exclude": ["no-case-declarations"]
     }
+  },
+  "imports": {
+    "jsdom": "https://esm.sh/jsdom"
   }
 }

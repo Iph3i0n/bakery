@@ -24,7 +24,7 @@
     </key>
     <key name="Name" type="string">The name of the input.</key>
   </event>
-  <event name="FileAdded" type="FileAddedEvent">
+  <event name="FileAdded" type="ImageAddedEvent">
     Fired when the user uploads a file. If the URL property is set to a promise
     of a string then that will be used to set the URL. If not then a data URL
     will be generated.
