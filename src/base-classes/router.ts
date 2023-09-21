@@ -95,7 +95,10 @@ export default abstract class Router extends BakeryBase {
       if (current.match === this.#previous) return;
 
       this.#previous = current.match;
-      this.dispatchEvent(new MatchEvent(current.match, current.params));
+      setTimeout(
+        () => this.dispatchEvent(new MatchEvent(current.match, current.params)),
+        5
+      );
     });
   }
 

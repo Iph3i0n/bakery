@@ -48,7 +48,7 @@
 
 <slot></slot>
 <s:if check=":self.closeable">
-  <div class="close-button" on:click="close">
+  <div class="close-button" role="button" on:click="close">
     <t-icon
       name="close"
       colour=":self.colour ?? 'warning'"
