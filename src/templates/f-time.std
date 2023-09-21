@@ -19,6 +19,9 @@
   <attr name="no-seconds" type="boolean">
     If set then only hours and minutes will be editable.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="TimeValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.

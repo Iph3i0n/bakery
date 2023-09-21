@@ -24,6 +24,9 @@
     Remember that the value is a comma separated string of all of the selected
     options.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="MultiSelectValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.

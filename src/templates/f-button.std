@@ -31,6 +31,9 @@
     Only used if `spa` is set. Will make the link replace the state rather than
     push. Useful if you don't want the back button to keep people on the page.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <aria role="button" />
   <import use="FindForm" from="../html/form.ts" />
   <base use="UrlBuilder" from="../base-classes/router.ts" />

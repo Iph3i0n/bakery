@@ -16,6 +16,9 @@
     The default value for the image. May be a URL or a File object. May also be
     computed.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="ImageValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.

@@ -17,6 +17,9 @@
     field will be considered invalid and the form will not be submittable.
     Remember that the value is in the format of `yyyy-mm-dd`.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="DateValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.

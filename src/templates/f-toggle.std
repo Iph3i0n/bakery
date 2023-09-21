@@ -11,6 +11,9 @@
     If set then the form will not be submittable until the element field has the
     value of `on`.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="ToggleValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.

@@ -15,6 +15,9 @@
     A RegExp string used to evaluate the input. If there are no matches then the
     field will be considered invalid and the form will not be submittable.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="MonacoLoaded" type="MonacoLoadedEvent">
     Fired once monaco has been loaded to allow manipulation of the core monaco
     object.

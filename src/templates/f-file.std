@@ -15,6 +15,9 @@
   <attr name="accept" type="string" default="*">
     The accepted mime types. Uses the same schema as the HTML input element.
   </attr>
+  <member name="value" type="string | File | File[] | boolean | undefined">
+    The value of the element. What is submitted.
+  </member>
   <event name="ValueChanged" type="FileValueChangedEvent">
     Fired when the input value is changed. Does not fire if the value changes
     because the `prefill` value changes.
