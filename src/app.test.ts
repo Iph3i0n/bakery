@@ -169,4 +169,23 @@ describe("App", () => {
       await wait_for_destroy("d-alert");
     });
   });
+
+  describe("d-card", () => {
+    it("Draws a card", async (t) => {
+      await load(
+        `<d-card><span slot="title">Test Title</span>Test Card</d-card>`
+      );
+      await page.waitForSelector("d-card");
+      await assertSnapshot(t, await element_snapshot("d-card"));
+    });
+
+    for (const colour of colours)
+      it(`Draws a ${colour} card`, async (t) => {
+        await load(
+          `<d-card colour="${colour}"><span slot="title">Test Title</span>Test Alert</d-card>`
+        );
+        await page.waitForSelector("d-card");
+        await assertSnapshot(t, await element_snapshot("d-card"));
+      });
+  });
 });
