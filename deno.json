@@ -9,8 +9,8 @@
     ]
   },
   "tasks": {
-    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.18/main.ts",
-    "test": "wholemeal build && deno test --allow-all",
+    "install": "deno install --allow-all https://deno.land/x/wholemeal@1.0.18/main.ts && PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts",
+    "test": "deno test --allow-all",
     "dev": "wholemeal dev --out=./docs/dist",
     "dev-dev": "wholemeal-dev dev --out=./docs/dist",
     "dev-build": "wholemeal-dev build --out=./docs/dist"
@@ -19,5 +19,11 @@
     "rules": {
       "exclude": ["no-case-declarations"]
     }
+  },
+  "imports": {
+    "@puppeteer": "https://deno.land/x/puppeteer@16.2.0/mod.ts",
+    "@path": "https://deno.land/std@0.202.0/path/mod.ts",
+    "@bdd": "https://deno.land/std@0.202.0/testing/bdd.ts",
+    "@snapshot": "https://deno.land/std@0.202.0/testing/snapshot.ts"
   }
 }
