@@ -16,4 +16,3 @@ export const colours = [
   "rainbow_8",
   "rainbow_9",
 ] as const;
-""
