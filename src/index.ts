@@ -54,3 +54,12 @@ import "./templates/u-paginator.std";
 import "./templates/u-route.std";
 import "./templates/u-text.std";
 import "./templates/u-use.std";
+
+// @ts-ignore
+import GlobalCss from "./global.pss";
+// @ts-ignore
+import RenderSheet from "@ipheion/wholemeal/css";
+
+const style = document.createElement("style");
+style.innerHTML = RenderSheet(GlobalCss());
+document.head.append(style);

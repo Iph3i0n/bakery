@@ -1,6 +1,6 @@
 const path = require("path");
 
-module.exports = {
+const createExport = (options, output) => ({
   entry: "./src/index.ts",
   module: {
     rules: [
@@ -11,7 +11,10 @@ module.exports = {
       },
       {
         test: /\.std$/,
-        use: "@ipheion/wholemeal/std",
+        use: {
+          loader: "@ipheion/wholemeal/std",
+          options,
+        },
         exclude: /node_modules/,
       },
       {
@@ -33,8 +36,17 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js", ".std", ".pss"],
   },
   output: {
-    filename: "bundle.min.js",
+    filename: output,
     path: path.resolve(__dirname, "docs", "dist"),
   },
   mode: "production",
-};
+  externals: {
+    react: "react",
+    reactDOM: "react-dom",
+  },
+});
+
+module.exports = [
+  createExport({ framework: "native" }, "bundle.min.js"),
+  createExport({ framework: "react" }, "react.js"),
+];
