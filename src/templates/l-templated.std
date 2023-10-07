@@ -23,7 +23,8 @@
 </style>
 
 <script>
-  import { ejs } from "ejs";
+  import { ejs } from "ejs/ejs.min";
+
   const cache = {};
 
   function DecodeHtml(html) {
