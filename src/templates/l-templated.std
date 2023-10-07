@@ -13,11 +13,7 @@
     be treated as a HTML ID.
   </attr>
   <import use="is_visible" from="../html/is-visible" />
-  <base
-    use="ContextFetcher"
-    from="../base-classes/context-fetcher"
-    default
-  />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher" default />
 </s:meta>
 
 <style>
@@ -27,18 +23,18 @@
 </style>
 
 <script>
-  import { unsafe_import } from "../fetch-resources";
+  import { ejs } from "ejs";
   const cache = {};
 
   function DecodeHtml(html) {
     var txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
-}
+  }
 
   async function process_data(template) {
     const rendered = ejs.render(DecodeHtml(template), {
-      props: new Proxy( 
+      props: new Proxy(
         {},
         {
           get: (_, key) => {
@@ -123,9 +119,6 @@
   let old_use;
 
   $after: {
-    await unsafe_import(
-      "https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js"
-    );
     const use = self.use_string_context("use");
     if (!use) return;
     const data = await get_data(use);

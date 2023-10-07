@@ -57,7 +57,6 @@
   <base use="RichText" from="../base-classes/rich-text" default />
   <import use="c" from="../html/classes" default />
   <import use="slotted" from="../toggleable-slot" default />
-  <import use="unsafe_import" from="../fetch-resources" />
   <import use="link_css" from="../fetch-resources" />
   <import use="on_key_handler" from="../events/keyboard" />
   <aria role="input" />

@@ -18,15 +18,12 @@
   <attr name="flush" type="boolean">
     If true then no padding or borders will be applied.
   </attr>
-  <base
-    use="ContextFetcher"
-    from="../base-classes/context-fetcher"
-    default
-  />
-  <import use="unsafe_import" from="../fetch-resources" />
+  <base use="ContextFetcher" from="../base-classes/context-fetcher" default />
 </s:meta>
 
 <script>
+  import hljs from "highlight.js";
+
   const preceding_whitespace = (l) => {
     const tester = l.split(" ");
     for (let i = 0; i < tester.length; i++) if (tester[i].trim()) return i;
@@ -68,8 +65,7 @@
   const container = () => self.root.querySelector("#container");
 
   function build_code() {
-    if (!window.hljs) return;
-    const result = window.hljs.highlight(code(), {
+    const result = hljs.highlight(code(), {
       language: self.language,
     }).value;
 
@@ -77,12 +73,7 @@
     if (!cont) return;
     cont.innerHTML = result;
   }
-
-  if (!window.hljs)
-    unsafe_import(
-      `https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js`
-    ).then(build_code);
-  else build_code();
+  build_code();
 
   self.addEventListener(RenderEvent.Key, build_code);
 </script>

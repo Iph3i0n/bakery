@@ -48,14 +48,9 @@
 <script>
   import c from "../html/classes";
   import slotted from "../toggleable-slot";
-  import { link_css, unsafe_import } from "../fetch-resources";
+  import { monaco } from "../monaco";
 
   const container = CreateRef();
-
-  link_css(
-    "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/editor/editor.main.css",
-    self
-  );
 
   const slot = slotted();
 
@@ -77,33 +72,25 @@
   let editor;
 
   $load: {
-    await unsafe_import(
-      "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"
-    );
-    require.config({
-      paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor/min/vs" },
-    });
-
     container.current.appendChild(target);
 
-    require(["vs/editor/editor.main"], function () {
-      editor = monaco.editor.create(target, {
-        value: self.value || "",
-        language: self.language,
-        minimap: { enabled: false },
-        theme: "vs-dark",
-        automaticLayout: true,
-      });
+    editor = monaco.editor.create(target, {
+      value: self.value || "",
+      language: self.language,
+      minimap: { enabled: false },
+      theme: "vs-dark",
+      automaticLayout: true,
+    });
 
-      editor.onDidChangeModelContent(() => {
-        self.value = editor.getValue();
-      });
+    editor.onDidChangeModelContent(() => {
+      self.value = editor.getValue();
+    });
 
-      self.dispatchEvent(new MonacoLoaded(editor));
+    self.dispatchEvent(new MonacoLoaded(editor));
 
-      self.addEventListener("ValueChanged", () => {
-        if (editor.getValue() !== self.value && self.value) editor.setValue(self.value);
-      });
+    self.addEventListener("ValueChanged", () => {
+      if (editor.getValue() !== self.value && self.value)
+        editor.setValue(self.value);
     });
   }
 
@@ -112,7 +99,8 @@
       container.current.appendChild(target);
 
     if (!editor) return;
-    if (editor.getValue() !== self.value && self.value) editor.setValue(self.value);
+    if (editor.getValue() !== self.value && self.value)
+      editor.setValue(self.value);
   }
 </script>
 <style>

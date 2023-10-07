@@ -12,7 +12,7 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     ".vscode": true,
-    "dist": true,
+    // "dist": true,
     "deno.lock": true
   },
   "html.customData": ["./docs/dist/bakery.html-data.json"]

@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,17 @@
   "homepage": "https://github.com/PaulPopat/bakery#readme",
   "private": true,
   "dependencies": {
-    "@ipheion/wholemeal": "file:../wholemeal"
+    "@ipheion/wholemeal": "file:../wholemeal",
+    "ejs": "^3.1.9",
+    "highlight.js": "^11.8.0",
+    "monaco-editor": "^0.44.0",
+    "wicg-inert": "^3.1.2"
   },
   "devDependencies": {
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"

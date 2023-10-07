@@ -23,12 +23,3 @@ export function link_css(url: string, self: BakeryBase) {
 }
 
 const loaded: Record<string, Promise<void>> = {};
-
-export function unsafe_import(path: string) {
-  if (!loaded[path])
-    loaded[path] = fetch(path, { cache: "force-cache" })
-      .then((response) => response.text())
-      .then(eval);
-
-  return loaded[path];
-}

@@ -1,1 +1,1 @@
-export * from "@ipheion/wholemeal/dist/mod";
+export * from "@ipheion/wholemeal";

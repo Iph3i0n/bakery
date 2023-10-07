@@ -16,17 +16,15 @@
     elements within.
   </attr>
   <import use="c" from="../html/classes" default />
-  <import use="unsafe_import" from="../fetch-resources" />
   <import use="on_key_handler" from="../events/keyboard" />
   <import use="On" from="../events" />
   <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
+  import "wicg-inert";
   const modal = CreateRef();
   const body = CreateRef();
-
-  unsafe_import("https://cdn.jsdelivr.net/npm/wicg-inert/dist/inert.min.js");
 
   let open = false;
   let target = undefined;

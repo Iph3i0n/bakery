@@ -26,18 +26,16 @@
   </slot>
   <aria role="dialog" />
   <import use="On" from="../events" />
-  <import use="unsafe_import" from="../fetch-resources" />
   <import use="on_key_handler" from="../events/keyboard" />
   <base use="Router" from="../base-classes/router" default />
   <import use="screen_sizes" from="../spec" />
 </s:meta>
 
 <script>
+  import "wicg-inert";
   let open = false;
   let width = "0";
   let has_footer = false;
-
-  unsafe_import("https://cdn.jsdelivr.net/npm/wicg-inert/dist/inert.min.js");
 
   switch (self.size) {
     case "small":
