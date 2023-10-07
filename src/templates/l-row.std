@@ -11,11 +11,11 @@
   </attr>
 
   <aria role="grid" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <style>
-  @js const theme = require("../theme.ts");
+  @js const theme = require("../theme");
 
   :host {
     display: grid;

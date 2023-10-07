@@ -1,5 +1,5 @@
-@js const theme = require("./src/theme.ts");
-@js const spec = require("./src/spec.ts");
+@js const theme = require("./src/theme");
+@js const spec = require("./src/spec");
 
 @import ":`url('${spec.font_url}')`";
 

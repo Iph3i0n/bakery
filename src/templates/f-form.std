@@ -39,7 +39,7 @@
     </key>
   </event>
 
-  <base use="FormManagerElement" from="../base-classes/form.ts" />
+  <base use="FormManagerElement" from="../base-classes/form" />
 </s:meta>
 
 <slot />

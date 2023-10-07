@@ -7,7 +7,7 @@
   <attr name="lines" default="1">The number of lines for the placeholder.</attr>
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
 </s:meta>
@@ -17,8 +17,8 @@
 </script>
 
 <style>
-  @js const spec = require("../spec.ts");
-  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec");
+  @js const theme = require("../theme");
 
   @keyframes placeholder-fade {
     0% {

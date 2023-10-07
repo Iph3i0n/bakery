@@ -6,7 +6,7 @@
     out.
   </attr>
   <aria role="heading" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
@@ -22,7 +22,7 @@
 </script>
 
 <style>
-  @js const theme = require("../theme.ts");
+  @js const theme = require("../theme");
 
   :host {
     display: block;

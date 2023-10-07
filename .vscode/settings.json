@@ -1,6 +1,4 @@
 {
-  "deno.enable": true,
-  "deno.unstable": true,
   "prettier.htmlWhitespaceSensitivity": "ignore",
   "files.associations": {
     "*.std": "html",

@@ -1,0 +1,31 @@
+{
+  "name": "@iphieon/bakery",
+  "version": "1.0.0",
+  "description": "This is a cool library of web components for creating modern PWAs. It is a work in progress but check out [https://bakery.popatux.co.uk/tutorial](https://bakery.popatux.co.uk/tutorial) for some examples.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulPopat/bakery.git"
+  },
+  "author": "paultaylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulPopat/bakery/issues"
+  },
+  "homepage": "https://github.com/PaulPopat/bakery#readme",
+  "private": true,
+  "dependencies": {
+    "@ipheion/wholemeal": "file:../wholemeal"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}

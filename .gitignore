@@ -1,3 +1,4 @@
 docs/dist
 dist
 __screens__
+node_modules

@@ -6,13 +6,13 @@
   <attr name="name">The name given to the result in the context.</attr>
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
 </s:meta>
 
 <script>
-  import { SetContextEventKey } from "../events/context.ts";
+  import { SetContextEventKey } from "../events/context";
 
   let value = self.use_string_context("var");
   self.provide_context(self.name, value);

@@ -1,4 +1,4 @@
-import AddToGlobal from "./global.ts";
+import AddToGlobal from "./global";
 
 export default class PaginationEvent extends Event {
   readonly #skip: number;

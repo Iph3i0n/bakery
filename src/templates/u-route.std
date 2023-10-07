@@ -28,7 +28,7 @@
       are here. If not then an empty object.
     </key>
   </event>
-  <base use="Router" from="../base-classes/router.ts" default />
+  <base use="Router" from="../base-classes/router" default />
 </s:meta>
 
 <s:if check=":self.Matches.match">

@@ -6,11 +6,11 @@
   </attr>
 
   <aria role="section" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <style>
-  @js const spec = require("../spec.ts");
+  @js const spec = require("../spec");
 
   :host {
     display: block;

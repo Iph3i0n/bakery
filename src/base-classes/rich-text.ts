@@ -1,10 +1,10 @@
 // deno-lint-ignore-file no-explicit-any
 import "./selection-polyfill.js";
-import { CreateRef, LoadedEvent, ShouldRender } from "../deps.ts";
-import FormElement from "./form.ts";
-import Slotted from "../toggleable-slot.ts";
-import { get_file } from "../html/file.ts";
-import { ImageEvent } from "../events/form.ts";
+import { CreateRef, LoadedEvent, ShouldRender } from "../deps";
+import FormElement from "./form";
+import Slotted from "../toggleable-slot";
+import { get_file } from "../html/file";
+import { ImageEvent } from "../events/form";
 
 const BasicLineBreak = ["pre", "blockquote"];
 

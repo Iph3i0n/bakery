@@ -1,4 +1,4 @@
-import Merge from "./merge.ts";
+import Merge from "./merge";
 
 type Nightised<T> = { light: T; dark: T };
 

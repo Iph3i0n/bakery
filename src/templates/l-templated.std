@@ -12,10 +12,10 @@
     If set then the use attribute will be treated as a URL. If not then it will
     be treated as a HTML ID.
   </attr>
-  <import use="is_visible" from="../html/is-visible.ts" />
+  <import use="is_visible" from="../html/is-visible" />
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
 </s:meta>
@@ -27,7 +27,7 @@
 </style>
 
 <script>
-  import { unsafe_import } from "../fetch-resources.ts";
+  import { unsafe_import } from "../fetch-resources";
   const cache = {};
 
   function DecodeHtml(html) {

@@ -25,11 +25,11 @@
     The bottom of the offcanvas, will be hidden if empty.
   </slot>
   <aria role="dialog" />
-  <import use="On" from="../events.ts" />
-  <import use="unsafe_import" from="../fetch-resources.ts" />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
-  <base use="Router" from="../base-classes/router.ts" default />
-  <import use="screen_sizes" from="../spec.ts" />
+  <import use="On" from="../events" />
+  <import use="unsafe_import" from="../fetch-resources" />
+  <import use="on_key_handler" from="../events/keyboard" />
+  <base use="Router" from="../base-classes/router" default />
+  <import use="screen_sizes" from="../spec" />
 </s:meta>
 
 <script>
@@ -99,8 +99,8 @@
   }
 </script>
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
 
   @insert ../styles/overlay.pss;
 

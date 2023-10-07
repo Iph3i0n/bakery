@@ -1,4 +1,4 @@
-import ContextFetcher from "./base-classes/context-fetcher.ts";
+import ContextFetcher from "./base-classes/context-fetcher";
 
 export default function options(self: ContextFetcher) {
   let options: Array<{
@@ -12,7 +12,7 @@ export default function options(self: ContextFetcher) {
     if (!(target instanceof HTMLSlotElement)) return;
 
     const nodes = target.assignedElements();
-    const result = [];
+    const result: Array<any> = [];
     for (const node of nodes)
       result.push({
         text: node.textContent ?? "",

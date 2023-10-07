@@ -1,4 +1,4 @@
-import c from "./html/classes.ts";
+import c from "./html/classes";
 
 type Increment = "millisecond" | "second" | "minute" | "hour" | "day" | "month";
 

@@ -1,8 +1,8 @@
-import { ShouldRender, LoadedEvent, RenderEvent } from "../deps.ts";
-import c from "../html/classes.ts";
-import Router, { UrlBuilder } from "./router.ts";
-import ContextFetcher from "./context-fetcher.ts";
-import { is_visible } from "../html/is-visible.ts";
+import { ShouldRender, LoadedEvent, RenderEvent } from "../deps";
+import c from "../html/classes";
+import Router, { UrlBuilder } from "./router";
+import ContextFetcher from "./context-fetcher";
+import { is_visible } from "../html/is-visible";
 
 const REGISTER_KEY = "__BAKERY_INTERNAL__register-form-element";
 const VALIDATION_KEY = "__BAKERY_INTERNAL__request-validation";

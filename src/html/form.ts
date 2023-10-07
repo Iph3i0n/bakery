@@ -1,4 +1,4 @@
-import { FormManagerElement } from "../base-classes/form.ts";
+import { FormManagerElement } from "../base-classes/form";
 
 export function FindForm(submit: HTMLElement): FormManagerElement | undefined {
   const parent = submit.parentElement;

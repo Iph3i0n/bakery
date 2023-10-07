@@ -13,13 +13,13 @@
     By default all data is cached on the users machine. If set then that cache
     is disabled. Only use if you have to.
   </attr>
-  <import use="is_visible" from="../html/is-visible.ts" />
-  <import use="PaginationEvent" from="../pagination.ts" default />
-  <base use="UrlBuilder" from="../base-classes/router.ts" />
+  <import use="is_visible" from="../html/is-visible" />
+  <import use="PaginationEvent" from="../pagination" default />
+  <base use="UrlBuilder" from="../base-classes/router" />
 </s:meta>
 
 <script>
-  import { SetContextEventKey } from "../events/context.ts";
+  import { SetContextEventKey } from "../events/context";
 
   let skip = 0;
   let take = 50;

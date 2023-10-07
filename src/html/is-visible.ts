@@ -1,7 +1,7 @@
-import ContextFetcher from "../base-classes/context-fetcher.ts";
-import BakeryBase from "../base-classes/main.ts";
-import Router from "../base-classes/router.ts";
-import { RenderEvent } from "../deps.ts";
+import ContextFetcher from "../base-classes/context-fetcher";
+import BakeryBase from "../base-classes/main";
+import Router from "../base-classes/router";
+import { RenderEvent } from "../deps";
 
 export function is_visible(self: BakeryBase) {
   let current = self.parentElement;

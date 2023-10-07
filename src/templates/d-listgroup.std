@@ -4,12 +4,12 @@
   have a theme colour as a class name in order to style them.
 
   <aria role="list" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
   :host {
     display: block;
     theme.border("body");

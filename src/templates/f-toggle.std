@@ -32,10 +32,10 @@
   <slot name="invalid">
     The error text for if validate is set and the RegExp does not match
   </slot>
-  <base use="FormElement" from="../base-classes/form.ts" default />
-  <import use="c" from="../html/classes.ts" default />
-  <import use="slotted" from="../toggleable-slot.ts" default />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
+  <base use="FormElement" from="../base-classes/form" default />
+  <import use="c" from="../html/classes" default />
+  <import use="slotted" from="../toggleable-slot" default />
+  <import use="on_key_handler" from="../events/keyboard" />
   <aria role="select" />
   <form />
 </s:meta>
@@ -57,8 +57,8 @@
   );
 </script>
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
   @insert ../styles/input.pss;
 
   .label {

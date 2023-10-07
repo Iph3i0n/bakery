@@ -3,7 +3,7 @@
   with the name of the locale it is written in. If there is no content in the
   slot with the preferred locale of the user, content from the unnamed slot will
   be used as a fallback.
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>

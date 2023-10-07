@@ -40,15 +40,15 @@
   <slot name="invalid">
     The error text for if validate is set and the RegExp does not match
   </slot>
-  <base use="FormElement" from="../base-classes/form.ts" default />
+  <base use="FormElement" from="../base-classes/form" default />
   <aria role="input" />
   <form />
 </s:meta>
 
 <script>
-  import c from "../html/classes.ts";
-  import slotted from "../toggleable-slot.ts";
-  import { link_css, unsafe_import } from "../fetch-resources.ts";
+  import c from "../html/classes";
+  import slotted from "../toggleable-slot";
+  import { link_css, unsafe_import } from "../fetch-resources";
 
   const container = CreateRef();
 
@@ -116,8 +116,8 @@
   }
 </script>
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
   @insert ../styles/input.pss;
 
   .label {

@@ -1,5 +1,5 @@
-import BakeryBase from "./base-classes/main.ts";
-import { RenderEvent, LoadedEvent } from "./deps.ts";
+import BakeryBase from "./base-classes/main";
+import { RenderEvent, LoadedEvent } from "./deps";
 
 const loaded_css: Record<string, boolean> = {};
 

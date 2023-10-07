@@ -1,12 +1,12 @@
-import { ComponentBase, ShouldRender } from "../deps.ts";
+import { ComponentBase, ShouldRender } from "../deps";
 import {
   ContextChangedEvent,
   ContextChangedKey,
   ContextEventKey,
   RequestContextEvent,
   SetContextEvent,
-} from "../events/context.ts";
-import { screen_sizes } from "../spec.ts";
+} from "../events/context";
+import { screen_sizes } from "../spec";
 
 // deno-lint-ignore no-explicit-any
 type Context = Record<string, any>;

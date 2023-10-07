@@ -14,11 +14,11 @@
   </event>
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
-  <import use="PaginationEvent" from="../pagination.ts" default />
-  <import use="c" from="../html/classes.ts" default />
+  <import use="PaginationEvent" from="../pagination" default />
+  <import use="c" from="../html/classes" default />
 </s:meta>
 
 <script>
@@ -47,7 +47,7 @@
 </script>
 
 <style>
-  @js const theme = require("../theme.ts");
+  @js const theme = require("../theme");
 
   :host {
     display: flex;

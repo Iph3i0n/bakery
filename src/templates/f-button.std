@@ -35,10 +35,10 @@
     The value of the element. What is submitted.
   </member>
   <aria role="button" />
-  <import use="FindForm" from="../html/form.ts" />
-  <base use="UrlBuilder" from="../base-classes/router.ts" />
-  <import use="Router" from="../base-classes/router.ts" default />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
+  <import use="FindForm" from="../html/form" />
+  <base use="UrlBuilder" from="../base-classes/router" />
+  <import use="Router" from="../base-classes/router" default />
+  <import use="on_key_handler" from="../events/keyboard" />
 </s:meta>
 
 <script>
@@ -102,7 +102,7 @@
 </script>
 
 <style>
-  @js const theme = require("../theme.ts");
+  @js const theme = require("../theme");
   @js const c = self.colour ?? 'primary';
   :host {
     position: relative;

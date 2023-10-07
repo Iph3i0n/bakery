@@ -8,12 +8,12 @@
   </attr>
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
   <import
     use="ContextEventKey, ContextChangedEvent"
-    from="../events/context.ts"
+    from="../events/context"
   />
 </s:meta>
 

@@ -13,7 +13,7 @@
     being destroyed.
   </event>
   <aria role="alert" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
@@ -25,8 +25,8 @@
   }
 </script>
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
 
   :host {
     position: relative;

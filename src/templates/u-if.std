@@ -5,7 +5,7 @@
   </attr>
   <base
     use="ContextFetcher"
-    from="../base-classes/context-fetcher.ts"
+    from="../base-classes/context-fetcher"
     default
   />
 </s:meta>

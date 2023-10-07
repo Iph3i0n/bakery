@@ -8,7 +8,7 @@
   <attr name="bordered" type="boolean">
     If set then the panel will have a border and shadow but still no padding.
   </attr>
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
@@ -18,7 +18,7 @@
 </script>
 
 <style>
-  @js const theme = require("../theme.ts");
+  @js const theme = require("../theme");
 
   :host {
     display: block;

@@ -27,8 +27,8 @@
   <attr name="spin" type="boolean">
     If true then the icon will spin. Useful for loading indicators.
   </attr>
-  <import use="link_css" from="../fetch-resources.ts" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <import use="link_css" from="../fetch-resources" />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
@@ -39,8 +39,8 @@
 </script>
 
 <style>
-  @js const theme = require("../theme.ts");
-  @js const spec = require("../spec.ts");
+  @js const theme = require("../theme");
+  @js const spec = require("../spec");
   @js const size = spec.text_styles[self.size ?? 'body'].font_size;
 
   :host {

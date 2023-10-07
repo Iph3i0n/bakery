@@ -1,5 +1,5 @@
-import DirectionRender, { Instruction } from "./direction-render.ts";
-import * as spec from "./spec.ts";
+import DirectionRender, { Instruction } from "./direction-render";
+import * as spec from "./spec";
 const motion_ok = "(prefers-reduced-motion: no-preference)";
 const prefer_light = "(prefers-color-scheme: light)";
 const prefer_dark = "(prefers-color-scheme: dark)";

@@ -15,11 +15,11 @@
     If true then the dropdown will have a scroll bar when there are too many
     elements within.
   </attr>
-  <import use="c" from="../html/classes.ts" default />
-  <import use="unsafe_import" from="../fetch-resources.ts" />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
-  <import use="On" from="../events.ts" />
-  <base use="BakeryBase" from="../base-classes/main.ts" default />
+  <import use="c" from="../html/classes" default />
+  <import use="unsafe_import" from="../fetch-resources" />
+  <import use="on_key_handler" from="../events/keyboard" />
+  <import use="On" from="../events" />
+  <base use="BakeryBase" from="../base-classes/main" default />
 </s:meta>
 
 <script>
@@ -79,8 +79,8 @@
   );
 </script>
 <style>
-  @js const spec = require("../spec.ts");
-  @js const theme = require("../theme.ts");
+  @js const spec = require("../spec");
+  @js const theme = require("../theme");
   @insert ../styles/overlay.pss;
   @insert ../styles/custom-scrollbar.pss;
 

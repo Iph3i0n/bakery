@@ -44,11 +44,11 @@
   <slot name="invalid">
     The error text for if validate is set and the RegExp does not match
   </slot>
-  <base use="FormElement" from="../base-classes/form.ts" default />
-  <import use="c" from="../html/classes.ts" default />
-  <import use="slotted" from="../toggleable-slot.ts" default />
-  <import use="link_css" from="../fetch-resources.ts" />
-  <import use="on_key_handler" from="../events/keyboard.ts" />
+  <base use="FormElement" from="../base-classes/form" default />
+  <import use="c" from="../html/classes" default />
+  <import use="slotted" from="../toggleable-slot" default />
+  <import use="link_css" from="../fetch-resources" />
+  <import use="on_key_handler" from="../events/keyboard" />
   <aria role="input" />
   <form />
 </s:meta>

@@ -1,7 +1,7 @@
-import { ShouldRender, RenderEvent } from "../deps.ts";
-import PaginationEvent from "../pagination.ts";
-import BakeryBase from "./main.ts";
-import AddToGlobal from "../global.ts";
+import { ShouldRender, RenderEvent } from "../deps";
+import PaginationEvent from "../pagination";
+import BakeryBase from "./main";
+import AddToGlobal from "../global";
 
 const DATA_KEY = "route";
 
