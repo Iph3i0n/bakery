@@ -49,6 +49,27 @@
   import c from "../html/classes";
   import slotted from "../toggleable-slot";
   import * as monaco from "monaco-editor";
+  import css from "../../node_modules/monaco-editor/min/vs/editor/editor.main.css";
+
+  const css_text = css[0][1];
+
+  window.MonacoEnvironment = {
+    getWorkerUrl: function (moduleId, label) {
+      if (label === "json") {
+        return "/dist/json.worker.js";
+      }
+      if (label === "css" || label === "scss" || label === "less") {
+        return "/dist/css.worker.js";
+      }
+      if (label === "html" || label === "handlebars" || label === "razor") {
+        return "/dist/html.worker.js";
+      }
+      if (label === "typescript" || label === "javascript") {
+        return "/dist/ts.worker.js";
+      }
+      return "/dist/editor.worker.js";
+    },
+  };
 
   const container = CreateRef();
 
@@ -101,6 +122,14 @@
     if (!editor) return;
     if (editor.getValue() !== self.value && self.value)
       editor.setValue(self.value);
+
+    let styles = self.querySelector("#monaco-css");
+    if (!styles) {
+      styles = document.createElement("style");
+      self.root.append(styles);
+    }
+    styles.id = "monaco-css";
+    styles.innerText = css_text;
   }
 </script>
 <style>

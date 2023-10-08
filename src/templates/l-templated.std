@@ -22,8 +22,8 @@
   }
 </style>
 
-<script>
-  import { ejs } from "ejs/ejs.min";
+<script type="module">
+  import ejs from "ejs/ejs.min";
 
   const cache = {};
 

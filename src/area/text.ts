@@ -1,0 +1,9 @@
+export { default as Badge } from "../templates/t-badge.std";
+export { default as Code } from "../templates/t-code.std";
+export { default as Crumbs } from "../templates/t-crumbs.std";
+export { default as Heading } from "../templates/t-heading.std";
+export { default as Icon } from "../templates/t-icon.std";
+export { default as Link } from "../templates/t-link.std";
+export { default as Localised } from "../templates/t-localised.std";
+export { default as Paragraph } from "../templates/t-paragraph.std";
+export { default as RichText } from "../templates/t-richtext.std";

@@ -22,7 +22,9 @@
 </s:meta>
 
 <script>
+  import slotted from "../toggleable-slot";
   import hljs from "highlight.js";
+  const container = slotted();
 
   const preceding_whitespace = (l) => {
     const tester = l.split(" ");
@@ -62,20 +64,21 @@
       .trim();
   };
 
-  const container = () => self.root.querySelector("#container");
-
   function build_code() {
     const result = hljs.highlight(code(), {
       language: self.language,
     }).value;
 
-    const cont = container();
+    const cont = container.current;
     if (!cont) return;
     cont.innerHTML = result;
   }
+
   build_code();
 
-  self.addEventListener(RenderEvent.Key, build_code);
+  $after: {
+    build_code();
+  }
 </script>
 
 <style>
@@ -162,9 +165,13 @@
   }
 </style>
 
+<div style="display: none">
+  <slot on:slotchange="container.on_change"></slot>
+</div>
+
 <s:if check=":self.file">
   <div class="file-name">
     <s:text use=":self.file"></s:text>
   </div>
 </s:if>
-<div id="container" class="scrollable"></div>
+<div id="container" class="scrollable" s:ref="container"></div>
