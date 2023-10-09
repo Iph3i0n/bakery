@@ -61,8 +61,8 @@ export abstract class FormManagerElement extends UrlBuilder {
 
   readonly #elements: Array<FormElement> = [];
 
-  constructor() {
-    super();
+  constructor(target: HTMLElement) {
+    super(target);
     this.addEventListener(REGISTER_KEY, (event) => {
       if (!(event instanceof RegisterFormElementEvent))
         throw new Error(
@@ -256,8 +256,8 @@ export default abstract class FormElement extends ContextFetcher {
   abstract validate: string;
   abstract name: string;
 
-  constructor() {
-    super();
+  constructor(target: HTMLElement) {
+    super(target);
 
     this.addEventListener(RenderEvent.Key, () => {
       if (this.disabled) this.tabIndex = -1;

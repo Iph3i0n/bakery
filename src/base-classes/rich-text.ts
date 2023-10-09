@@ -64,8 +64,8 @@ export default abstract class RichText extends FormElement {
     this.#exec("insertHTML", text);
   }
 
-  constructor() {
-    super();
+  constructor(target: HTMLElement) {
+    super(target);
 
     let loaded = false;
     this.addEventListener(LoadedEvent.Key, () => {

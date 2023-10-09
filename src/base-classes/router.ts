@@ -51,8 +51,8 @@ export abstract class UrlBuilder extends BakeryBase {
     );
   }
 
-  constructor() {
-    super();
+  constructor(target: HTMLElement) {
+    super(target);
 
     this.addEventListener(PaginationEvent.Key, (e) => {
       if (!(e instanceof PaginationEvent)) return;
@@ -75,8 +75,8 @@ export default abstract class Router extends BakeryBase {
 
   #previous = false;
 
-  constructor() {
-    super();
+  constructor(target: HTMLElement) {
+    super(target);
     document.addEventListener(NavigationEventKey, () =>
       this.dispatchEvent(new ShouldRender())
     );

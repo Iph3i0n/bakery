@@ -8,14 +8,7 @@ import {
 } from "../events/context";
 import { screen_sizes } from "../spec";
 
-// deno-lint-ignore no-explicit-any
-type Context = Record<string, any>;
-
 export default abstract class BakeryBase extends ComponentBase {
-  constructor() {
-    super();
-  }
-
   #get_value(key: string | symbol) {
     const event = new RequestContextEvent();
     this.dispatchEvent(event);
@@ -36,7 +29,8 @@ export default abstract class BakeryBase extends ComponentBase {
           const result = this.#get_value(key);
 
           const listener = (e: Event) => {
-            if (e.target === this || this.#get_value(key) === result) return;
+            if (e.target === this.matcher || this.#get_value(key) === result)
+              return;
             document.removeEventListener(ContextChangedKey, listener);
             this.should_render();
           };
@@ -65,7 +59,8 @@ export default abstract class BakeryBase extends ComponentBase {
       this.#context_providing = true;
 
       this.addEventListener(ContextEventKey, (e: Event) => {
-        if (!(e instanceof RequestContextEvent) || e.target === this) return;
+        if (!(e instanceof RequestContextEvent) || e.target === this.matcher)
+          return;
         e.AddData(this.#context_key ?? "", this.#context_value);
       });
     }
@@ -85,6 +80,7 @@ export default abstract class BakeryBase extends ComponentBase {
     watch: HTMLElement = this,
     inverse = false
   ) {
+    if (watch instanceof ComponentBase) watch = watch.matcher;
     const target = unit === "px" ? width : this.#rem_to_pixels(width);
     const current = inverse
       ? target > watch.offsetWidth
@@ -127,6 +123,6 @@ export default abstract class BakeryBase extends ComponentBase {
       const handler = new Function("event", handler_text);
       handler.call(this, event);
     }
-    return super.dispatchEvent(event);
+    return this.matcher.dispatchEvent(event);
   }
 }
