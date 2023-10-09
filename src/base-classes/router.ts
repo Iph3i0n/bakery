@@ -1,7 +1,6 @@
 import { ShouldRender, RenderEvent } from "../deps";
 import PaginationEvent from "../pagination";
 import BakeryBase from "./main";
-import AddToGlobal from "../global";
 
 const DATA_KEY = "route";
 
@@ -163,5 +162,3 @@ export default abstract class Router extends BakeryBase {
     };
   }
 }
-
-AddToGlobal("Router", Router);
